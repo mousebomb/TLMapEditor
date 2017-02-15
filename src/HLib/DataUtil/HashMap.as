@@ -1,0 +1,169 @@
+package HLib.DataUtil
+{
+	import flash.utils.Dictionary;
+
+	/**
+	 * 键值对哈希表 
+	 * @author Administrator
+	 * 
+	 */	
+	public  class HashMap
+	{
+		private var _keys:Array = null;  
+		private var _props:Dictionary = null;  
+		private var _result:Array;
+		
+		public function HashMap()
+		{  
+			this.clear();  
+		}  
+		
+		public function get props():Dictionary
+		{
+			return _props;
+		}
+
+		public function set props(value:Dictionary):void
+		{
+			_props = value;
+		}
+
+		/**
+		 * 清理所有数据 
+		 * 
+		 */		
+		public function clear():void
+		{ 
+			this.props = new Dictionary();  
+			_keys ? _keys.length = 0: _keys = [];
+			_result = null;
+		}  
+		
+		/**
+		 * 是否有指定的key 
+		 * @param key
+		 * @return 
+		 * 
+		 */		
+		public function containsKey(key:*):Boolean
+		{  
+			return this.props[key] != null;  
+		}  
+		
+		/**
+		 * 是否有指定的值 
+		 * @param value
+		 * @return 
+		 * 
+		 */		
+		public function containsValue(value:*):Boolean
+		{  
+			var result:Boolean = false;  
+			var len:uint = this.size;  
+			if(len > 0){  
+				for(var i:uint = 0 ; i < len ; i++){  
+					if(this.props[this._keys[i]] == value) return true;  
+				}  
+			} 
+			return false;
+		}  
+		
+		/**
+		 * 返回指定key所对应的值 
+		 * @param key
+		 * @return 
+		 * 
+		 */		
+		public function get(key:*):*
+		{  
+			return this.props[key];  
+		}  
+		
+		/**
+		 * 插入一个键值对 
+		 * @param key
+		 * @param value
+		 * @return 
+		 * 
+		 */		
+		public function put(key:*,value:*):*
+		{  
+			var result:* = null;  
+			if(this.containsKey(key)){  
+				result = this.get(key);  
+				this.props[key] = value;  
+			}else{  
+				this.props[key] = value;  
+				this._keys.push(key);  
+			}  
+			return result;  
+		}  
+		
+		/**
+		 * 移除指定key的键值对 
+		 * @param key
+		 * @return 
+		 * 
+		 */		
+		public function remove(key:*):*
+		{  
+			var result:* = null;  
+			if(this.containsKey(key)){  
+				result = this.props[key];
+				delete this.props[key];  
+				var index:int = this._keys.indexOf(key);  
+				if(index > -1){  
+					this._keys.splice(index,1);  
+				}  
+			}  
+			return result;  
+		}  
+		
+		/**
+		 * 返回整个表的键值对数量 
+		 * @return 
+		 * 
+		 */		
+		public function get size():uint
+		{  
+			return this._keys.length;  
+		} 
+		
+		/**
+		 *  是否有键值对在表中
+		 * @return 
+		 * 
+		 */		
+		public function isEmpty():Boolean
+		{  
+			return this.size < 1;  
+		}  
+		
+		/**
+		 * 返回所有值组成的数组 
+		 * @return 
+		 */		
+		public function get values():Array
+		{  
+			_result = [];  
+			var len:uint = this.size;  
+			if(len > 0){  
+				for(var i:uint = 0;i<len;i++){  
+					_result.push(this.props[this._keys[i]]);  
+				}  
+			}  
+			return _result;  
+		}  
+		
+		/**
+		 * 返回所有键组成的数组 
+		 * @return 
+		 * 
+		 */		
+		public function get keys():Array
+		{ 
+			return this._keys;  
+		}  
+		
+	}
+}
