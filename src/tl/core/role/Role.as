@@ -102,9 +102,6 @@ package tl.core.role
 		/** 右手武器部件 **/
 		public function get rightArmsUnit():RoleMesh
 		{
-			//https://git.coding.net/mousebomb/TLMapEditor.git
-			/*git remote add origin https://git.coding.net/mousebomb/TLMapEditor.git
-			 git push -u origin master*/
 			return _rightArmsUnit;
 		}
 

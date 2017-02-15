@@ -366,7 +366,7 @@ package tl.frameworks.mediator
 		private function onStageMouseMove(event:MouseEvent):void
 		{
 			// 摄像机
-			if (isStageRightMouseDown && curBrushType == ToolBrushType.BRUSH_TYPE_NONE)
+			if (isStageRightMouseDown/* && curBrushType == ToolBrushType.BRUSH_TYPE_NONE*/)
 			{
 				// 移动摄像机
 				var deltaX:Number = StageFrame.stage.mouseX - lastX;
@@ -399,10 +399,13 @@ package tl.frameworks.mediator
 				var downPos:Vector3D = event.scenePosition;
 				brushView.x          = downPos.x;
 				brushView.z          = downPos.z;
-				// 除了地形高度刷100ms一次，其它刷子移动也执行
+				brushView.y =  mapModel.getHeight(downPos.x, downPos.z);
+				// 除了地形高度刷100ms一次，其它刷子移动也执行 并且其它刷子y要设置
 				if(_isBrushPressed &&
 						(curBrushType == ToolBrushType.BRUSH_TYPE_TERRAINTEXTURE || curBrushType== ToolBrushType.BRUSH_TYPE_ZONE))
+				{
 					doBrush();
+				}
 			}
 		}
 
@@ -451,6 +454,9 @@ package tl.frameworks.mediator
 				brushView.asZoneBrush();
 				view.isShowZone=true;
 			}
+			// 刷子阶段 不监听其它鼠标单击
+			setTargetsMouseInteractive( false );
+
 			track("EditorScene3DMediator/onToolBrush", mapModel.curTextureBrushLayerIndex, mapModel.mapVO.textureFiles[mapModel.curTextureBrushLayerIndex]);
 
 		}
@@ -530,7 +536,6 @@ package tl.frameworks.mediator
 			}
 			if (_isBrushPressed)brushTimer.start();
 			else brushTimer.stop();
-
 		}
 
 		private function onBrushTimer(event:TimerEvent):void
@@ -632,6 +637,9 @@ package tl.frameworks.mediator
 			{
 				brushView.parent.removeChild(brushView);
 			}
+			//
+			// 选择阶段 监听其它鼠标单击
+			setTargetsMouseInteractive(true);
 		}
 	}
 }

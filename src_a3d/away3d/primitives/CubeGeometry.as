@@ -457,7 +457,6 @@ package away3d.primitives
 				}
 			}
 
-			trace(StageFrame.renderIdx,"CubeGeometry/buildUVs",data.length,"stride:",stride, data);
 			target.updateData(data);
 		}
 	}
