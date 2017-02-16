@@ -3,16 +3,14 @@
  */
 package tl.frameworks.mediator
 {
-	import flash.display.Stage;
 	import flash.events.MouseEvent;
 
 	import org.robotlegs.mvcs.Mediator;
 
+	import tl.frameworks.NotifyConst;
+	import tl.frameworks.defines.FunctionPointType;
 	import tl.mapeditor.ui.common.MyButton;
-
 	import tl.mapeditor.ui.window.FunctionPointUI;
-
-	import tool.StageFrame;
 
 	/**功能点设置*/
 	public class FunctionPointUIMediator extends Mediator
@@ -28,14 +26,14 @@ package tl.frameworks.mediator
 		{
 			super.onRegister();
 
-			view.init("功能点设置", 240, 200);
-			view.x = StageFrame.stage.stageWidth - view.myWidth >> 1;
-			view.y = StageFrame.stage.stageHeight - view.myHeight >> 1;
+			view.init("功能点设置", 260, 140);
+			view.x = 90;
+			view.y = 372;
 
 			var leng:int = view.btnVector.length;
 			for (var i:int = 0; i < leng; i++)
 			{
-				view.btnVector[i].addEventListener(MouseEvent.CLICK, onClick)
+				eventMap.mapListener(view.btnVector[i],MouseEvent.CLICK, onClick);
 			}
 		}
 
@@ -47,19 +45,19 @@ package tl.frameworks.mediator
 				switch (btn.name)
 				{
 					case '出生点' :
-
+						dispatchWith(NotifyConst.UI_ADD_FUNCPOINT, false, FunctionPointType.START);
 						break;
 					case '跳转点' :
-
+						dispatchWith(NotifyConst.UI_ADD_FUNCPOINT, false, FunctionPointType.JUMP);
 						break;
 					case '特殊点' :
-
+						dispatchWith(NotifyConst.UI_ADD_FUNCPOINT, false, FunctionPointType.SPECIAL);
 						break;
 					case '预留点一' :
-
+						dispatchWith(NotifyConst.UI_ADD_FUNCPOINT, false, FunctionPointType.EXTRA_1);
 						break;
 					case '预留点二' :
-
+						dispatchWith(NotifyConst.UI_ADD_FUNCPOINT, false, FunctionPointType.EXTRA_2);
 						break;
 				}
 			}

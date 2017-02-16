@@ -5,6 +5,8 @@ package tl.mapeditor.ui.window
 {
 	import flash.events.MouseEvent;
 
+	import tl.mapeditor.ui.common.MyButton;
+
 	import tl.mapeditor.ui.common.MyDragBar;
 
 	import tl.mapeditor.ui.common.MyTextField;
@@ -17,6 +19,8 @@ package tl.mapeditor.ui.window
 	{
 		public var vectorTxt:Vector.<MyTextField> ;
 		public var vectorDragBar:Vector.<MyDragBar> ;
+		public var showBtn:MyButton;
+		public var hideBtn:MyButton;
 		public function BrushSettingUI()
 		{
 			super();
@@ -66,6 +70,17 @@ package tl.mapeditor.ui.window
 				text.x = 370;
 				vectorTxt.push(text);
 			}
+			showBtn = Tool.getMyBtn('显示地形刷', 120);
+			showBtn.name = '显示地形刷';
+			this.addChild(showBtn);
+			showBtn.x = 60;
+			showBtn.y = 155;
+
+			hideBtn = Tool.getMyBtn('隐藏地形刷', 120);
+			hideBtn.name = '隐藏地形刷';
+			this.addChild(hideBtn);
+			hideBtn.x = 240;
+			hideBtn.y = 155;
 		}
 
 		override protected function onClickClose(e:MouseEvent = null):void

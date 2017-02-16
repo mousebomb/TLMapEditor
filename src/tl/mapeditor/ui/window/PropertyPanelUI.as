@@ -38,7 +38,7 @@ package tl.mapeditor.ui.window
 			var text:MyTextField;
 			titleTextVec = new <MyTextField>[];
 			valueTextVec = new <MyTextField>[];
-			var labelArr:Array = ['属性', '地图文件夹名', '地图图片前缀', 'xml文件名', '地图总大小', '地图行列数量', '地图块大小', '格子数量', '', '']
+			var labelArr:Array = ['属性', '地图文件夹名', '地图图片前缀', '地图文件名', '地图总大小', '地图行列数量', '地图块大小', '格子数量']
 			for(var i:int = 0; i < _showNum; i++)
 			{
 				text = Tool.getMyTextField(90, -1, 12, 0x999999, "center");
@@ -50,7 +50,8 @@ package tl.mapeditor.ui.window
 				text.mouseEnabled = text.mouseWheelEnabled = false;
 				bgSpr.addChild(text);
 				text.y = 16 * i;
-				titleTextVec.push(text);
+				if(i > 0)
+					titleTextVec.push(text)
 
 				text = Tool.getMyTextField(150, -1, 12, 0x999999, "center");
 				text.background = true;
@@ -65,7 +66,8 @@ package tl.mapeditor.ui.window
 				bgSpr.addChild(text);
 				text.x = 90;
 				text.y = 16 * i;
-				titleTextVec.push(text);
+				if(i > 0)
+					valueTextVec.push(text);
 			}
 		}
 

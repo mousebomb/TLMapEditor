@@ -11,16 +11,15 @@ package tl.frameworks.mediator
 	import flash.events.TimerEvent;
 	import flash.geom.Vector3D;
 	import flash.ui.Keyboard;
-	import flash.utils.Dictionary;
 	import flash.utils.Timer;
 
 	import org.robotlegs.mvcs.Mediator;
 
+	import tl.core.funcpoint.FuncPointVO;
 	import tl.core.old.WizardObject;
 	import tl.core.rigidbody.RigidBodyVO;
 	import tl.core.rigidbody.RigidBodyView;
 	import tl.core.role.Role;
-	import tl.core.terrain.TLMapVO;
 	import tl.frameworks.NotifyConst;
 	import tl.frameworks.TLEvent;
 	import tl.frameworks.defines.ToolBrushType;
@@ -28,7 +27,7 @@ package tl.frameworks.mediator
 	import tl.frameworks.model.TLEditorMapModel;
 	import tl.mapeditor.scenes.EditorScene3D;
 	import tl.mapeditor.ui3d.BrushView;
-	import tl.mapeditor.ui3d.MapZoneView;
+	import tl.mapeditor.ui3d.FuncPointView;
 
 	import tool.StageFrame;
 
@@ -76,6 +75,7 @@ package tl.frameworks.mediator
 			addContextListener(NotifyConst.TOGGLE_GRID, onToggleGrid);
 			addContextListener(NotifyConst.TOGGLE_ZONE, onToggleZone);
 			addContextListener(NotifyConst.MAP_NODE_VAL_CHANGED,onMapNodeValChanged);
+			addContextListener(NotifyConst.UI_ADD_FUNCPOINT, onAddFuncPoint);
 
 		}
 
@@ -188,6 +188,7 @@ package tl.frameworks.mediator
 				isSelectedDragging            = false;
 			}
 			onStageMouseUp4RigidBody(e);
+			onStageMouseUp4FuncPoint(e);
 		}
 
 		/** 当前在选中 已存在的role 标记选中的 */
@@ -233,13 +234,20 @@ package tl.frameworks.mediator
 				isSelectedRBDragging           = false;
 				selectedRigidBody              = null;
 			}
-			setTargetsMouseInteractive(true);
+			if (selectedFuncPoint)
+			{
+				selectedFuncPoint.showBounds = false;
+				isSelectedFPDragging         = false;
+				selectedFuncPoint            = null;
+			}
+			if(curBrushType==ToolBrushType.BRUSH_TYPE_NONE)
+				setTargetsMouseInteractive(true);
 		}
 
 		/** 为保障拖拽一个对象时，其它对象不影响拖拽，要清除除了地表以外的鼠标响应 */
 		private function setTargetsMouseInteractive( isInteractive:Boolean ):void
 		{
-			trace(StageFrame.renderIdx,"[EditorScene3DMediator]/setTargetsMouseInteractive" , isInteractive);
+//			trace(StageFrame.renderIdx,"[EditorScene3DMediator]/setTargetsMouseInteractive" , isInteractive);
 			for (var i:int = 0; i < rolesInScene.length; i++)
 			{
 				var role:Role = rolesInScene[i];
@@ -249,6 +257,11 @@ package tl.frameworks.mediator
 			{
 				var view1:RigidBodyView = rigidBodiesInScene[i];
 				view1.mouseEnabled=isInteractive;
+			}
+			for (var i:int = 0; i < funcPointsInScene.length; i++)
+			{
+				var fp:FuncPointView = funcPointsInScene[i];
+				fp.mouseEnabled      = isInteractive;
 			}
 		}
 
@@ -379,6 +392,8 @@ package tl.frameworks.mediator
 
 		private function onMouseMove(event:MouseEvent3D):void
 		{
+			//位置
+			mapModel.setCurMousePos(event.scenePosition);
 			// 刷子
 			onMouseMove4Brush(event);
 			// 拖拽实体模型
@@ -387,6 +402,8 @@ package tl.frameworks.mediator
 			onMouseMove4MoveWizard(event);
 			//拖拽刚体
 			onMouseMoveRigidBody(event);
+			// 拖拽功能点
+			onMouseMoveFuncPoint(event);
 		}
 
 
@@ -463,6 +480,7 @@ package tl.frameworks.mediator
 
 		private function onToolBrushSplatPower(n:*):void
 		{
+			trace(StageFrame.renderIdx,"[EditorScene3DMediator]/onToolBrushSplatPower alpha强度",n.data);
 			mapModel.brushSplatPower = n.data;
 			if(brushView) brushView.brushSplatPower = n.data;
 		}
@@ -472,6 +490,7 @@ package tl.frameworks.mediator
 			if(brushView)
 			{
 				brushView.brushStrong = n.data;
+				trace(StageFrame.renderIdx,"[EditorScene3DMediator]/onToolBrushStrong 笔刷强度",n.data);
 			}
 		}
 		private function onToolBrushSize( n: * ):void
@@ -480,7 +499,7 @@ package tl.frameworks.mediator
 			if (brushView)
 			{
 				brushView.brushSize = n.data;
-				trace(StageFrame.renderIdx,"EditorScene3DMediator/onToolBrushSize", n.data);
+				trace(StageFrame.renderIdx,"EditorScene3DMediator/onToolBrushSize 笔刷大小", n.data);
 			}
 		}
 		private function onToolBrushSizeAdd(n:TLEvent):void
@@ -626,6 +645,61 @@ package tl.frameworks.mediator
 		private var selectedRigidBody:RigidBodyView;
 		private var rigidBodiesInScene:Vector.<RigidBodyView> = new <RigidBodyView>[];
 
+
+		// #pragma mark --  放置点		  ------------------------------------------------------------
+		private var funcPointsInScene:Vector.<FuncPointView> = new Vector.<FuncPointView>();
+		private var selectedFuncPoint:FuncPointView;
+		private var isNewFuncPoint:Boolean                   = false;
+		private var isSelectedFPDragging:Boolean             = false;
+
+		private function onAddFuncPoint(n:*):void
+		{
+			clearSelection();
+			var vo:FuncPointVO = new FuncPointVO();
+			vo.type = n.data;
+			selectedFuncPoint  = new FuncPointView(vo);
+			view.addChild(selectedFuncPoint);
+			funcPointsInScene.push(selectedFuncPoint);
+			mapModel.addFuncPoint(vo);
+			// 提交后监听鼠标点击可选中
+			isSelectedFPDragging = true;
+			isNewFuncPoint       = true;
+			selectedFuncPoint.addEventListener(MouseEvent3D.MOUSE_DOWN, onFuncPointMouseDown);
+			setTargetsMouseInteractive(false);
+		}
+
+		private function onFuncPointMouseDown(e:MouseEvent3D):void
+		{
+			clearSelection();
+			selectedFuncPoint            = e.target as FuncPointView;
+			selectedFuncPoint.showBounds = true;
+			isSelectedFPDragging         = true;
+			setTargetsMouseInteractive(false);
+		}
+
+		private function onMouseMoveFuncPoint(event:MouseEvent3D):void
+		{
+			if (selectedFuncPoint == null || isSelectedFPDragging == false) return;
+			if (selectedFuncPoint.parent != null)
+			{
+				var downPos:Vector3D = event.scenePosition;
+				selectedFuncPoint.vo.tileX  = mapModel.mouseTilePos.x;
+				selectedFuncPoint.vo.tileY = mapModel.mouseTilePos.y;
+				selectedFuncPoint.y = mapModel.getHeight(downPos.x, downPos.z);
+				selectedFuncPoint.validate();
+			}
+		}
+
+		private function onStageMouseUp4FuncPoint(event:MouseEvent):void
+		{
+			if (selectedFuncPoint)
+			{
+				isSelectedFPDragging           = false;
+				isNewFuncPoint                 = false;
+				setTargetsMouseInteractive(true);
+			}
+		}
+
 		// #pragma mark --  使用选择工具  ------------------------------------------------------------
 
 		private function onToolSelect(n:TLEvent):void
@@ -641,5 +715,6 @@ package tl.frameworks.mediator
 			// 选择阶段 监听其它鼠标单击
 			setTargetsMouseInteractive(true);
 		}
+
 	}
 }

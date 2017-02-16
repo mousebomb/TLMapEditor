@@ -35,9 +35,13 @@ package tl.core.terrain
 
 		/** 转换 - 从flash显示坐标转到地形网格坐标 */
 		[Inline]
-		public static function transToTerrainPos(x:Number, z:Number):Point
+		public static function transToTerrainPos(x:Number, z:Number, p:Point = null):Point
 		{
-			return new Point(Math.round(x / TLMapVO.TERRAIN_SCALE), Math.round(-z / TLMapVO.TERRAIN_SCALE));
+			if(!p)
+				p = new Point();
+			p.x = Math.round(x / TLMapVO.TERRAIN_SCALE);
+			p.y = Math.round(-z / TLMapVO.TERRAIN_SCALE);
+			return p;
 		}
 
 		/** 以Flash显示坐标来获得高度; 考虑刚体在内 */
@@ -61,6 +65,7 @@ package tl.core.terrain
 		public function readMapVO(by:ByteArray):void
 		{
 			_curMapVO                   = new TLMapVO();
+			by.uncompress();
 			// tiles heightMap
 			var w:int                   = by.readUnsignedShort();
 			var h:int                   = by.readUnsignedShort();

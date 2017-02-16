@@ -3,22 +3,21 @@
  */
 package tl.frameworks.mediator
 {
-	import fl.data.DataProvider;
-
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.utils.Dictionary;
 
-	import org.mousebomb.framework.GlobalFacade;
-	import org.mousebomb.framework.MediatorBase;
 	import org.mousebomb.framework.Notify;
 	import org.robotlegs.mvcs.Mediator;
 
-	import tl.core.role.Role;
 	import tl.core.old.WizardObject;
 	import tl.frameworks.NotifyConst;
+	import tl.frameworks.TLEvent;
 	import tl.frameworks.model.CSV.SGCsvManager;
-	import tl.mapeditor.Config;
+	import tl.mapeditor.ToolBoxType;
+	import tl.mapeditor.ui.common.MyPageButton;
+	import tl.mapeditor.ui.window.WizardBarUI;
+
 	import tool.StageFrame;
 
 	public class WizardBarMediator extends Mediator
@@ -29,7 +28,7 @@ package tl.frameworks.mediator
 		}
 
 		[Inject]
-		public var view:WizardBar;
+		public var view: WizardBarUI;
 		[Inject]
 		public var csvModel:SGCsvManager;
 
@@ -38,47 +37,57 @@ package tl.frameworks.mediator
 
 		override public function onRegister():void
 		{
-			//
-			view.assetList.iconField=null;
-			view.assetList.labelField = "name";
-			view.assetList.addEventListener(Event.CHANGE, onChanged);
-			view.addBtn.addEventListener(MouseEvent.CLICK, onAddClick);
-			view.closeBtn.addEventListener(MouseEvent.CLICK, onCloseClick)
-			//
+
+			view.onSelectModelCallBack = onSelectModelCallBack;
+			view.init("模型库", 260, 540);
+			addContextListener(NotifyConst.SELECT_WIZARDOBJECT_TYPE, onSelectType)
+			eventMap.mapListener(view.searchBtn,MouseEvent.CLICK, onClickSearch);
+			eventMap.mapListener(view.selectBtn, MouseEvent.CLICK, onClickSelect);
+			eventMap.mapListener(view.modelPageBtn,MyPageButton.PAGING, onPaging);
+			onCsvLoaded( null );
 			addContextListener(NotifyConst.CSV_LOADED, onCsvLoaded);
 			onResize();
 			eventMap.mapListener(view.stage,Event.RESIZE, onResize);
-			onCsvLoaded( null );
+			view.moveUI = onViewMove;
+			dispatchWith(NotifyConst.UI_PREVIEW_SHOW, false, {x:view.x + 10, y:view.y + 35});
 		}
-		private  function onCloseClick(event:MouseEvent):void
+
+		private function onSelectType(event:TLEvent):void
 		{
-
-			if(view && view.parent) {
-				view.parent.removeChild(view);
-			}
+			var name:String = event.data as String;
+			var index:int = menuVec.indexOf(name);
+			onMenuSelectCallBack(index);
 		}
-
-		private function onAddClick(event:MouseEvent):void
+		private function onViewMove():void
 		{
-
+			TLMapEditor.view3DForPreview.x = view.x + 10;
+			TLMapEditor.view3DForPreview.y = view.y + 35;
 		}
 
+		private function onClickSelect(event:MouseEvent):void
+		{
+			ToolBoxType.popmenuX = view.x + view.myWidth;
+			var mh:int = 18.5*menuVec.length;
+			var vh:int = StageFrame.stage.stageHeight - mh;
+			var vy:int = view.y + view.selectBtn.y ;
+			if(vy + mh*.5 < StageFrame.stage.stageHeight)
+				ToolBoxType.popmenuY = vy - mh * .5;
+			else
+				ToolBoxType.popmenuY = vh;
+			dispatchWith(NotifyConst.NEW_POPMENUBAR_UI, false, menuVec);
+		}
 
 		override public function onRemove():void
 		{
-
 			dispatchWith(NotifyConst.UI_PREVIEW_HIDE);
-//			dispatchWith(NotifyConst.UI_PREVIEW_SHOW,false,{x,y});
 		}
 
 		private function onResize(e:* = null):void
 		{
-			view.y = 500;
-			view.assetList.height = StageFrame.stage.stageHeight - view.y - 240;
-			view.x = 90//StageFrame.stage.stageWidth - 200;
-			TLMapEditor.view3DForPreview.x = view.x + 10;
-			TLMapEditor.view3DForPreview.y = view.y + 20;
-			view.addBtn.y = view.assetList.y + view.assetList.height+10;
+
+			view.x = 90;
+			view.y = StageFrame.stage.stageHeight - view.myHeight;
+			onViewMove();
 		}
 
 		//菜单内容
@@ -89,6 +98,7 @@ package tl.frameworks.mediator
 					"怪物（有尸体）", "特效模型（同场景特效）", "特效怪物（只显示血条）", "固定不动怪", "友方Boss怪物", "竞技场用怪", "特效怪（没有鼠标事件）",
 					"宠物", "搜捡部件（需要攻击）", "采集类型", "篝火专用", "可以被占领的生物", "要塞支持类建筑", "要塞防御类建筑", "要塞陷阱", "掉落物品"
 				]);
+		private var wizardVector:Array;
 
 		private function onCsvLoaded(n:Notify):void
 		{
@@ -122,15 +132,23 @@ package tl.frameworks.mediator
 		/** 选择类型后 **/
 		private function onMenuSelectCallBack(index:int):void
 		{
-			//设置类型文本显示
-			view.nameTf.text = menuVec[index];
 			//设置数据
-			// 显示实体列表
-			view.assetList.dataProvider = new DataProvider(_modelDataVec[index]);
+			wizardVector = _modelDataVec[index];
+			if(!wizardVector)
+			{
+				return;
+			}
+			//设置类型文本显示
+			view.modelTypeText.text = menuVec[index];
+			var len:int = wizardVector.length;
+			view.modelPageBtn.maxPage = int(len/_showNum) + 1;
+			view.modelPageBtn.nowPage = 1;
 		}
 
 		/** 当前选中的模型 */
 		private var _curSelectedWizardObject :WizardObject ;
+		private const _showNum:int = 13;
+		private var _nowWizardObjectArr:Array;
 
 		/** 当前选中的模型 */
 		public function get curSelectedWizardObject():WizardObject
@@ -138,17 +156,46 @@ package tl.frameworks.mediator
 			return _curSelectedWizardObject;
 		}
 
-		private function onChanged(event:Event):void
+		/** 选择模型执行 **/
+		private function onSelectModelCallBack(index:uint):void
 		{
-			var wo :WizardObject = view.assetList.selectedItem as WizardObject;
+			if(!_nowWizardObjectArr || _nowWizardObjectArr.length <= index) return;
+			//实例化精灵
+			var wo :WizardObject = _nowWizardObjectArr[index];
 			if(wo == null ) return;
+			view.modelIdText.text = wo.id;
 			dispatchWith(NotifyConst.STATUS,false,"选择模型ID"+wo.id +" "+wo.name);
 			//实例化精灵
 			dispatchWith(NotifyConst.SELECT_WIZARD_PREVIEW,false , wo);
-
-			trace(StageFrame.renderIdx,"WizardBarMediator/onChanged");
 		}
 
+		private function onPaging(event:Event):void
+		{
+			var pag:int = view.modelPageBtn.nowPage;
+			_nowWizardObjectArr = wizardVector.slice((pag-1)*_showNum, pag*_showNum);
+			var len:int = _nowWizardObjectArr.length;
+			var vector:Vector.<Array> = new Vector.<Array>(len, true);
+			for(var i:int = 0; i < len; i++)
+				vector[i] = ["", _nowWizardObjectArr[i].id, _nowWizardObjectArr[i].name];//第一个空字符串是因为0是显示按钮用的,用个空字符串填充
+			//设置数据
+			view.modelListVC.setData(vector);
+		}
+		/**点击查找按钮*/
+		private function onClickSearch(event:MouseEvent):void
+		{
+			var id:String = view.modelIdText.text;
+			var leng:int = wizardVector.length;
+			var obj:WizardObject
+			for (var i:int = 0; i < leng; i++)
+			{
+				obj = wizardVector[i];
+				if(obj.id == id)
+				{
+					view.modelPageBtn.nowPage = int(i/_showNum) + 1;
+					break;
+				}
+			}
+		}
 
 	}
 }

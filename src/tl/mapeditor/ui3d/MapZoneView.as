@@ -12,6 +12,8 @@ package tl.mapeditor.ui3d
 
 	import flash.utils.Dictionary;
 
+	import tl.core.GPUResProvider;
+
 	import tl.core.terrain.TLMapVO;
 	import tl.frameworks.defines.ZoneType;
 
@@ -29,15 +31,9 @@ package tl.mapeditor.ui3d
 			StageFrame.addGameFun(validateNow);
 		}
 
-		private var materialDic :Dictionary = new Dictionary();
-
 		public function getColorMaterial(color:uint):ColorMaterial
 		{
-			if( materialDic[color] ==null)
-			{
-				materialDic[color] = new ColorMaterial(color , 0.5);
-			}
-			return materialDic[color];
+			return GPUResProvider.getInstance().getColorMaterial(color);
 		}
 
 		private var dic:Dictionary = new Dictionary();
@@ -57,8 +53,8 @@ package tl.mapeditor.ui3d
 				if(!tile)
 				{
 					tile    = new Mesh(new CubeGeometry(TLMapVO.TERRAIN_SCALE, TLMapVO.TERRAIN_SCALE, TLMapVO.TERRAIN_SCALE), getColorMaterial(color));
-					tile.x           = tileX * TLMapVO.TERRAIN_SCALE;
-					tile.z           = -tileY * TLMapVO.TERRAIN_SCALE;
+					tile.x           = (tileX+.5) * TLMapVO.TERRAIN_SCALE;
+					tile.z           = -(tileY +.5)* TLMapVO.TERRAIN_SCALE;
 					tile.y = mapVO.getHeight( tileX ,tileY );
 					dic[key(tileX,tileY)] = tile;
 					addChild(tile);

@@ -6,6 +6,8 @@ package tl.frameworks
 	public class NotifyConst
 	{
 
+		/**鼠标坐标变化 查看：model.mouseTilePos */
+		public static const MOUSE_POS_CHANGED :String = "MOUSE_POS_CHANGED";
 		/** 地图数据VO初始化完毕 */
 		public static const MAP_VO_INITED :String = "MAP_VO_INITED";
 		/** 需要锁定操作 */
@@ -44,6 +46,8 @@ package tl.frameworks
 
 		/** 切换工具栏类型 @data = int @see ToolBoxType */
 		public static const SWITCH_TOOLBOX:String = "SWITCH_TOOLBOX";
+		/** 选择模型类型 */
+		public static const SELECT_WIZARDOBJECT_TYPE:String = "select_wizardObject_type";
 		/**  */
 		public static const SWFRES_LOADED:String  = "SWFRES_LOADED";
 		/**  加载csv  */
@@ -65,13 +69,9 @@ package tl.frameworks
 
 		/** 开始按下拖拽，准备在场景内放置精灵 @data=WizardObject */
 		public static const UI_START_ADD_WIZARD:String = "UI_START_ADD_WIZARD";
-		/** 在场景内移动精灵 @data = Role */
-		public static const MOVE_WIZARD:String         = "MOVE_WIZARD";
-		/** 在场景内移除精灵 @data = Role */
-		public static const REMOVE_WIZARD:String       = "REMOVE_WIZARD";
 
-		/** 用户确定放下了精灵 Mediator > Model */
-		public static const UI_WIZARD_ADDED:String = "UI_WIZARD_ADDED";
+		/** 添加功能点  @data 点类型 */
+		public static const UI_ADD_FUNCPOINT :String = "UI_ADD_FUNCPOINT";
 
 
 		/**通知状态 @data =String */
@@ -114,6 +114,8 @@ package tl.frameworks
 		public static const NEW_LONG_UI:String = 'new_long_ui';
 		/**快捷键显示*/
 		public static const NEW_HELP_UI:String = 'new_help_ui';
+		/**下拉菜单弹出*/
+		public static const NEW_POPMENUBAR_UI:String = 'new_popmenuBar_ui';
 
 		public function NotifyConst()
 		{

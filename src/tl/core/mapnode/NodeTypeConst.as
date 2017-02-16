@@ -3,7 +3,7 @@
  */
 package tl.core.mapnode
 {
-	/** 区域存储数据掩码定义 */
+	/** 区域存储数据掩码定义  并未使用，目前用的 tl.frameworks.defines.ZoneType */
 	public class NodeTypeConst
 	{
 		/** 障碍区域 */

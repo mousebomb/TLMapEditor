@@ -8,6 +8,7 @@ package tl.mapeditor.ui
 	import tl.frameworks.NotifyConst;
 
 	import tl.mapeditor.ToolBoxType;
+	import tl.mapeditor.ui.window.WizardBarUI;
 
 	import tool.StageFrame;
 
@@ -16,9 +17,9 @@ package tl.mapeditor.ui
 		public var toolbar:Toolbar;
 		public var operation:OperationBar;
 		public var wizardBar :WizardBar;
+		public var wizardBarUI:WizardBarUI;
 		public var terrainTextureBar :TerrainTextureBar;
 		public var statusBar :StatusBar;
-		public var popMenuBar:PopMenuBar;					//下拉菜单
 		/** 当前显示的toolbox类型 */
 		private const _type:String ;
 
@@ -46,36 +47,18 @@ package tl.mapeditor.ui
 					addChild(terrainTextureBar);
 					break;
 				case ToolBoxType.WIZARD_LIBRARY:
-					wizardBar ||= new WizardBar();
-					addChild(wizardBar);
+					/*wizardBar ||= new WizardBar();
+					addChild(wizardBar);*/
+					wizardBarUI ||= new WizardBarUI();
+					if(wizardBarUI.parent)
+					{
+						wizardBarUI.parent.removeChild(wizardBarUI);
+					}	else {
+						addChild(wizardBarUI);
+					}
 					break;
 				case ToolBoxType.TERRAIN_HEIGHT:
 
-					break;
-				case ToolBoxType.BAR_NAME_1 :
-					popMenuBar ||= new PopMenuBar();
-					this.parent.addChild(popMenuBar);
-					popMenuBar.menu = popMenuBar.fillVector;
-					break;
-				case ToolBoxType.BAR_NAME_2 :
-					popMenuBar ||= new PopMenuBar();
-					this.parent.addChild(popMenuBar);
-					popMenuBar.menu = popMenuBar.toolVector;
-					break;
-				case ToolBoxType.BAR_NAME_3:
-					popMenuBar ||= new PopMenuBar();
-					this.parent.addChild(popMenuBar);
-					popMenuBar.menu = popMenuBar.uiVector;
-					break;
-				case ToolBoxType.BAR_NAME_4 :
-					popMenuBar ||= new PopMenuBar();
-					this.parent.addChild(popMenuBar);
-					popMenuBar.menu = popMenuBar.ranVector;
-					break;
-				case ToolBoxType.BAR_NAME_5 :
-					popMenuBar ||= new PopMenuBar();
-					this.parent.addChild(popMenuBar);
-					popMenuBar.menu = popMenuBar.helpVector;
 					break;
 			}
 		}

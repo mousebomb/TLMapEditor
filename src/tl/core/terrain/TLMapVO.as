@@ -9,7 +9,11 @@ package tl.core.terrain
 	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
 
+	import tl.core.funcpoint.FuncPointVO;
+
 	import tl.core.rigidbody.RigidBodyVO;
+
+	import tool.StageFrame;
 
 	public class TLMapVO
 	{
@@ -18,7 +22,7 @@ package tl.core.terrain
 		}
 
 		/** 地图名字 */
-		public var name :String ;
+		public var name :String = 'null';
 
 		/** 地形横向顶点数 必须是TILE的顶点尺度的倍数 */
 		public var terrainVerticlesX:int;
@@ -352,6 +356,17 @@ package tl.core.terrain
 		public final function nodeIndex(x:int,y:int):int
 		{
 			return x+y*terrainVerticlesX;
+		}
+
+
+		// #pragma mark --  点  ------------------------------------------------------------
+		public var funcPoints:Vector.<FuncPointVO> = new Vector.<FuncPointVO>();
+
+		/** TODO 初始化 从数据读入功能点 */
+		public function fromFuncPoints(rawBytes :ByteArray ):void
+		{
+			trace(StageFrame.renderIdx,"[TLMapVO]/fromFuncPoints");
+
 		}
 
 	}

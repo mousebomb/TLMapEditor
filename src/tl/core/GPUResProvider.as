@@ -3,6 +3,8 @@
  */
 package tl.core
 {
+	import away3d.materials.ColorMaterial;
+
 	import flash.display.BitmapData;
 
 	import tl.core.IResourceKey;
@@ -137,6 +139,21 @@ package tl.core
 		private function onAWDLoaded(url:String , assets :Vector.<IAsset>, args:Array ):void
 		{
 			args[0](args[1] , assets);
+		}
+
+
+
+		// #pragma mark --  公共彩色材质  ------------------------------------------------------------
+
+		private  var materialDic :Dictionary = new Dictionary();
+		/**公共彩色材质*/
+		public  function getColorMaterial(color:uint):ColorMaterial
+		{
+			if( materialDic[color] ==null)
+			{
+				materialDic[color] = new ColorMaterial(color , 0.8);
+			}
+			return materialDic[color];
 		}
 	}
 }

@@ -45,6 +45,7 @@ package tl.frameworks.service
 		{
 			var bitmap:Bitmap = (event.target as LoaderInfo).content as Bitmap;
 			_callback(bitmap.bitmapData);
+			bitmap.bitmapData.dispose();
 			editorMapModel.busyLoading = false;
 			dispatchWith(NotifyConst.UNLOCKED);
 		}

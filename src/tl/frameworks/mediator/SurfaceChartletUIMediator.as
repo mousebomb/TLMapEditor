@@ -48,7 +48,7 @@ package tl.frameworks.mediator
 
 			eventMap.mapListener(view.stage,KeyboardEvent.KEY_DOWN, onKeyDown);
 			eventMap.mapListener(view.stage,KeyboardEvent.KEY_UP, onKeyUp);
-			view.init("地表贴图面板", 425, 440);
+			view.init("地表贴图面板", 425, 470);
 			view.x = StageFrame.stage.stageWidth - view.myWidth >> 1;
 			view.y = StageFrame.stage.stageHeight - view.myHeight >> 1;
 
@@ -64,13 +64,14 @@ package tl.frameworks.mediator
 				view.vectorChartlet[i].addEventListener(MouseEvent.MOUSE_DOWN, onChartletMouseDown)
 				view.vectorChartlet[i].addEventListener(MouseEvent.MOUSE_UP, onChartletMouseUp)
 			}
+			view.hideBtn.addEventListener(MouseEvent.CLICK, onClickHide);
+			view.showBtn.addEventListener(MouseEvent.CLICK, onClickShow);
 			eventMap.mapListener(view.stage, MouseEvent.MOUSE_UP, onMouseUp);
 			if(editorMapModel.mapVO)
 			{
-				dispatchWith(NotifyConst.TOOL_BRUSH, false,ToolBrushType.BRUSH_TYPE_TERRAINTEXTURE);
+				onClickShow(null);
 				validatePickedList();
 			}	else {
-
 				// 土地，石头，青草，耕地，砖
 				var arr:Array = ['db_107_01', 'db_107_shitou01', 'db_607_caodi02', 'db_107_a03', 'db_107_a01'];
 				for(var i:int=0; i<5; i++)
@@ -78,8 +79,20 @@ package tl.frameworks.mediator
 					gpuRes.getTerrainTexturePreview(arr[i],onAssetLoaded);
 				}
 			}
-			//
+			//地图资源创建完成
 			addContextListener(NotifyConst.MAP_VO_INITED,onMapVOInited);
+		}
+		/**显示笔刷*/
+		private function onClickShow(event:MouseEvent):void
+		{
+			if(editorMapModel.mapVO)
+				dispatchWith(NotifyConst.TOOL_BRUSH, false,ToolBrushType.BRUSH_TYPE_TERRAINTEXTURE);
+		}
+		/**隐藏笔刷*/
+		private function onClickHide(event:MouseEvent):void
+		{
+			if(editorMapModel.mapVO)
+				dispatchWith(NotifyConst.TOOL_SELECT, false);
 		}
 
 		private function onMapVOInited( n: * ):void
@@ -112,7 +125,7 @@ package tl.frameworks.mediator
 			super.onRemove();
 			if(editorMapModel.mapVO)
 			{
-				dispatchWith(NotifyConst.TOOL_SELECT, false);
+				onClickHide(null);
 			}
 		}
 

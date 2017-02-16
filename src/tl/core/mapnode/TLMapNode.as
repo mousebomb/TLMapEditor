@@ -3,6 +3,7 @@
  */
 package tl.core.mapnode
 {
+/**目前未使用， 用于游戏内寻路 astar 和判断可否抵达用 */
 	public class TLMapNode
 	{
 

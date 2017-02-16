@@ -50,6 +50,7 @@ package tl.frameworks.command
 	import tl.mapeditor.ui.window.PropertyPanelUI;
 	import tl.mapeditor.ui.window.SurfaceChartletUI;
 	import tl.mapeditor.ui.window.ThumbnailUI;
+	import tl.mapeditor.ui.window.WizardBarUI;
 	import tl.mapeditor.ui.window.ZoneSettingUI;
 
 	public class StartupCmd extends Command
@@ -85,13 +86,14 @@ package tl.frameworks.command
 			commandMap.mapEvent(NotifyConst.NEW_LONG_UI, LogUICmd);
 			commandMap.mapEvent(NotifyConst.NEW_HELP_UI, HelpUICmd);
 			commandMap.mapEvent(NotifyConst.STATUS, LogCmd);
+			commandMap.mapEvent(NotifyConst.NEW_POPMENUBAR_UI, PopMenuBarCmd)
 
 			// map view mediator
 			mediatorMap.mapView(EditorUI, EditorUIMediator);
 			mediatorMap.mapView(Toolbar, ToolbarMediator);
 			mediatorMap.mapView(StatusBar, StatusBarMediator);
 			mediatorMap.mapView(TerrainTextureBar, TerrainTextureBarMediator);
-			mediatorMap.mapView(WizardBar, WizardBarMediator);
+			mediatorMap.mapView(WizardBarUI, WizardBarMediator);
 			mediatorMap.mapView(OperationBar, OperationBarMediator);
 			mediatorMap.mapView(PopMenuBar, PopMenuBarMediator);
 			mediatorMap.mapView(CreateFileUI, CreateFileUIMediator);

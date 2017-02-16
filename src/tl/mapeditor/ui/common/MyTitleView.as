@@ -3,10 +3,10 @@ package tl.mapeditor.ui.common
 	/**
 	 * 标题栏类
 	 * @author 李舒浩
-	 */	
-	import Lib.BaseClass.MySprite;
-	import Lib.Tool.Tool;
-	
+	 */
+
+	import tl.utils.Tool;
+
 	public class MyTitleView extends MySprite
 	{
 		private var _titleTextVec:Vector.<MyTextField>;

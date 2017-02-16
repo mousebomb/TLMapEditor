@@ -10,6 +10,7 @@ package tl.frameworks.command
 	/**日志显示*/
 	public class LogUICmd extends Command
 	{
+		public static var ui:LogUI;
 		public function LogUICmd()
 		{
 			super();
@@ -17,8 +18,17 @@ package tl.frameworks.command
 
 		override public function execute():void
 		{
-			var ui :LogUI = new LogUI();
-			contextView.addChild(ui);
+			if(!ui)
+			{
+				ui = new LogUI();
+			}
+			if(ui.parent)
+			{
+				ui.parent.removeChild(ui)
+			}	else
+			{
+				contextView.addChild(ui);
+			}
 		}
 	}
 }

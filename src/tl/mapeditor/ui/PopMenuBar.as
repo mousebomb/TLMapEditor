@@ -8,6 +8,8 @@ package tl.mapeditor.ui
 
 	import tl.mapeditor.ToolBoxType;
 
+	import tl.mapeditor.ToolBoxType;
+
 	import tl.mapeditor.ui.common.MySprite;
 	import tl.mapeditor.ui.common.MyTextButton;
 	import tl.mapeditor.ui.common.MyTextField;
@@ -15,15 +17,7 @@ package tl.mapeditor.ui
 
 	public class PopMenuBar extends MySprite
 	{
-		
-		public var selectCallBack:Function;
-		public const fillVector:Vector.<String> = new <String>[ToolBoxType.BAR_NAME_17, ToolBoxType.BAR_NAME_18, ToolBoxType.BAR_NAME_19];
-		public const toolVector:Vector.<String> = new <String>[ToolBoxType.BAR_NAME_21, ToolBoxType.BAR_NAME_22, ToolBoxType.BAR_NAME_23, ToolBoxType.BAR_NAME_24];
-		public const uiVector:Vector.<String> = new <String>[ToolBoxType.BAR_NAME_25, ToolBoxType.BAR_NAME_26, ToolBoxType.BAR_NAME_29,
-			ToolBoxType.BAR_NAME_31, ToolBoxType.BAR_NAME_32];
-		public const ranVector:Vector.<String> = new <String>[];
-		public const helpVector:Vector.<String> = new <String>[ToolBoxType.BAR_NAME_33, ToolBoxType.BAR_NAME_34]
-		
+		public var menuVector:Vector.<String>;
 		public function PopMenuBar()
 		{
 			init();
@@ -33,19 +27,6 @@ package tl.mapeditor.ui
 		private function init():void
 		{
 			this.myWidth = 100;
-			/*this.addEventListener(MouseEvent.ROLL_OUT, onMouseRollOut);
-			this.addEventListener(MouseEvent.CLICK, onMouseClick);*/
-		}
-		
-		private function onMouseRollOut(e:MouseEvent):void
-		{
-			hideMenu();
-		}
-		private function onMouseClick(e:MouseEvent):void
-		{
-			if(!(e.target is MyTextField)) return;
-			hideMenu();
-			if(selectCallBack != null) selectCallBack(int(e.target.name));
 		}
 		
 		/**
@@ -56,6 +37,7 @@ package tl.mapeditor.ui
 		{
 			//清除所有选择
 			clearSelect();
+			menuVector = menuVec;
 			//添加选择项
 			var index:int = 0;
 			var len:int = menuVec.length;
@@ -86,19 +68,6 @@ package tl.mapeditor.ui
 			this.drawRect(this.myWidth, vh, 0x424242);
 			//边框线
 			Tool.drawReacLineByGraphics(this.graphics, null, this.myWidth, this.height, 1, 1, 0x0, 0, 0, false);
-			if(menuVec == fillVector)
-			{
-				this.x = 75;
-			}	else if(menuVec == toolVector) {
-				this.x = 160;
-			}	else if(menuVec == uiVector) {
-				this.x = 245;
-			}	else if(menuVec == ranVector) {
-				this.x = 330;
-			}	else if(menuVec == helpVector) {
-				this.x = 415
-			}
-			this.y = 32;
 		}
 		
 		public function showMenu():void  

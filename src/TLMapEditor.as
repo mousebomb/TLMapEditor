@@ -145,8 +145,8 @@ package
 			_View3DForPreview              = new View3D(new PreviewScene3D());
 			_View3DForPreview.stage3DProxy = _Stage3DProxy;
 			_View3DForPreview.shareContext = true;						//允许共享执行
-			_View3DForPreview.width        = 180;
-			_View3DForPreview.height       = 180;
+			_View3DForPreview.width        = 240;
+			_View3DForPreview.height       = 200;
 			_View3DForPreview.visible = false;
 			_View3DForPreview.layeredView = true;
 			this.addChild(_View3DForPreview);

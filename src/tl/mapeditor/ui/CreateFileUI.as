@@ -43,7 +43,7 @@ package tl.mapeditor.ui
 			this.addChild(inputTextW);
 			inputTextW.algin = "center";
 			inputTextW.name = "地图宽度";
-			inputTextW.text = '1024';
+			inputTextW.text = '256';
 			inputTextW.x = textField.x + textField.width + 2;
 			inputTextW.y = textField.y + (textField.height - inputTextW.height)/2;
 			inputTextW.type = "input";
@@ -62,7 +62,7 @@ package tl.mapeditor.ui
 			inputTextH.type = "input";
 			inputTextH.restrict = "0-9";
 			inputTextH.algin = "center";
-			inputTextH.text = '1024';
+			inputTextH.text = '256';
 			//文件夹名
 			textField = Tool.getTitleText("地图命名");
 			this.addChild(textField);

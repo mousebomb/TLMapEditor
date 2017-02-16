@@ -7,6 +7,7 @@ package tl.mapeditor.ui.window
 	import flash.geom.Rectangle;
 
 	import tl.core.terrain.TLTileVO;
+	import tl.mapeditor.ui.common.MyButton;
 
 	import tl.mapeditor.ui.common.MyDragBar;
 	import tl.mapeditor.ui.common.MySprite;
@@ -25,6 +26,8 @@ package tl.mapeditor.ui.window
 		private var _rootSpr:MySprite;
 		private var _isLoad:Boolean;
 		public const dragRect:Rectangle = new Rectangle(70, 70, 260, 130);
+		public var showBtn:MyButton;
+		public var hideBtn:MyButton;
 		public function SurfaceChartletUI()
 		{
 			super();
@@ -105,6 +108,17 @@ package tl.mapeditor.ui.window
 				vectorTxt.push(text)
 			}
 
+			showBtn = Tool.getMyBtn('显示贴图刷', 120);
+			showBtn.name = '显示贴图刷';
+			this.addChild(showBtn);
+			showBtn.x = 60;
+			showBtn.y = 440;
+
+			hideBtn = Tool.getMyBtn('隐藏贴图刷', 120);
+			hideBtn.name = '隐藏贴图刷';
+			this.addChild(hideBtn);
+			hideBtn.x = 240;
+			hideBtn.y = 440;
 		}
 
 		override protected function onClickClose(e:MouseEvent = null):void

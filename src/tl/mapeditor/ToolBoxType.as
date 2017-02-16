@@ -65,7 +65,15 @@ package tl.mapeditor
 		/** 地形高度图工具 */
 		public static const TERRAIN_HEIGHT:String  	= '地形高度';
 		/**创建新地图*/
-		public static const CREATE_FILE:String		= '创建地图'
+		public static const CREATE_FILE:String		= '创建地图';
+
+		public static const fillVector:Vector.<String> = new <String>[BAR_NAME_17, BAR_NAME_18, BAR_NAME_19];
+		public static const toolVector:Vector.<String> = new <String>[BAR_NAME_21, BAR_NAME_22, BAR_NAME_23, BAR_NAME_24];
+		public static const uiVector:Vector.<String> = new <String>[BAR_NAME_25, BAR_NAME_26, BAR_NAME_29, BAR_NAME_31, BAR_NAME_32];
+		public static const ranVector:Vector.<String> = new <String>[];
+		public static const helpVector:Vector.<String> = new <String>[BAR_NAME_33, BAR_NAME_34];
+		public static var popmenuX:int;
+		public static var popmenuY:int;
 		public function ToolBoxType()
 		{
 		}

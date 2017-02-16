@@ -10,6 +10,7 @@ package tl.frameworks.mediator
 
 	import tl.frameworks.NotifyConst;
 	import tl.frameworks.TLEvent;
+	import tl.frameworks.model.TLEditorMapModel;
 	import tl.mapeditor.ToolBoxType;
 	import tl.mapeditor.ui.*;
 
@@ -21,12 +22,13 @@ package tl.frameworks.mediator
 
 		[Inject]
 		public var view:EditorUI;
+		[Inject]
+		public var editorMapModel:TLEditorMapModel;
 		private var _isRemove:Boolean;
 
 
 		override public function onRegister():void
 		{
-			eventMap.mapListener(view.stage , MouseEvent.CLICK,onMouseClick);
 			addContextListener( NotifyConst.SWITCH_TOOLBOX, onSWITCH_TOOLBOX);
 		}
 
@@ -41,6 +43,18 @@ package tl.frameworks.mediator
 
 			switch (menuName)
 			{
+				case ToolBoxType.BAR_NAME_1 :
+					dispatchWith(NotifyConst.NEW_POPMENUBAR_UI, false, ToolBoxType.fillVector);
+					break;
+				case ToolBoxType.BAR_NAME_2 :
+					dispatchWith(NotifyConst.NEW_POPMENUBAR_UI, false, ToolBoxType.toolVector);
+					break;
+				case ToolBoxType.BAR_NAME_3:
+					dispatchWith(NotifyConst.NEW_POPMENUBAR_UI, false, ToolBoxType.uiVector);
+					break;
+				case ToolBoxType.BAR_NAME_4 :
+					dispatchWith(NotifyConst.NEW_POPMENUBAR_UI, false, ToolBoxType.ranVector);
+					break;
 				case ToolBoxType.BAR_NAME_5:
 					dispatchWith(NotifyConst.NEW_HELP_UI);
 					break;
@@ -51,7 +65,8 @@ package tl.frameworks.mediator
 					dispatchWith(NotifyConst.TOGGLE_ZONE);
 					break;
 				case ToolBoxType.BAR_NAME_13 :
-					dispatchWith(NotifyConst.TOOL_NEW_RIGIDBODY,false);
+					if(editorMapModel.mapVO)
+						dispatchWith(NotifyConst.TOOL_NEW_RIGIDBODY,false);
 					break;
 				case ToolBoxType.BAR_NAME_9:
 					dispatchWith(NotifyConst.NEW_ZONESETTING_UI);
@@ -72,16 +87,6 @@ package tl.frameworks.mediator
 					view.switchToolBox(e.data);
 					break;
 			}
-			if(view.wizardBar && view.wizardBar.parent)
-				dispatchWith(NotifyConst.UI_PREVIEW_SHOW, false, {x:view.wizardBar.x + 10, y:view.wizardBar.y + 20});
-		}
-
-		private function onMouseClick(event:MouseEvent):void
-		{
-			if(view && view.popMenuBar && view.popMenuBar.parent && !_isRemove)
-				view.popMenuBar.parent.removeChild(view.popMenuBar);
-			_isRemove = false;
-
 		}
 	}
 }

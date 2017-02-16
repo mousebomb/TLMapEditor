@@ -11,6 +11,8 @@ package tl.frameworks.mediator
 
 	import tl.mapeditor.ui.window.LogUI;
 
+	import tool.StageFrame;
+
 	/**日志*/
 	public class LogUIMediator extends Mediator
 	{
@@ -27,8 +29,10 @@ package tl.frameworks.mediator
 		{
 			super.onRegister();
 
-			view.init("日志", 260, 155);
+			view.init("日志", 320, 240);
 			view.showLog(logModel._log);
+			view.x = StageFrame.stage.stageWidth - view.myWidth >> 1;
+			view.y = StageFrame.stage.stageHeight - view.myHeight >> 1;
 
 			addContextListener(NotifyConst.STATUS, onSTATUS);
 		}

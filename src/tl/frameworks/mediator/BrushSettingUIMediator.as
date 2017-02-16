@@ -35,7 +35,7 @@ package tl.frameworks.mediator
 		{
 			super.onRegister();
 
-			view.init("地形笔刷设置", 425, 160);
+			view.init("地形笔刷设置", 425, 180);
 			view.x = 350;
 			view.y = 32;
 
@@ -49,18 +49,29 @@ package tl.frameworks.mediator
 
 			StageFrame.stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 			if(mapModel.mapVO)
-				dispatchWith(NotifyConst.TOOL_BRUSH, false,ToolBrushType.BRUSH_TYPE_HEIGHT);
+				onClickShow(null);
+			view.hideBtn.addEventListener(MouseEvent.CLICK, onClickHide);
+			view.showBtn.addEventListener(MouseEvent.CLICK, onClickShow);
 		}
 
 		override public function onRemove():void
 		{
 			super.onRemove();
-			if(mapModel.mapVO)
-			{
-				dispatchWith(NotifyConst.TOOL_SELECT, false);
-			}
+			onClickHide(null);
 		}
 
+		/**显示笔刷*/
+		private function onClickShow(event:MouseEvent):void
+		{
+			if(mapModel.mapVO)
+				dispatchWith(NotifyConst.TOOL_BRUSH, false,ToolBrushType.BRUSH_TYPE_HEIGHT);
+		}
+		/**隐藏笔刷*/
+		private function onClickHide(event:MouseEvent):void
+		{
+			if(mapModel.mapVO)
+				dispatchWith(NotifyConst.TOOL_SELECT, false);
+		}
 		private function onMouseDown(event:MouseEvent):void
 		{
 			var drag:MyDragBar = event.currentTarget as MyDragBar;

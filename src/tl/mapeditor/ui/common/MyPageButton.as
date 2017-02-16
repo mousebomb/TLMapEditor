@@ -1,30 +1,5 @@
 package tl.mapeditor.ui.common
 {
-	import tl.mapeditor.UIModule.*;
-	/**
-	 * 公用切页按钮
-	 * @author 李舒浩
-	 * 用法:
-	 * 		var pageButton:HPageButton = new HPageButton();
-	 * 		//默认皮肤类型
-	 *		//pageButton.setDefaultSkin(1);//0为2按钮 1为4按钮
-	 *		pageButton.init(10);
-	 *		pageButton.textColor = 0xFF0000;
-	 *		this.addChild(pageButton);
-	 * 
-	 * 	ps : 如果不需要顶页与最后一页,传如皮肤时只需要传入上一页与下一页数组即可
-	 * 
-	 *  方法与属性：
-	 * 		textColor		: 页数显示16进制颜色值
-	 * 		nowPage			: 当前页数
-	 * 		maxPage			: 最大页数
-	 * 		clear()			: 销毁清除方法(当不需要使用此组件时请调用此方法销毁以便释放内存)
-	 * 		setDefaultSkin(): 默认皮肤方法,参数为类型
-	 * 事件:
-	 * 		MyPageButton.CLEARCOMPONENT	: (Event)清除该按钮时派发,一般用于清除内部样式后在外部移除相关事件,从父对象中移除,清空索引等
-	 * 		MyPageButton.PAGING			: (Event)切页时执行
-	 * 		MyPageButton.SETMAXPAGING	: (Event)设置最大页时派发
-	 */	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.events.Event;
@@ -33,12 +8,8 @@ package tl.mapeditor.ui.common
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
-	
-	import Lib.App.ResourcePool;
-	import Lib.BaseClass.MySprite;
-	import Lib.Tool.Tool;
-	
-	import tool.Away3DConfig;
+
+	import tl.utils.Tool;
 
 	public class MyPageButton extends MySprite
 	{
@@ -86,7 +57,7 @@ package tl.mapeditor.ui.common
 			_backSprite.height = $myHeight;
 			this.addChild(_backSprite);
 			//页数显示文本
-			_pageText = Tool.getMyTextField(_backSprite.width, -1, 10, 0xCCCCCC, "center", 0, false, "华文琥珀");
+			_pageText = Tool.getMyTextField(_backSprite.width, -1, 10, 0xCCCCCC, "center", 0, false);
 			this.addChild(_pageText);
 			_pageText.text = _nowPage + "/" + _maxPage;
 			_pageText.mouseEnabled = _pageText.mouseWheelEnabled = false;
@@ -157,51 +128,51 @@ package tl.mapeditor.ui.common
 		{
 			var arr:Array;
 			//设置皮肤
-			var backBtmd:BitmapData = ResourcePool.getInstance().getBtmdBySwf("Skin", "Skin_PageButton_BG");
+			var backBtmd:BitmapData = new Skin_PageButton_BG();
 			//设置按钮
 			switch(type)
 			{
 				case 0:
 					arr = [
 						[
-							 ResourcePool.getInstance().getBtmdBySwf("Skin", "Skin_PageButton_L_Up")
-							,ResourcePool.getInstance().getBtmdBySwf("Skin", "Skin_PageButton_L_Over")
-							,ResourcePool.getInstance().getBtmdBySwf("Skin", "Skin_PageButton_L_Down")
-							,ResourcePool.getInstance().getBtmdBySwf("Skin", "Skin_PageButton_L_Disabled") 
+							 new Skin_PageButton_L_Up()
+							,new Skin_PageButton_L_Over()
+							,new Skin_PageButton_L_Down()
+							,new Skin_PageButton_L_Disabled()
 						]
 						,[
-							 ResourcePool.getInstance().getBtmdBySwf("Skin", "Skin_PageButton_R_Up")
-							,ResourcePool.getInstance().getBtmdBySwf("Skin", "Skin_PageButton_R_Over")
-							,ResourcePool.getInstance().getBtmdBySwf("Skin", "Skin_PageButton_R_Down")
-							,ResourcePool.getInstance().getBtmdBySwf("Skin", "Skin_PageButton_R_Disabled") 
+							 new Skin_PageButton_R_Up()
+							,new Skin_PageButton_R_Over()
+							,new Skin_PageButton_R_Down()
+							,new Skin_PageButton_R_Disabled()
 						]
 					]
 					break;
 				case 1:
 					arr = [
 						[
-							ResourcePool.getInstance().getBtmdBySwf("Skin", "Skin_PageButton_L_Up")
-							,ResourcePool.getInstance().getBtmdBySwf("Skin", "Skin_PageButton_L_Over")
-							,ResourcePool.getInstance().getBtmdBySwf("Skin", "Skin_PageButton_L_Down")
-							,ResourcePool.getInstance().getBtmdBySwf("Skin", "Skin_PageButton_L_Disabled") 
+							 new Skin_PageButton_L_Up()
+							,new Skin_PageButton_L_Over()
+							,new Skin_PageButton_L_Down()
+							,new Skin_PageButton_L_Disabled()
 						]
 						,[
-							ResourcePool.getInstance().getBtmdBySwf("Skin", "Skin_PageButton_L_Up")
-							,ResourcePool.getInstance().getBtmdBySwf("Skin", "Skin_PageButton_L_Over")
-							,ResourcePool.getInstance().getBtmdBySwf("Skin", "Skin_PageButton_L_Down")
-							,ResourcePool.getInstance().getBtmdBySwf("Skin", "Skin_PageButton_L_Disabled") 
+							 new Skin_PageButton_L_Up()
+							,new Skin_PageButton_L_Over()
+							,new Skin_PageButton_L_Down()
+							,new Skin_PageButton_L_Disabled()
 						]
 						,[
-							ResourcePool.getInstance().getBtmdBySwf("Skin", "Skin_PageButton_R_Up")
-							,ResourcePool.getInstance().getBtmdBySwf("Skin", "Skin_PageButton_R_Over")
-							,ResourcePool.getInstance().getBtmdBySwf("Skin", "Skin_PageButton_R_Down")
-							,ResourcePool.getInstance().getBtmdBySwf("Skin", "Skin_PageButton_R_Disabled") 
+							 new Skin_PageButton_R_Up()
+							,new Skin_PageButton_R_Over()
+							,new Skin_PageButton_R_Down()
+							,new Skin_PageButton_R_Disabled()
 						]
 						,[
-							ResourcePool.getInstance().getBtmdBySwf("Skin", "Skin_PageButton_R_Up")
-							,ResourcePool.getInstance().getBtmdBySwf("Skin", "Skin_PageButton_R_Over")
-							,ResourcePool.getInstance().getBtmdBySwf("Skin", "Skin_PageButton_R_Down")
-							,ResourcePool.getInstance().getBtmdBySwf("Skin", "Skin_PageButton_R_Disabled") 
+							 new Skin_PageButton_R_Up()
+							,new Skin_PageButton_R_Over()
+							,new Skin_PageButton_R_Down()
+							,new Skin_PageButton_R_Disabled()
 						]
 					]
 					break;
@@ -344,7 +315,6 @@ package tl.mapeditor.ui.common
 				{
 					_pageText.addEventListener(FocusEvent.FOCUS_IN, onTextFocusIn);
 					_pageText.addEventListener(FocusEvent.FOCUS_OUT, onTextFocusOut);
-					Away3DConfig.myStage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyBoard);
 				}
 			}
 			else
@@ -354,7 +324,6 @@ package tl.mapeditor.ui.common
 				_pageText.tabEnabled = false;
 				_pageText.removeEventListener(FocusEvent.FOCUS_IN, onTextFocusIn);
 				_pageText.removeEventListener(FocusEvent.FOCUS_OUT, onTextFocusOut);
-				Away3DConfig.myStage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyBoard);
 			}
 		}
 		public function get isCanInput():Boolean { return _isCanInput; }
@@ -387,7 +356,6 @@ package tl.mapeditor.ui.common
 			switch(e.keyCode)
 			{
 				case 13:	//回车
-					Away3DConfig.myStage.focus = null;
 //					_pageText.dispatchEvent(new FocusEvent(FocusEvent.FOCUS_OUT));
 					break;
 			}

@@ -5,20 +5,36 @@ package tl.frameworks.model
 {
 	import flash.display.BitmapData;
 	import flash.geom.Point;
+	import flash.geom.Vector3D;
 	import flash.utils.ByteArray;
+	import flash.utils.CompressionAlgorithm;
 
 	import org.mousebomb.Math.MousebombMath;
+
+	import tl.core.funcpoint.FuncPointVO;
 
 	import tl.core.old.WizardObject;
 	import tl.core.rigidbody.RigidBodyVO;
 	import tl.core.terrain.*;
 	import tl.frameworks.NotifyConst;
+	import tl.mapeditor.ui3d.FuncPointView;
 
 	import tool.StageFrame;
 
 	/** 编辑环境使用的mapmodel  多出一些编辑方法 */
 	public class TLEditorMapModel extends TLMapModel
 	{
+
+		/** 鼠标指向坐标点(单位是格) */
+		public var mouseTilePos : Point =new Point();
+
+		// 鼠标flash显示坐标输入，转换记录格子坐标
+		public function setCurMousePos(mousePos:Vector3D):void
+		{
+			transToTerrainPos(mousePos.x,mousePos.z , mouseTilePos);
+			dispatchWith(NotifyConst.MOUSE_POS_CHANGED);
+//			trace(StageFrame.renderIdx,"[TLEditorMapModel]/setCurMousePos tilePOS:",mouseTilePos);
+		}
 
 		// #pragma mark --  设置区域  ------------------------------------------------------------
 		/**操作状态 当前设置区域 */
@@ -251,6 +267,21 @@ package tl.frameworks.model
 		}
 
 
+		// #pragma mark --  功能点  ------------------------------------------------------------
+		public function addFuncPoint(vo:FuncPointVO):void
+		{
+			_curMapVO.funcPoints.push(vo);
+		}
+
+		public function delFuncPoint(vo:FuncPointVO):void
+		{
+			var index : int = _curMapVO.funcPoints.indexOf(vo);
+			if(index>-1)
+			{
+				_curMapVO.funcPoints.splice(index,1);
+			}
+		}
+
 		// #pragma mark --  保存  ------------------------------------------------------------
 		public function saveMapData():ByteArray
 		{
@@ -280,7 +311,7 @@ package tl.frameworks.model
 			}
 			//写入模型
 			trace(StageFrame.renderIdx,"[TLEditorMapModel]/saveMapData size=",end.length);//1254736
-
+			end.compress();
 			return end;
 		}
 

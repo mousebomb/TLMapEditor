@@ -14,6 +14,7 @@ package tl.frameworks.mediator
 	import org.robotlegs.mvcs.Mediator;
 
 	import tl.frameworks.NotifyConst;
+	import tl.frameworks.TLEvent;
 	import tl.frameworks.model.vo.CreateMapVO;
 	import tl.mapeditor.Config;
 	import tl.mapeditor.ToolBoxType;
@@ -31,6 +32,7 @@ package tl.frameworks.mediator
 		[Inject]
 		public var view: PopMenuBar;
 		private var _file:File;
+		private var _isShow:Boolean;
 		private var _fileFilter:FileFilter = new FileFilter("*.tlmap", "*.tlmap");
 
 		override public function onRegister():void
@@ -38,6 +40,25 @@ package tl.frameworks.mediator
 			super.onRegister();
 
 			addViewListener(MouseEvent.CLICK,onItemClick)
+			eventMap.mapListener(view.stage , MouseEvent.CLICK,onMouseClick);
+
+			view.y = 32;
+			if(view.menuVector == ToolBoxType.fillVector)
+			{
+				view.x = 75;
+			}	else if(view.menuVector == ToolBoxType.toolVector) {
+				view.x = 160;
+			}	else if(view.menuVector == ToolBoxType.uiVector) {
+				view.x = 245;
+			}	else if(view.menuVector == ToolBoxType.ranVector) {
+				view.x = 330;
+			}	else if(view.menuVector == ToolBoxType.helpVector) {
+				view.x = 415
+			}	else {
+				view.x = ToolBoxType.popmenuX;
+				view.y = ToolBoxType.popmenuY;
+			}
+			_isShow = true;
 		}
 
 		private function onItemClick(event:MouseEvent):void
@@ -68,8 +89,20 @@ package tl.frameworks.mediator
 					case ToolBoxType.BAR_NAME_31 :
 						dispatchWith(NotifyConst.NEW_LONG_UI);
 						break;
-					default :
+					case ToolBoxType.BAR_NAME_21 :
+					case ToolBoxType.BAR_NAME_22 :
+					case ToolBoxType.BAR_NAME_23 :
+					case ToolBoxType.BAR_NAME_24 :
+					case ToolBoxType.BAR_NAME_27 :
+					case ToolBoxType.BAR_NAME_28 :
+					case ToolBoxType.BAR_NAME_29 :
+					case ToolBoxType.BAR_NAME_32 :
+					case ToolBoxType.BAR_NAME_33 :
+					case ToolBoxType.BAR_NAME_34 :
 						dispatchWith(NotifyConst.SWITCH_TOOLBOX, false, btnName);
+						break;
+					default :
+						dispatchWith(NotifyConst.SELECT_WIZARDOBJECT_TYPE, false, btnName);
 						break;
 				}
 			}
@@ -93,6 +126,18 @@ package tl.frameworks.mediator
 			_file.removeEventListener(Event.COMPLETE, onLoadComplete);
 			//解析xml
 			var bytes:ByteArray = ByteArray(e.target.data);
+		}
+
+		private function onMouseClick(event:MouseEvent):void
+		{
+			if(_isShow)
+			{
+				_isShow = false;
+			}	else {
+				if(view && view.parent)
+					view.parent.removeChild(view);
+			}
+
 		}
 	}
 }
