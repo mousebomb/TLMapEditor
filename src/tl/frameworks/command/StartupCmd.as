@@ -17,10 +17,13 @@ package tl.frameworks.command
 	import tl.frameworks.mediator.PopMenuBarMediator;
 	import tl.frameworks.mediator.PreviewView3DMediator;
 	import tl.frameworks.mediator.PropertyPanelUIMediator;
+	import tl.frameworks.mediator.StatisticsUIMediator;
 	import tl.frameworks.mediator.SurfaceChartletUIMediator;
 	import tl.frameworks.mediator.ThumbnailUIMediator;
+	import tl.frameworks.mediator.WizardSettingUIMediator;
 	import tl.frameworks.mediator.ZoneSettingUIMediator;
 	import tl.frameworks.model.LogModel;
+	import tl.frameworks.model.SkyBoxTextureListModel;
 
 	import tl.frameworks.model.TLEditorMapModel;
 	import tl.frameworks.NotifyConst;
@@ -34,6 +37,7 @@ package tl.frameworks.command
 	import tl.frameworks.mediator.WizardBarMediator;
 	import tl.frameworks.model.CSV.SGCsvManager;
 	import tl.frameworks.model.TerrainTextureListModel;
+	import tl.frameworks.model.WizardSettingModel;
 	import tl.frameworks.service.TLEditorMapService;
 	import tl.mapeditor.scenes.EditorScene3D;
 	import tl.mapeditor.scenes.PreviewScene3D;
@@ -48,9 +52,11 @@ package tl.frameworks.command
 	import tl.mapeditor.ui.window.HelpUI;
 	import tl.mapeditor.ui.window.LogUI;
 	import tl.mapeditor.ui.window.PropertyPanelUI;
+	import tl.mapeditor.ui.window.StatisticsUI;
 	import tl.mapeditor.ui.window.SurfaceChartletUI;
 	import tl.mapeditor.ui.window.ThumbnailUI;
 	import tl.mapeditor.ui.window.WizardBarUI;
+	import tl.mapeditor.ui.window.WizardSettingUI;
 	import tl.mapeditor.ui.window.ZoneSettingUI;
 
 	public class StartupCmd extends Command
@@ -65,7 +71,9 @@ package tl.frameworks.command
 			// model
 			injector.mapSingleton(TLEditorMapModel);
 			injector.mapSingleton(TerrainTextureListModel);
+			injector.mapSingleton(SkyBoxTextureListModel);
 			injector.mapSingleton(LogModel);
+			injector.mapSingleton(WizardSettingModel);
 			injector.mapValue(SGCsvManager,SGCsvManager.getInstance());// SGCsvManager暂时改不掉，牵扯太多
 			injector.mapValue(GPUResProvider,GPUResProvider.getInstance());
 			// service
@@ -76,17 +84,16 @@ package tl.frameworks.command
 			commandMap.mapEvent(NotifyConst.NEW_MAP, NewTerrainCmd);
 			commandMap.mapEvent(NotifyConst.LOAD_MAP, LoadMapCmd);
 			commandMap.mapEvent(NotifyConst.SAVE_MAP, SaveMapCmd);
-			commandMap.mapEvent(NotifyConst.NEW_THUMBNAIL_UI, ThumbnailUICmd);
 			commandMap.mapEvent(NotifyConst.NEW_COVERAGEPANEL_UI, CoveragePanelCmd);
-			commandMap.mapEvent(NotifyConst.NEW_PROPERTYPANEL_UI, PropertyPanelCmd);
 			commandMap.mapEvent(NotifyConst.NEW_BRUSHSETTING_UI, BrushSettingUICmd);
-			commandMap.mapEvent(NotifyConst.NEW_FUNCTIONPOINT_UI, FunctionPointUICmd);
 			commandMap.mapEvent(NotifyConst.NEW_ZONESETTING_UI, ZoneSettingUICmd);
 			commandMap.mapEvent(NotifyConst.NEW_SURFACECHARTLET_UI, SurfaceChartletUICmd);
 			commandMap.mapEvent(NotifyConst.NEW_LONG_UI, LogUICmd);
 			commandMap.mapEvent(NotifyConst.NEW_HELP_UI, HelpUICmd);
 			commandMap.mapEvent(NotifyConst.STATUS, LogCmd);
-			commandMap.mapEvent(NotifyConst.NEW_POPMENUBAR_UI, PopMenuBarCmd)
+			commandMap.mapEvent(NotifyConst.NEW_POPMENUBAR_UI, PopMenuBarCmd);
+			commandMap.mapEvent(NotifyConst.NEW_STATISTICS_UI, StatisticsCmd);
+			commandMap.mapEvent(NotifyConst.NEW_WIZARD_UI, WizardSettingCmd);
 
 			// map view mediator
 			mediatorMap.mapView(EditorUI, EditorUIMediator);
@@ -106,6 +113,8 @@ package tl.frameworks.command
 			mediatorMap.mapView(SurfaceChartletUI, SurfaceChartletUIMediator);
 			mediatorMap.mapView(LogUI, LogUIMediator);
 			mediatorMap.mapView(HelpUI, HelpUIMediator);
+			mediatorMap.mapView(StatisticsUI, StatisticsUIMediator);
+			mediatorMap.mapView(WizardSettingUI, WizardSettingUIMediator);
 
 			// map view Mediator 3D (3D的目前尚未实现自动addChild绑定，所以需要手动createMediator)
 			mediatorMap.mapView(EditorScene3D , EditorScene3DMediator,null,false,false);

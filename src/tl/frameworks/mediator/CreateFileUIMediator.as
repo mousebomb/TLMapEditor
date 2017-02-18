@@ -26,9 +26,6 @@ package tl.frameworks.mediator
 	{
 		[Inject]
 		public var view:CreateFileUI;
-		private var _mapW:uint = 1024;			//地图宽度
-		private var _mapH:uint = 1024;			//地图高度
-		private var _mapN:String = '新地图';		//地图名称
 		private var _oldInput:String;			//原来的输入文本
 		private var _mapFile:File;
 		private var _fileFilter:FileFilter = new FileFilter("*.png", "*.png");
@@ -73,7 +70,7 @@ package tl.frameworks.mediator
 				{
 					if(view && view.parent)
 							view.parent.removeChild(view)
-					dispatchWith(NotifyConst.NEW_MAP, false,new CreateMapVO(_mapW, _mapH, _mapN, _mapFile));
+					dispatchWith(NotifyConst.NEW_MAP, false,new CreateMapVO(int(view.inputTextW.text), int(view.inputTextH.text), view.inputTextN.text, _mapFile));
 				}	else if(event.target.name == '选择高度图') {
 					_mapFile = new File();
 					_mapFile.addEventListener(Event.SELECT, onSelect, false, 0, true);			//选择后派发
@@ -87,36 +84,13 @@ package tl.frameworks.mediator
 		private function onTextChange(event:Event):void
 		{
 			var textField:MyTextField = MyTextField(event.currentTarget);
-			switch(textField.name)
-			{
-				case "地图宽度":	//列数
-					_mapW = uint(textField.text);
-					break;
-				case "地图高度"://图片前缀
-					_mapH = uint(textField.text);
-					break;
-				case "地图命名"://图片目录
-					_mapN = textField.text;
-					break;
-			}
+			_oldInput = textField.text;
 		}
 		/** 输入文本获得焦点执行 **/
 		private function onTextFocusIn(e:FocusEvent):void
 		{
 			var textField:MyTextField = MyTextField(e.currentTarget);
-
-			switch(textField.name)
-			{
-				case "地图宽度":	//列数
-					_oldInput = _mapW.toString();
-					break;
-				case "地图高度"://图片前缀
-					_oldInput = _mapH.toString();
-					break;
-				case "地图命名"://图片目录
-					_oldInput = _mapN;
-					break;
-			}
+			_oldInput = textField.text;
 			textField.text = "";
 		}
 		/** 输入文本失去焦点执行 **/
@@ -124,36 +98,13 @@ package tl.frameworks.mediator
 		{
 			var textField:MyTextField = MyTextField(e.currentTarget);
 			if(textField.text != '')	return;
-			var text:String = '';
-			switch(textField.name)
-			{
-				case "地图宽度":	//列数
-					text = _mapW.toString();
-					break;
-				case "地图高度"://图片前缀
-					text = _mapH.toString();
-					break;
-				case "地图命名"://图片目录
-					text = _mapN;
-					break;
-			}
-			textField.text = text
+			textField.text = _oldInput
 		}
 
 		/** 选择完成执行 **/
 		private function onSelect(e:Event):void
 		{
-			var url:String = _mapFile.nativePath;
-			//名字
-			var fileName = String(_mapFile.name).split(".")[0];
-			//_mapFile.load();
-		}
-		/** 文件加载完成 **/
-		private function onLoadComplete(e:Event):void
-		{
 			_mapFile.removeEventListener(Event.SELECT, onSelect);
-			_mapFile.removeEventListener(Event.COMPLETE, onLoadComplete);
-			var bytes:ByteArray = ByteArray(e.target.data);
 		}
 	}
 }

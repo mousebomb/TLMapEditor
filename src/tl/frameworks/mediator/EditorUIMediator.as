@@ -29,6 +29,7 @@ package tl.frameworks.mediator
 
 		override public function onRegister():void
 		{
+			addContextListener(NotifyConst.MAP_VO_INITED, onMapVoInited);
 			addContextListener( NotifyConst.SWITCH_TOOLBOX, onSWITCH_TOOLBOX);
 		}
 
@@ -71,22 +72,23 @@ package tl.frameworks.mediator
 				case ToolBoxType.BAR_NAME_9:
 					dispatchWith(NotifyConst.NEW_ZONESETTING_UI);
 					break;
-				case ToolBoxType.BAR_NAME_10:
-					dispatchWith(NotifyConst.NEW_FUNCTIONPOINT_UI);
-					break;
 				case ToolBoxType.BAR_NAME_16:
 					dispatchWith(NotifyConst.NEW_SURFACECHARTLET_UI);
-					break;
-				case ToolBoxType.BAR_NAME_28:
-					dispatchWith(NotifyConst.NEW_THUMBNAIL_UI);
-					break;
-				case ToolBoxType.BAR_NAME_30:
-					dispatchWith(NotifyConst.NEW_PROPERTYPANEL_UI);
 					break;
 				default :
 					view.switchToolBox(e.data);
 					break;
 			}
+		}
+		/**默认打开缩略图、属性面板、模型库界面*/
+		private function onMapVoInited(event:TLEvent):void
+		{
+			if(!view.Thumbnail || !view.Thumbnail.parent)
+				view.switchToolBox(ToolBoxType.BAR_NAME_28);
+			if(!view.property || !view.property.parent)
+				view.switchToolBox(ToolBoxType.BAR_NAME_30);
+			if(!view.wizardBarUI || !view.wizardBarUI.parent)
+				view.switchToolBox(ToolBoxType.WIZARD_LIBRARY);
 		}
 	}
 }

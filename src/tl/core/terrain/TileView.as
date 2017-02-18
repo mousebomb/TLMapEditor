@@ -96,6 +96,7 @@ package tl.core.terrain
 			var tileNormalMaterial:TextureMaterial = new TextureMaterial(textures[0], true, false, true);
 			tileNormalMaterial.specular            = 0.0;
 			tileNormalMaterial.lightPicker         = LightProvider.getInstance().lightPicker;
+			tileNormalMaterial.shadowMethod = LightProvider.getInstance().shadowMapMethod;
 			tileNormalMaterial.diffuseMethod       =
 					new TLTerrainDiffuseMethod(splatTextures
 							, splatAlpha

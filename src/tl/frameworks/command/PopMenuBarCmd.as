@@ -30,13 +30,8 @@ package tl.frameworks.command
 			else
 					ui.myWidth = 130;
 			ui.menu = vector;
-			if(!ui.parent)
-			{
-				contextView.addChild(ui);
-			}	else {
-				ui.parent.removeChild(ui);
-			}
-
+			ui.isShow = true;
+			contextView.addChild(ui);
 		}
 	}
 }

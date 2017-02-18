@@ -68,7 +68,6 @@ package tl.frameworks.mediator
 			eventMap.mapListener(view.layerList,Event.CHANGE, onLayerChange);
 			// 加载所有纹理
 			addContextListener(NotifyConst.TERRAIN_TEXTURES_LIST_LOADED, onTERRAIN_TEXTURES_LIST_LOADED);
-			dispatchWith(NotifyConst.LOAD_TERRAIN_TEXTURES_LIST);
 			onTERRAIN_TEXTURES_LIST_LOADED( null );
 			//
 			onResize();

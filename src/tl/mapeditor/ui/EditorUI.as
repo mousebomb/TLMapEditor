@@ -8,6 +8,9 @@ package tl.mapeditor.ui
 	import tl.frameworks.NotifyConst;
 
 	import tl.mapeditor.ToolBoxType;
+	import tl.mapeditor.ui.window.FunctionPointUI;
+	import tl.mapeditor.ui.window.PropertyPanelUI;
+	import tl.mapeditor.ui.window.ThumbnailUI;
 	import tl.mapeditor.ui.window.WizardBarUI;
 
 	import tool.StageFrame;
@@ -20,8 +23,11 @@ package tl.mapeditor.ui
 		public var wizardBarUI:WizardBarUI;
 		public var terrainTextureBar :TerrainTextureBar;
 		public var statusBar :StatusBar;
+		public var Thumbnail:ThumbnailUI;
+		public var property:PropertyPanelUI;
 		/** 当前显示的toolbox类型 */
 		private const _type:String ;
+		private var _functionPoint:FunctionPointUI;
 
 		public function EditorUI()
 		{
@@ -49,7 +55,7 @@ package tl.mapeditor.ui
 				case ToolBoxType.WIZARD_LIBRARY:
 					/*wizardBar ||= new WizardBar();
 					addChild(wizardBar);*/
-					wizardBarUI ||= new WizardBarUI();
+					 wizardBarUI ||= new WizardBarUI();
 					if(wizardBarUI.parent)
 					{
 						wizardBarUI.parent.removeChild(wizardBarUI);
@@ -59,6 +65,33 @@ package tl.mapeditor.ui
 					break;
 				case ToolBoxType.TERRAIN_HEIGHT:
 
+					break;
+				case ToolBoxType.BAR_NAME_10:
+					_functionPoint ||= new FunctionPointUI();
+					if(_functionPoint.parent)
+					{
+						_functionPoint.parent.removeChild(_functionPoint);
+					}	else {
+						addChild(_functionPoint);
+					}
+					break;
+				case ToolBoxType.BAR_NAME_28:
+					Thumbnail ||= new ThumbnailUI();
+					if(Thumbnail.parent)
+					{
+						Thumbnail.parent.removeChild(Thumbnail);
+					}	else {
+						addChild(Thumbnail);
+					}
+					break;
+				case ToolBoxType.BAR_NAME_30:
+					property ||= new PropertyPanelUI()
+					if(property.parent)
+					{
+						property.parent.removeChild(property);
+					}	else {
+						addChild(property);
+					}
 					break;
 			}
 		}

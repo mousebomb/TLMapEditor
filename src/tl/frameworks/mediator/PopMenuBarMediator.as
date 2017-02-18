@@ -15,6 +15,7 @@ package tl.frameworks.mediator
 
 	import tl.frameworks.NotifyConst;
 	import tl.frameworks.TLEvent;
+	import tl.frameworks.model.TLEditorMapModel;
 	import tl.frameworks.model.vo.CreateMapVO;
 	import tl.mapeditor.Config;
 	import tl.mapeditor.ToolBoxType;
@@ -31,8 +32,9 @@ package tl.frameworks.mediator
 
 		[Inject]
 		public var view: PopMenuBar;
+		[Inject]
+		public var mapModel:TLEditorMapModel ;
 		private var _file:File;
-		private var _isShow:Boolean;
 		private var _fileFilter:FileFilter = new FileFilter("*.tlmap", "*.tlmap");
 
 		override public function onRegister():void
@@ -42,23 +44,6 @@ package tl.frameworks.mediator
 			addViewListener(MouseEvent.CLICK,onItemClick)
 			eventMap.mapListener(view.stage , MouseEvent.CLICK,onMouseClick);
 
-			view.y = 32;
-			if(view.menuVector == ToolBoxType.fillVector)
-			{
-				view.x = 75;
-			}	else if(view.menuVector == ToolBoxType.toolVector) {
-				view.x = 160;
-			}	else if(view.menuVector == ToolBoxType.uiVector) {
-				view.x = 245;
-			}	else if(view.menuVector == ToolBoxType.ranVector) {
-				view.x = 330;
-			}	else if(view.menuVector == ToolBoxType.helpVector) {
-				view.x = 415
-			}	else {
-				view.x = ToolBoxType.popmenuX;
-				view.y = ToolBoxType.popmenuY;
-			}
-			_isShow = true;
 		}
 
 		private function onItemClick(event:MouseEvent):void
@@ -78,7 +63,8 @@ package tl.frameworks.mediator
 						_file.browseForOpen("打开地图文件", [_fileFilter]);
 						break;
 					case ToolBoxType.BAR_NAME_19 :
-						dispatchWith(NotifyConst.SAVE_MAP,false);
+						if(mapModel.mapVO)
+							dispatchWith(NotifyConst.SAVE_MAP,false);
 						break;
 					case ToolBoxType.BAR_NAME_25 :
 						dispatchWith(NotifyConst.NEW_BRUSHSETTING_UI);
@@ -89,14 +75,19 @@ package tl.frameworks.mediator
 					case ToolBoxType.BAR_NAME_31 :
 						dispatchWith(NotifyConst.NEW_LONG_UI);
 						break;
+					case ToolBoxType.BAR_NAME_32 :
+						//统计界面
+						dispatchWith(NotifyConst.NEW_STATISTICS_UI);
+						break;
 					case ToolBoxType.BAR_NAME_21 :
+						dispatchWith(NotifyConst.NEW_WIZARD_UI)
+						break;
 					case ToolBoxType.BAR_NAME_22 :
 					case ToolBoxType.BAR_NAME_23 :
 					case ToolBoxType.BAR_NAME_24 :
 					case ToolBoxType.BAR_NAME_27 :
 					case ToolBoxType.BAR_NAME_28 :
 					case ToolBoxType.BAR_NAME_29 :
-					case ToolBoxType.BAR_NAME_32 :
 					case ToolBoxType.BAR_NAME_33 :
 					case ToolBoxType.BAR_NAME_34 :
 						dispatchWith(NotifyConst.SWITCH_TOOLBOX, false, btnName);
@@ -130,9 +121,9 @@ package tl.frameworks.mediator
 
 		private function onMouseClick(event:MouseEvent):void
 		{
-			if(_isShow)
+			if(view.isShow)
 			{
-				_isShow = false;
+				view.isShow = false;
 			}	else {
 				if(view && view.parent)
 					view.parent.removeChild(view);

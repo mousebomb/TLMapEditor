@@ -32,7 +32,7 @@ package tl.mapeditor.ui.window
 			this.isInit = true;
 			super.init(title, $width, $height, bgColor, hasCloseBtn, isDrag);
 
-			positionTxt = Tool.getMyTextField(100, 38, 12, 0xFFFFFF, "left", 0, true);
+			positionTxt = Tool.getMyTextField(100, 38, 12, 0xFFFFFF, "left", 2, true);
 			this.addChild(positionTxt);
 			positionTxt.mouseEnabled = positionTxt.mouseWheelEnabled = false;
 			Tool.setDisplayGlowFilter(positionTxt);

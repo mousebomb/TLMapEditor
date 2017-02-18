@@ -1,16 +1,14 @@
 package tl.core
 {
-import away3d.lights.DirectionalLight;
-import away3d.lights.PointLight;
-import away3d.lights.shadowmaps.NearDirectionalShadowMapper;
-import away3d.materials.lightpickers.StaticLightPicker;
-import away3d.materials.methods.FilteredShadowMapMethod;
-	import away3d.primitives.SkyBox;
-	import away3d.textures.BitmapCubeTexture;
+	import away3d.lights.DirectionalLight;
+	import away3d.lights.PointLight;
+	import away3d.lights.shadowmaps.NearDirectionalShadowMapper;
+	import away3d.materials.lightpickers.StaticLightPicker;
+	import away3d.materials.methods.FilteredShadowMapMethod;
 
 	import flash.geom.Vector3D;
 
-public class LightProvider
+	public class LightProvider
 	{
 		private static var _lightManager:LightProvider;
 		
@@ -24,8 +22,6 @@ public class LightProvider
 		}
 		
 		private var _shadowMapMethod:FilteredShadowMapMethod;
-
-	private var _skybox :SkyBox;
 
 	/** 阳光 **/
 		public function get lightPicker():StaticLightPicker 
@@ -53,15 +49,16 @@ public class LightProvider
 		private function init():void
 		{
 			var baseShadowMethod:NearDirectionalShadowMapper = new NearDirectionalShadowMapper();
-			baseShadowMethod.depthMapSize = 2048;	//深度贴图尺寸
-			baseShadowMethod.lightOffset = 5000;
+			baseShadowMethod.depthMapSize                    = 2048;	//深度贴图尺寸
+			baseShadowMethod.lightOffset                     = 0;
 			
 			//点光源
-			_pointLight = new PointLight();
+			_pointLight            = new PointLight();
 			//平行光
-			_sunLight = new DirectionalLight(-1, -1, -1);
+			_sunLight              = new DirectionalLight(-1, -1, -1);
 			_sunLight.shadowMapper = baseShadowMethod;				//阴影映射
-			_sunLight.direction = new Vector3D(-0.2, -0.78, -0.2);      //光源角度
+			_sunLight.direction    = new Vector3D(-0.2, -0.78, -0.2);      //光源角度
+			_sunLight.specular     = 0.0;
 //			var softShadowMapMethod:SoftShadowMapMethod = new SoftShadowMapMethod(_sunLight);
 //			softShadowMapMethod.alpha = 0.1;
 			//动态阴影
@@ -69,8 +66,17 @@ public class LightProvider
 			_shadowMapMethod = new FilteredShadowMapMethod( _sunLight );
 			_shadowMapMethod.alpha = 0.5;
 			//
-			_skybox=new SkyBox(new BitmapCubeTexture(new Embeds.EnvPosX().bitmapData,new Embeds.EnvNegX().bitmapData,new Embeds.EnvPosY().bitmapData,new Embeds.EnvNegY().bitmapData,new Embeds.EnvPosZ().bitmapData ,new Embeds.EnvNegZ().bitmapData));
+		}
 
+		/** 设置阳光照射角度 */
+		public function setSunLightDirection( dir:Vector3D ):void
+		{
+			_sunLight.direction = dir;
+		}
+
+		public function getSunLightDirection():Vector3D
+		{
+			return _sunLight.direction;
 		}
 		
 
@@ -97,13 +103,10 @@ public class LightProvider
 			_debug = false;
 		}
 
-	public function get sunLight():DirectionalLight {
-		return _sunLight;
-	}
+		public function get sunLight():DirectionalLight
+		{
+			return _sunLight;
+		}
 
-	public function get skybox():SkyBox
-	{
-		return _skybox;
 	}
-}
 }

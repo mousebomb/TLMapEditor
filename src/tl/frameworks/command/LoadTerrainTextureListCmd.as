@@ -3,10 +3,9 @@
  */
 package tl.frameworks.command
 {
-	import org.mousebomb.framework.INotifyControler;
-	import org.mousebomb.framework.Notify;
 	import org.robotlegs.mvcs.Command;
 
+	import tl.frameworks.model.SkyBoxTextureListModel;
 	import tl.frameworks.model.TerrainTextureListModel;
 
 	public class LoadTerrainTextureListCmd extends Command
@@ -14,12 +13,15 @@ package tl.frameworks.command
 		public function LoadTerrainTextureListCmd()
 		{
 		}
-[Inject]
-public var terrainTextureListModel:TerrainTextureListModel;
+		[Inject]
+		public var terrainTextureListModel:TerrainTextureListModel;
+		[Inject]
+		public var skyBoxTextureListModel:SkyBoxTextureListModel;
 
 		override public function execute():void
 		{
 			terrainTextureListModel.loadList();
+			skyBoxTextureListModel.loadList();
 		}
 	}
 }

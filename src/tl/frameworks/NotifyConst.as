@@ -30,8 +30,12 @@ package tl.frameworks
 		public static const TOOL_BRUSH_SIZE_ADD:String = "TOOL_BRUSH_SIZE_ADD";
 		/**设置地形刷的柔和 @data : Number */
 		public static const TOOL_BRUSH_ROUHE:String     = "TOOL_BRUSH_ROUHE";
-		/** */
+		/** 使用选择工具 */
 		public static const TOOL_SELECT:String         = "TOOL_SELECT";
+		/** 选择3D对象后旋转 @data = 旋转角度 (+-1~360) */
+		public static const TOOL_TARGET_ROTATE :String = "TOOL_TARGET_ROTATE";
+		/** 选择3D对象后上下调整 @data = y轴向上增加像素 负数表示下降 */
+		public static const TOOL_TARGET_UP :String = "TOOL_TARGET_UP";
 		/** 新建刚体 */
 		public static const TOOL_NEW_RIGIDBODY:String  = "TOOL_NEW_RIGIDBODY";
 		/** 选中刚体的尺寸 @data:Number */
@@ -39,19 +43,18 @@ package tl.frameworks
 		/** 选中刚体的旋转 @data:Number */
 		public static const TOOL_RIGIDBODY_ROTATION_ADD:String  = "TOOL_RIGIDBODY_ROTATION_ADD";
 
-		/** 添加灯光 */
-		public static const TOOL_LIGHT_NEW :String = "TOOL_LIGHT_NEW";
-		/** 添加路点 */
-		public static const TOOL_POINT_ADD :String = "TOOL_POINT_ADD";
+		/**设置天空盒 @data:String 天空和Cube纹理 */
+		public static const TOOL_SKYBOX_SET :String = "TOOL_SKYBOX_SET";
+		/** 天空盒纹理列表就绪 */
+		public static const SKYBOX_TEXTURES_LIST_LOADED :String = "SKYBOX_TEXTURES_LIST_LOADED";
+
+		/**设置天光 光照角度 @data= Vector3D */
+		public static const LIGHT_DIRECTION_SET :String = "LIGHT_DIRECTION_SET";
 
 		/** 切换工具栏类型 @data = int @see ToolBoxType */
 		public static const SWITCH_TOOLBOX:String = "SWITCH_TOOLBOX";
 		/** 选择模型类型 */
 		public static const SELECT_WIZARDOBJECT_TYPE:String = "select_wizardObject_type";
-		/**  */
-		public static const SWFRES_LOADED:String  = "SWFRES_LOADED";
-		/**  加载csv  */
-		public static const LOAD_CSV:String       = "LOAD_CSV";
 		/** CSV加载完毕 */
 		public static const CSV_LOADED:String     = "CSV_LOADED";
 
@@ -64,8 +67,8 @@ package tl.frameworks
 		public static const SELECT_WIZARD_PREVIEW:String          = "SELECT_WIZARD_PREVIEW";
 		/** 选中地形贴图预览 @data=Material */
 		public static const SELECT_TERRAIN_TEXTURE_PREVIEW:String = "SELECT_TERRAIN_TEXTURE_PREVIEW";
-		/**设置选中区域*/
-		public static const SELECT_ZONE_SETTING:String = 'SELECT_ZONE_SETTING';
+		/**设置选中模型*/
+		public static const SELECT_WIZARDOBJECT_SETTING:String = 'SELECT_WIZARDOBJECT_SETTING';
 
 		/** 开始按下拖拽，准备在场景内放置精灵 @data=WizardObject */
 		public static const UI_START_ADD_WIZARD:String = "UI_START_ADD_WIZARD";
@@ -78,8 +81,6 @@ package tl.frameworks
 		public static const STATUS:String = "STATUS";
 		public static const LOG:String    = "LOG";
 
-		/** 加载地形纹理素材列表 */
-		public static const LOAD_TERRAIN_TEXTURES_LIST:String   = "LOAD_TERRAIN_TEXTURES_LIST";
 		/** 地形纹理素材列表已加载 */
 		public static const TERRAIN_TEXTURES_LIST_LOADED:String = "TERRAIN_TEXTURES_LIST_LOADED";
 		/** 地形纹理层 纹理改动 */
@@ -96,16 +97,10 @@ package tl.frameworks
 		public static const TOGGLE_GRID :String = "TOGGLE_GRID";
 		/**开关区域显示 @data 不需要 */
 		public static const TOGGLE_ZONE :String = "TOGGLE_ZONE";
-		/** 打开缩略图UI*/
-		public static const NEW_THUMBNAIL_UI:String = 'new_thumbanil_ui';
 		/**打开图层面板*/
 		public static const NEW_COVERAGEPANEL_UI:String = 'new_coveragePanel_ui';
-		/**打开属性面板*/
-		public static const NEW_PROPERTYPANEL_UI:String = 'new_PropertyPanel_ui';
 		/**地形笔刷设置*/
 		public static const NEW_BRUSHSETTING_UI:String  = 'new_brushSetting_ui';
-		/**功能点设置*/
-		public static const NEW_FUNCTIONPOINT_UI:String = 'new_functionPoint_ui';
 		/**区域设置*/
 		public static const NEW_ZONESETTING_UI:String = 'new_zoneSetting_ui';
 		/**地表贴图设置*/
@@ -116,6 +111,10 @@ package tl.frameworks
 		public static const NEW_HELP_UI:String = 'new_help_ui';
 		/**下拉菜单弹出*/
 		public static const NEW_POPMENUBAR_UI:String = 'new_popmenuBar_ui';
+		/**统计界面*/
+		public static const NEW_STATISTICS_UI:String = 'new_statistics_ui';
+		/**显示模型设置界面*/
+		public static const NEW_WIZARD_UI:String = 'new_wizard_ui';
 
 		public function NotifyConst()
 		{

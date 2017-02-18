@@ -18,6 +18,7 @@ package tl.mapeditor.ui
 	public class PopMenuBar extends MySprite
 	{
 		public var menuVector:Vector.<String>;
+		public var isShow:Boolean;				//显示标志
 		public function PopMenuBar()
 		{
 			init();
@@ -68,6 +69,23 @@ package tl.mapeditor.ui
 			this.drawRect(this.myWidth, vh, 0x424242);
 			//边框线
 			Tool.drawReacLineByGraphics(this.graphics, null, this.myWidth, this.height, 1, 1, 0x0, 0, 0, false);
+
+			this.y = 32;
+			if(this.menuVector == ToolBoxType.fillVector)
+			{
+				this.x = 75;
+			}	else if(this.menuVector == ToolBoxType.toolVector) {
+				this.x = 160;
+			}	else if(this.menuVector == ToolBoxType.uiVector) {
+				this.x = 245;
+			}	else if(this.menuVector == ToolBoxType.ranVector) {
+				this.x = 330;
+			}	else if(this.menuVector == ToolBoxType.helpVector) {
+				this.x = 415
+			}	else {
+				this.x = ToolBoxType.popmenuX;
+				this.y = ToolBoxType.popmenuY;
+			}
 		}
 		
 		public function showMenu():void  

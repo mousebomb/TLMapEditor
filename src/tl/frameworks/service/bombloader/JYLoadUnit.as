@@ -1,6 +1,8 @@
 package tl.frameworks.service.bombloader
 {
-	import tl.core.IResourceKey;
+    import away3d.textures.ATFCubeTexture;
+
+    import tl.core.IResourceKey;
 
 	import away3DExtend.E_MD5AnimParser;
 	import away3DExtend.E_MD5MeshParser;
@@ -250,7 +252,11 @@ package tl.frameworks.service.bombloader
 			{
 				imageCache[url] =  new ATFTexture(bytes);
 				executeCallLater(url);
-			}
+			}else if (type == JYLoader.RES_ATF_CUBE_A3D)
+            {
+                imageCache[url] =  new ATFCubeTexture(bytes);
+                executeCallLater(url);
+            }
             else
             {
                 // class和bmd 需要loader加载一次并尝试异步decode

@@ -32,6 +32,7 @@ package tl.core.terrain
 				sharedTerrainMaterial               = new TextureMaterial(gridTexture, false, true, true);
 				sharedTerrainMaterial.diffuseMethod = new TLTileGridMethod([_tile.tileVO.parentTerrain.terrainVerticlesX, _tile.tileVO.parentTerrain.terrainVerticlesY], gridTexture);
 				sharedTerrainMaterial.specular      = 0.0;
+				sharedTerrainMaterial.alphaBlending=true;
 			}
 			super(_tile.geometry, sharedTerrainMaterial);
 			this.x = _tile.x;
@@ -45,7 +46,7 @@ package tl.core.terrain
 				if(gridTexture == null )
 				{
 					// 只对应UV坐标，所以无关这里的尺寸，这里只为显示效果足够即可
-					var bmd:BitmapData = new BitmapData(32, 32, true, 0xffffffff);
+					var bmd:BitmapData = new BitmapData(32, 32, true, 0x00ffffff);
 					for (var i:int = 0; i < 32; i++)
 					{
 						bmd.setPixel32(0, i, 0xffCCCCCC);

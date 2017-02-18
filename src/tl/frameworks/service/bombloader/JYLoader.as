@@ -92,6 +92,8 @@ package tl.frameworks.service.bombloader
 
         /** ATF贴图 away3D用 */
         public static const RES_ATF_A3D :int = 5;
+        /** ATF贴图 skybox用 */
+        public static const RES_ATF_CUBE_A3D :int = 8;
 		/** 骨骼动画 */
         public static const RES_ANIM :int = 6;
 

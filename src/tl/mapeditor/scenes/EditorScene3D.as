@@ -15,6 +15,8 @@ package tl.mapeditor.scenes
 
 	import flash.geom.Vector3D;
 
+	import tl.core.skybox.TLSkyBox;
+
 	import tl.core.terrain.MapView;
 	import tl.mapeditor.ui3d.MapZoneView;
 
@@ -26,6 +28,8 @@ package tl.mapeditor.scenes
 
 		/** 地形 */
 		public var terrainView:MapView;
+		/**天空盒*/
+		public var skyBoxView:TLSkyBox;
 
 		private var _lookTarget:Vector3D = new Vector3D();
 
@@ -63,7 +67,8 @@ package tl.mapeditor.scenes
 
 			zoneView = new MapZoneView();
 
-			addChild(LightProvider.getInstance().skybox);
+			skyBoxView= new TLSkyBox();
+			addChild(skyBoxView);
 		}
 
 
@@ -113,6 +118,13 @@ package tl.mapeditor.scenes
 			_camHC.distance += delta*5;
 		}
 
+		/** 进入俯视模式 */
+		public function lookDown():void
+		{
+			_camHC.panAngle = -180;
+			_camHC.tiltAngle=  90;
+			_camHC.lookAtPosition = _lookTarget;
+		}
 
 
 

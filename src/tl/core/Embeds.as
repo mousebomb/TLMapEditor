@@ -20,5 +20,8 @@ package tl.core
 		[Embed(source="/../embed/skybox/sky_negZ.jpg")]
 		public static const EnvNegZ:Class;
 
+		[Embed(source="/../embed/skybox/sky.atf",mimeType="application/octet-stream")]
+		public static const SKYBOX_ATF :Class ;
+
 	}
 }

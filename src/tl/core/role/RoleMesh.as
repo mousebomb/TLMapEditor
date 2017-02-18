@@ -11,12 +11,14 @@ package tl.core.role
 	import away3d.entities.Entity;
 	import away3d.entities.Mesh;
 	import away3d.library.assets.IAsset;
+	import away3d.materials.TextureMaterial;
 	import away3d.primitives.CubeGeometry;
 
 	import flash.geom.Matrix3D;
 	import flash.utils.Dictionary;
 
 	import tl.core.GPUResProvider;
+	import tl.core.LightProvider;
 	import tl.core.Wizard.ActionName;
 
 	import tool.StageFrame;

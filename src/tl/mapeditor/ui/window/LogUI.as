@@ -35,6 +35,7 @@ package tl.mapeditor.ui.window
 			_logText = new MyTextField();
 			_logText.width = this.myWidth - 20;
 			_logText.height = 195;
+			_logText.leading = 2;
 			this.addChild(_logText);
 			_logText.x = 15;
 			_logText.y = titleY + 5;

@@ -4,6 +4,7 @@
 package tl.core
 {
 	import away3d.materials.ColorMaterial;
+	import away3d.textures.ATFCubeTexture;
 
 	import flash.display.BitmapData;
 
@@ -155,5 +156,21 @@ package tl.core
 			}
 			return materialDic[color];
 		}
+
+		// #pragma mark --  天空盒材质  ------------------------------------------------------------
+
+		/** 加载天空盒材质 */
+		public function getSkyboxTexture( cubeName :String ,cb :Function ):void
+		{
+			var url :String = Config.SKYBOX_URL +  cubeName + IResourceKey.Suffix_ATF;
+			JYLoader.getInstance().reqResource(url,JYLoader.RES_ATF_CUBE_A3D, 0,JYLoader.GROUP_SCENE,onCubeAtfLoaded,null,cb);
+		}
+
+		private function onCubeAtfLoaded(url:String ,atf :ATFCubeTexture,callback :Function):void
+		{
+			// 回调  TODO 采用自动引用计数 采用弱引用保存
+			callback(atf);
+		}
+
 	}
 }

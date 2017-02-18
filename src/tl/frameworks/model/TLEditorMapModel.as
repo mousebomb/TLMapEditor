@@ -66,6 +66,7 @@ package tl.frameworks.model
 		public function saveWizard(role:WizardObject):void
 		{
 			track("TLEditorMapModel/saveWizard");
+			//显示模型设置界面
 		}
 
 
@@ -286,6 +287,10 @@ package tl.frameworks.model
 		public function saveMapData():ByteArray
 		{
 			var end :ByteArray = new ByteArray();
+			// 版本号
+			end.writeUnsignedInt(1);
+			// 写入地图名
+			end.writeUTF(_curMapVO.name);
 			//写入高度图
 			end.writeShort(_curMapVO.terrainVerticlesX);
 			end.writeShort(_curMapVO.terrainVerticlesY);
@@ -310,7 +315,14 @@ package tl.frameworks.model
 				vo.exportToByteArray(end);
 			}
 			//写入模型
+//			end.writeShort()
 			trace(StageFrame.renderIdx,"[TLEditorMapModel]/saveMapData size=",end.length);//1254736
+			// 光照角度
+			end.writeFloat(_curMapVO.sunLightDirection.x);
+			end.writeFloat(_curMapVO.sunLightDirection.y);
+			end.writeFloat(_curMapVO.sunLightDirection.z);
+
+			// 压缩
 			end.compress();
 			return end;
 		}

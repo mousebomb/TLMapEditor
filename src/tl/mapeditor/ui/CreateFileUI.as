@@ -76,7 +76,7 @@ package tl.mapeditor.ui
 			inputTextN.y = textField.y + (textField.height - inputTextN.height)/2;
 			inputTextN.type = "input";
 			inputTextN.algin = "center";
-			inputTextN.text = 'new map';
+			inputTextN.text = 'map';
 			//高度图
 			var textField_1:MyTextField;
 			textField_1 = Tool.getTitleText("高度图");

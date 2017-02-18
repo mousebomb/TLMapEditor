@@ -6,6 +6,7 @@ package tl.core.terrain
 	import away3d.tools.utils.TextureUtils;
 
 	import flash.display.BitmapData;
+	import flash.geom.Vector3D;
 	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
 
@@ -359,7 +360,7 @@ package tl.core.terrain
 		}
 
 
-		// #pragma mark --  点  ------------------------------------------------------------
+		// #pragma mark --  功能点  ------------------------------------------------------------
 		public var funcPoints:Vector.<FuncPointVO> = new Vector.<FuncPointVO>();
 
 		/** TODO 初始化 从数据读入功能点 */
@@ -369,5 +370,9 @@ package tl.core.terrain
 
 		}
 
+
+		// #pragma mark --  光照角度  ------------------------------------------------------------
+		/**光照角度*/
+		public var sunLightDirection :Vector3D = new Vector3D(-0.2, -0.78, -0.2) ;
 	}
 }

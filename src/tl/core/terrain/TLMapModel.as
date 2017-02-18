@@ -4,6 +4,7 @@
 package tl.core.terrain
 {
 	import flash.geom.Point;
+	import flash.geom.Vector3D;
 	import flash.utils.ByteArray;
 	import flash.utils.ByteArray;
 	import flash.utils.ByteArray;
@@ -66,6 +67,10 @@ package tl.core.terrain
 		{
 			_curMapVO                   = new TLMapVO();
 			by.uncompress();
+			// 版本号
+			var version :uint = by.readUnsignedInt();
+			// 地图名
+			_curMapVO.name = by.readUTF();
 			// tiles heightMap
 			var w:int                   = by.readUnsignedShort();
 			var h:int                   = by.readUnsignedShort();
@@ -91,9 +96,13 @@ package tl.core.terrain
 			// 刚体
 			var rbLen : uint = by.readUnsignedShort();
 			_curMapVO.fromRigidBodies( by ,rbLen );
+			// 模型
+
 			// 区域存储
 //			_curMapVO.fromZoneData();
 			_curMapVO.initEmptyZone();
+			// 光照
+			_curMapVO.sunLightDirection = new Vector3D(by.readFloat(),by.readFloat(),by.readFloat());
 			//
 			dispatchWith(NotifyConst.MAP_VO_INITED);
 		}

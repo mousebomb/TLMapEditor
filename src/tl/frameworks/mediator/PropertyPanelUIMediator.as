@@ -3,6 +3,8 @@
  */
 package tl.frameworks.mediator
 {
+	import flash.geom.Point;
+
 	import org.robotlegs.mvcs.Mediator;
 
 	import tl.core.terrain.TLMapVO;

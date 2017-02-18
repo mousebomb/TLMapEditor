@@ -157,7 +157,9 @@
 		public var wizardNameColor:int;//怪物名字颜色标识
 		public var PhysicalHoldout:Array;//物理抗性
 		public var SpoilsType:int;//掉落类型
-		public var RangeEffect:String;//范围特效
+		public var RangeEffect:String;
+		public var label:String;
+		//范围特效
 		
 		public function Player()
 		{
@@ -251,7 +253,7 @@
 			PhysicalHoldout=args[37].split("|");//物理抗性
 			SpoilsType=int(args[38]);//掉落类型
 			RangeEffect=args[39];//范围特效
-			
+			label = name;
 			//生成特殊属性数据
 		}
 	}

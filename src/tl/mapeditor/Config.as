@@ -33,6 +33,11 @@ package tl.mapeditor
 		{
 			return PROJECT_URL + "awd/";
 		}
+
+		public static function get SKYBOX_URL():String
+		{
+			return PROJECT_URL + "skybox/";
+		}
 		public static function get MAP_URL():String
 		{
 			return PROJECT_URL + "map/";

@@ -15,6 +15,8 @@ package tl.frameworks.mediator
 
 	import org.robotlegs.mvcs.Mediator;
 
+	import tl.core.LightProvider;
+
 	import tl.core.funcpoint.FuncPointVO;
 	import tl.core.old.WizardObject;
 	import tl.core.rigidbody.RigidBodyVO;
@@ -77,8 +79,69 @@ package tl.frameworks.mediator
 			addContextListener(NotifyConst.MAP_NODE_VAL_CHANGED,onMapNodeValChanged);
 			addContextListener(NotifyConst.UI_ADD_FUNCPOINT, onAddFuncPoint);
 
+			addContextListener(NotifyConst.TOOL_TARGET_ROTATE,onToolSelectRotate);
+			addContextListener(NotifyConst.TOOL_TARGET_UP,onToolSelectUp);
+			addContextListener(NotifyConst.TOOL_SKYBOX_SET,onTOOL_SKYBOX_SET);
+
+			addContextListener(NotifyConst.LIGHT_DIRECTION_SET,onLIGHT_DIRECTION_SET);
+
 		}
 
+		// #pragma mark --  天空盒和光照  ------------------------------------------------------------
+		/**设置光照角度 */
+		private function onLIGHT_DIRECTION_SET( n: * ):void
+		{
+			LightProvider.getInstance().setSunLightDirection(n.data);
+		}
+
+		/**设置天空盒*/
+		private function onTOOL_SKYBOX_SET( n: * ):void
+		{
+			var cubeTextureName:String = n.data;
+			view.skyBoxView.setSkyBoxTextureName(cubeTextureName);
+		}
+
+		// #pragma mark --  选中对象旋转和抬高  ------------------------------------------------------------
+		private function onToolSelectRotate( n: * ):void
+		{
+			var target :Object3D = selectedTargetTransformBegin();
+			if(target)
+			{
+				target.rotationY += n.data;
+				selectedTargetTransformCommit();
+			}
+		}
+		private function onToolSelectUp( n: * ):void
+		{
+			var target :Object3D = selectedTargetTransformBegin();
+			if(target)
+			{
+				target.y += n.data;
+				selectedTargetTransformCommit();
+			}
+		}
+
+		private function selectedTargetTransformBegin():Object3D
+		{
+			var target:Object3D;
+			if (_selectedRigidBody)
+			{
+				target = _selectedRigidBody;
+			} else if (_selectedRole)
+			{
+				target = _selectedRole;
+			}
+			return target;
+		}
+
+		private function selectedTargetTransformCommit():void
+		{
+			// 保存移动数据
+			if(_selectedRigidBody)
+				_selectedRigidBody.commit();
+			else if (_selectedRole)
+				mapModel.saveWizard(_selectedRole.vo);
+		}
 		// #pragma mark --  区域显示  ------------------------------------------------------------
 
 		private function onMapNodeValChanged(n:*):void
@@ -115,6 +178,7 @@ package tl.frameworks.mediator
 				rigidBody.addEventListener(MouseEvent3D.MOUSE_DOWN, onRigidBodyMouseDown);
 			}
 			// 灯光
+			LightProvider.getInstance().setSunLightDirection(mapModel.mapVO.sunLightDirection);
 			// 区域
 			view.zoneView.mapVO = mapModel.mapVO;
 			// 路点
@@ -179,10 +243,10 @@ package tl.frameworks.mediator
 					draggingNewRole.addEventListener(MouseEvent3D.MOUSE_DOWN, onRoleMouseDown);
 				}
 				draggingNewRole = null;
-			} else if (selectedRole)
+			} else if (_selectedRole)
 			{
 				// 移动了重新保存 仍旧保持选中状态
-				mapModel.saveWizard(selectedRole.vo);
+				mapModel.saveWizard(_selectedRole.vo);
 				// 停止移动
 				setTargetsMouseInteractive(true);
 				isSelectedDragging            = false;
@@ -192,7 +256,7 @@ package tl.frameworks.mediator
 		}
 
 		/** 当前在选中 已存在的role 标记选中的 */
-		private var selectedRole:Role;
+		private var _selectedRole:Role;
 		/** 是否在拖拽中 */
 		private var isSelectedDragging:Boolean = false;
 
@@ -203,7 +267,7 @@ package tl.frameworks.mediator
 
 			var role:Role                 = event.target as Role;
 			role.bodyUnit.showBounds      = true;
-			selectedRole                  = role;
+			selectedRole = role;
 			// 开始拖拽
 			isSelectedDragging            = true;
 			// 拖拽的时候先屏蔽对role的鼠标事件
@@ -213,26 +277,26 @@ package tl.frameworks.mediator
 		private function onMouseMove4MoveWizard(event:MouseEvent3D):void
 		{
 			// 没有对象 就是正常鼠标移动
-			if (selectedRole == null || isSelectedDragging==false ) return;
+			if (_selectedRole == null || isSelectedDragging==false ) return;
 			var downPos:Vector3D = event.scenePosition;
-			selectedRole.x       = downPos.x;
-			selectedRole.z       = downPos.z;
-			selectedRole.y       = mapModel.getHeightWithRigidBody(downPos.x, downPos.z);
+			_selectedRole.x = downPos.x;
+			_selectedRole.z = downPos.z;
+			_selectedRole.y = mapModel.getHeightWithRigidBody(downPos.x, downPos.z);
 		}
 
 		/** 清除当前选择 */
 		public function clearSelection():void
 		{
-			if (selectedRole)
+			if (_selectedRole)
 			{
-				selectedRole.bodyUnit.showBounds = false;
+				_selectedRole.bodyUnit.showBounds = false;
 				selectedRole                     = null;
 			}
-			if (selectedRigidBody)
+			if (_selectedRigidBody)
 			{
-				selectedRigidBody.showBounds   = false;
-				isSelectedRBDragging           = false;
-				selectedRigidBody              = null;
+				_selectedRigidBody.showBounds = false;
+				isSelectedRBDragging          = false;
+				selectedRigidBody            = null;
 			}
 			if (selectedFuncPoint)
 			{
@@ -295,14 +359,7 @@ package tl.frameworks.mediator
 		private function onKeyDown(event:KeyboardEvent):void
 		{
 			// 对选中项的位移
-			var target:Object3D;
-			if (selectedRigidBody)
-			{
-				target = selectedRigidBody;
-			} else if (selectedRole)
-			{
-				target = selectedRole;
-			}
+			var target:Object3D = selectedTargetTransformBegin();
 			if (target)
 			{
 				var moveStep:Number = 1.0;
@@ -336,9 +393,7 @@ package tl.frameworks.mediator
 						break;
 				}
 				// 保存移动数据
-				if(selectedRigidBody) selectedRigidBody.commit();
-				else if (selectedRole)
-					mapModel.saveWizard(selectedRole.vo);
+				selectedTargetTransformCommit();
 			} else
 			{
 				switch (event.keyCode)
@@ -470,6 +525,7 @@ package tl.frameworks.mediator
 			{
 				brushView.asZoneBrush();
 				view.isShowZone=true;
+				view.lookDown();
 			}
 			// 刷子阶段 不监听其它鼠标单击
 			setTargetsMouseInteractive( false );
@@ -571,68 +627,68 @@ package tl.frameworks.mediator
 			// 不是实际放置，而是先比划一下 ，实际放置的时候找model
 			clearSelection();
 			var vo:RigidBodyVO = new RigidBodyVO();
-			selectedRigidBody  = new RigidBodyView(vo);
-			view.addChild(selectedRigidBody);
-			rigidBodiesInScene.push(selectedRigidBody);
+			_selectedRigidBody = new RigidBodyView(vo);
+			view.addChild(_selectedRigidBody);
+			rigidBodiesInScene.push(_selectedRigidBody);
 			mapModel.addRigidBody(vo);
 			// 提交后监听鼠标点击可选中
 			isSelectedRBDragging           = true;
 			isNewRigidBody                 = true;
-			selectedRigidBody.addEventListener(MouseEvent3D.MOUSE_DOWN, onRigidBodyMouseDown);
+			_selectedRigidBody.addEventListener(MouseEvent3D.MOUSE_DOWN, onRigidBodyMouseDown);
 			setTargetsMouseInteractive(false);
 		}
 		private function onToolRigidBodySizeAdd( n: TLEvent):void
 		{
-			if(selectedRigidBody)
+			if(_selectedRigidBody)
 			{
 				var deltaScale :Number = n.data;
-				selectedRigidBody.scaleX *=  deltaScale;
-				selectedRigidBody.scaleZ *=  deltaScale;
-				selectedRigidBody.commit();
+				_selectedRigidBody.scaleX *=  deltaScale;
+				_selectedRigidBody.scaleZ *=  deltaScale;
+				_selectedRigidBody.commit();
 			}
 		}
 
 		private function onToolRigidBodyRotated(n:TLEvent):void
 		{
-			if (selectedRigidBody)
+			if (_selectedRigidBody)
 			{
 				var deltaRot:Number = n.data;
-				selectedRigidBody.rotationY += deltaRot;
-				selectedRigidBody.commit();
+				_selectedRigidBody.rotationY += deltaRot;
+				_selectedRigidBody.commit();
 			}
 		}
 
 		private function onRigidBodyMouseDown(event:MouseEvent3D):void
 		{
 			clearSelection();
-			selectedRigidBody              = event.target as RigidBodyView;
-			selectedRigidBody.showBounds   = true;
-			isSelectedRBDragging           = true;
+			selectedRigidBody            = event.target as RigidBodyView;
+			_selectedRigidBody.showBounds = true;
+			isSelectedRBDragging          = true;
 			setTargetsMouseInteractive(false);
 		}
 
 		private function onMouseMoveRigidBody(event:MouseEvent3D):void
 		{
-			if (selectedRigidBody == null || isSelectedRBDragging == false) return;
-			if (selectedRigidBody.parent != null)
+			if (_selectedRigidBody == null || isSelectedRBDragging == false) return;
+			if (_selectedRigidBody.parent != null)
 			{
 				var downPos:Vector3D = event.scenePosition;
-				selectedRigidBody.x  = downPos.x;
-				selectedRigidBody.z  = downPos.z;
+				_selectedRigidBody.x = downPos.x;
+				_selectedRigidBody.z = downPos.z;
 				if (isNewRigidBody)
 				{
-					selectedRigidBody.y = mapModel.getHeight(downPos.x, downPos.z);
+					_selectedRigidBody.y = mapModel.getHeight(downPos.x, downPos.z);
 				} else
 				{
 					// 移动现有的，则不控制y
 				}
-				selectedRigidBody.commit();
+				_selectedRigidBody.commit();
 			}
 		}
 
 		private function onStageMouseUp4RigidBody(event:MouseEvent):void
 		{
-			if (selectedRigidBody)
+			if (_selectedRigidBody)
 			{
 				isSelectedRBDragging           = false;
 				isNewRigidBody                 = false;
@@ -642,7 +698,7 @@ package tl.frameworks.mediator
 
 		private var isNewRigidBody:Boolean                    = false;
 		private var isSelectedRBDragging:Boolean              = false;
-		private var selectedRigidBody:RigidBodyView;
+		private var _selectedRigidBody:RigidBodyView;
 		private var rigidBodiesInScene:Vector.<RigidBodyView> = new <RigidBodyView>[];
 
 
@@ -716,5 +772,18 @@ package tl.frameworks.mediator
 			setTargetsMouseInteractive(true);
 		}
 
+		public function set selectedRole(value:Role):void
+		{
+			if(value)
+				dispatchWith(NotifyConst.NEW_WIZARD_UI, false, value)
+			_selectedRole = value;
+		}
+
+		public function set selectedRigidBody(value:RigidBodyView):void
+		{
+			if(value)
+				dispatchWith(NotifyConst.NEW_WIZARD_UI, false, value)
+			_selectedRigidBody = value;
+		}
 	}
 }

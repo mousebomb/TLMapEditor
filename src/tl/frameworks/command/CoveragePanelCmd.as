@@ -10,14 +10,24 @@ package tl.frameworks.command
 	/**图层面板*/
 	public class CoveragePanelCmd extends Command
 	{
+		private static var ui:CoveragePanelUI
 		public function CoveragePanelCmd()
 		{
 		}
 
 		override public function execute():void
 		{
-			var ui : CoveragePanelUI = new CoveragePanelUI();
-			contextView.addChild(ui);
+			if(!ui)
+			{
+				ui = new CoveragePanelUI();
+			}
+			if(ui.parent)
+			{
+				ui.parent.removeChild(ui)
+			}	else {
+				contextView.addChild(ui);
+			}
+
 		}
 	}
 }
