@@ -11,10 +11,8 @@ package tl.core.terrain
 	import flash.utils.Dictionary;
 
 	import tl.core.funcpoint.FuncPointVO;
-
 	import tl.core.rigidbody.RigidBodyVO;
-
-	import tool.StageFrame;
+	import tl.core.role.RolePlaceVO;
 
 	public class TLMapVO
 	{
@@ -314,9 +312,29 @@ package tl.core.terrain
 
 
 		// #pragma mark --  模型  ------------------------------------------------------------
-		/** 模型对象 分组 */
-//public var objects:Vector.<
+		/** 模型对象 分组  [name:String] = Vector.<RolePlaceVO> */
+		public var entityGroups :Dictionary = new Dictionary();
+		/** 对象模型的组名 */
+		public var entityGroupNames :Vector.<String> = new <String>[];
 
+		/** 从数据初始化模型对象分组数据*/
+		public function fromEntityGroupData( rawBytes :ByteArray ):void
+		{
+			var gLen : int = rawBytes.readUnsignedShort();
+			for (var i:int = 0; i < gLen; i++)
+			{
+				var groupName:String = rawBytes.readUTF();
+				var groupLen:uint    = rawBytes.readUnsignedShort();
+				entityGroupNames.push(groupName);
+				var group:Vector.<RolePlaceVO> = entityGroups[groupName] = new Vector.<RolePlaceVO>();
+				for (var j:int = 0; j < groupLen; j++)
+				{
+					var vo :RolePlaceVO = new RolePlaceVO();
+					vo.readFromByteArray(rawBytes);
+					group.push(vo);
+				}
+			}
+		}
 
 
 		// #pragma mark --  区域存储为二维node的value  ------------------------------------------------------------
@@ -363,16 +381,12 @@ package tl.core.terrain
 		// #pragma mark --  功能点  ------------------------------------------------------------
 		public var funcPoints:Vector.<FuncPointVO> = new Vector.<FuncPointVO>();
 
-		/** TODO 初始化 从数据读入功能点 */
-		public function fromFuncPoints(rawBytes :ByteArray ):void
-		{
-			trace(StageFrame.renderIdx,"[TLMapVO]/fromFuncPoints");
-
-		}
-
 
 		// #pragma mark --  光照角度  ------------------------------------------------------------
 		/**光照角度*/
 		public var sunLightDirection :Vector3D = new Vector3D(-0.2, -0.78, -0.2) ;
+		// #pragma mark --  skybox  ------------------------------------------------------------
+		/** 天空盒纹理名 */
+		public var skyboxTextureName:String    ="sun";
 	}
 }

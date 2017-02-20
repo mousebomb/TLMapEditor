@@ -11,6 +11,8 @@ package tl.core.terrain
 
 	import org.robotlegs.mvcs.Actor;
 
+	import tl.core.funcpoint.FuncPointVO;
+
 	import tl.core.rigidbody.RigidBodyVO;
 	import tl.frameworks.NotifyConst;
 
@@ -97,12 +99,23 @@ package tl.core.terrain
 			var rbLen : uint = by.readUnsignedShort();
 			_curMapVO.fromRigidBodies( by ,rbLen );
 			// 模型
-
-			// 区域存储
-//			_curMapVO.fromZoneData();
-			_curMapVO.initEmptyZone();
-			// 光照
+			_curMapVO.fromEntityGroupData(by);
+			// 区域
+			_curMapVO.fromZoneData(by);
+			// 光照角度
 			_curMapVO.sunLightDirection = new Vector3D(by.readFloat(),by.readFloat(),by.readFloat());
+			// 功能点
+			var lLen : uint = by.readUnsignedShort();
+			for(i=0;i<lLen;i++)
+			{
+				var fpvo :FuncPointVO = new FuncPointVO();
+				fpvo.tileX = by.readUnsignedShort();
+				fpvo.tileY = by.readUnsignedShort();
+				fpvo.type = by.readUnsignedByte();
+				_curMapVO.funcPoints.push(fpvo);
+			}
+			// 天空盒
+			_curMapVO.skyboxTextureName = by.readUTF();
 			//
 			dispatchWith(NotifyConst.MAP_VO_INITED);
 		}

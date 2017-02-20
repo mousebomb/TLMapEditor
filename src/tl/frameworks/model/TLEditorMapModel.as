@@ -8,15 +8,20 @@ package tl.frameworks.model
 	import flash.geom.Vector3D;
 	import flash.utils.ByteArray;
 	import flash.utils.CompressionAlgorithm;
+	import flash.utils.Dictionary;
 
 	import org.mousebomb.Math.MousebombMath;
+	import org.mousebomb.framework.GlobalFacade;
 
 	import tl.core.funcpoint.FuncPointVO;
 
 	import tl.core.old.WizardObject;
 	import tl.core.rigidbody.RigidBodyVO;
+	import tl.core.role.Role;
+	import tl.core.role.RolePlaceVO;
 	import tl.core.terrain.*;
 	import tl.frameworks.NotifyConst;
+	import tl.frameworks.defines.WizardType;
 	import tl.mapeditor.ui3d.FuncPointView;
 
 	import tool.StageFrame;
@@ -58,15 +63,41 @@ package tl.frameworks.model
 
 
 		// #pragma mark --  addWizard  ------------------------------------------------------------
-		public function addWizard(role:WizardObject):void
+		/** 加入模型 */
+		public function addWizard(role:Role):RolePlaceVO
 		{
 			track("TLEditorMapModel/addWizard");
+
+			return addWizardToGroup(role ,WizardType.LABEL[role.vo.type]);
 		}
 
-		public function saveWizard(role:WizardObject):void
+		private function addWizardToGroup(role:Role, wizardType:String):RolePlaceVO
 		{
-			track("TLEditorMapModel/saveWizard");
-			//显示模型设置界面
+			var group :Vector.<RolePlaceVO> = _curMapVO.entityGroups[wizardType];
+			if(group == null)
+			{
+				_curMapVO.entityGroups[wizardType] = group = new <RolePlaceVO>[];
+				_curMapVO.entityGroupNames.push(wizardType);
+			}
+			var placeData :RolePlaceVO = new RolePlaceVO();
+			placeData.wizardId = role.vo.id;
+			placeData.x = role.x;
+			placeData.y =role.y;
+			placeData.z = role.z;
+			group.push(placeData);
+			return placeData;
+		}
+
+		public function commitWizard(role:Role,placeData:RolePlaceVO):void
+		{
+			if(placeData)
+			{
+				placeData.x = role.x;
+				placeData.y = role.y;
+				placeData.z = role.z;
+			}else{
+				GlobalFacade.sendNotify(NotifyConst.STATUS,this,"精灵放置数据不存在");
+			}
 		}
 
 
@@ -288,7 +319,7 @@ package tl.frameworks.model
 		{
 			var end :ByteArray = new ByteArray();
 			// 版本号
-			end.writeUnsignedInt(1);
+			end.writeUnsignedInt(2);
 			// 写入地图名
 			end.writeUTF(_curMapVO.name);
 			//写入高度图
@@ -315,12 +346,42 @@ package tl.frameworks.model
 				vo.exportToByteArray(end);
 			}
 			//写入模型
-//			end.writeShort()
-			trace(StageFrame.renderIdx,"[TLEditorMapModel]/saveMapData size=",end.length);//1254736
+			end.writeShort(_curMapVO.entityGroupNames.length);
+			for each (var groupName:String in _curMapVO.entityGroupNames)
+			{
+				var group:Vector.<RolePlaceVO> = _curMapVO.entityGroups[groupName];
+				end.writeUTF(groupName);
+				end.writeShort(group.length);
+				trace(StageFrame.renderIdx,"[TLEditorMapModel]/saveMapData groupName:"+groupName+" num:"+group.length);
+				for (var i:int = 0; i < group.length; i++)
+				{
+					group[i].exportToByteArray(end);
+				}
+			}
+			// 区域
+			for (var y:int = 0; y < _curMapVO.terrainVerticlesY; y++)
+			{
+				for (var x:int = 0; x < _curMapVO.terrainVerticlesX; x++)
+				{
+					end.writeByte( _curMapVO.getNodeVal(x,y));
+				}
+			}
+
 			// 光照角度
 			end.writeFloat(_curMapVO.sunLightDirection.x);
 			end.writeFloat(_curMapVO.sunLightDirection.y);
 			end.writeFloat(_curMapVO.sunLightDirection.z);
+			// 写入功能点
+			end.writeShort(_curMapVO.funcPoints.length);
+			for (var i:int = 0; i < _curMapVO.funcPoints.length; i++)
+			{
+				var funcPointVO:FuncPointVO = _curMapVO.funcPoints[i];
+				end.writeShort(funcPointVO.tileX);
+				end.writeShort(funcPointVO.tileY);
+				end.writeByte(funcPointVO.type);
+			}
+			// 写入天空盒
+			end.writeUTF(_curMapVO.skyboxTextureName);
 
 			// 压缩
 			end.compress();

@@ -11,21 +11,24 @@ package tl.frameworks.mediator
 	import flash.events.TimerEvent;
 	import flash.geom.Vector3D;
 	import flash.ui.Keyboard;
+	import flash.utils.Dictionary;
 	import flash.utils.Timer;
 
 	import org.robotlegs.mvcs.Mediator;
 
 	import tl.core.LightProvider;
-
 	import tl.core.funcpoint.FuncPointVO;
 	import tl.core.old.WizardObject;
 	import tl.core.rigidbody.RigidBodyVO;
 	import tl.core.rigidbody.RigidBodyView;
 	import tl.core.role.Role;
+	import tl.core.role.RolePlaceVO;
+	import tl.core.terrain.TLMapVO;
 	import tl.frameworks.NotifyConst;
 	import tl.frameworks.TLEvent;
 	import tl.frameworks.defines.ToolBrushType;
 	import tl.frameworks.defines.ZoneType;
+	import tl.frameworks.model.CSV.SGCsvManager;
 	import tl.frameworks.model.TLEditorMapModel;
 	import tl.mapeditor.scenes.EditorScene3D;
 	import tl.mapeditor.ui3d.BrushView;
@@ -40,6 +43,8 @@ package tl.frameworks.mediator
 		public var view:EditorScene3D;
 		[Inject]
 		public var mapModel:TLEditorMapModel;
+		[Inject]
+		public var csvModel:SGCsvManager;
 
 		override public function onRegister():void
 		{
@@ -92,6 +97,7 @@ package tl.frameworks.mediator
 		private function onLIGHT_DIRECTION_SET( n: * ):void
 		{
 			LightProvider.getInstance().setSunLightDirection(n.data);
+			mapModel.mapVO.sunLightDirection=n.data;
 		}
 
 		/**设置天空盒*/
@@ -99,6 +105,7 @@ package tl.frameworks.mediator
 		{
 			var cubeTextureName:String = n.data;
 			view.skyBoxView.setSkyBoxTextureName(cubeTextureName);
+			mapModel.mapVO.skyboxTextureName = cubeTextureName;
 		}
 
 		// #pragma mark --  选中对象旋转和抬高  ------------------------------------------------------------
@@ -140,7 +147,7 @@ package tl.frameworks.mediator
 			if(_selectedRigidBody)
 				_selectedRigidBody.commit();
 			else if (_selectedRole)
-				mapModel.saveWizard(_selectedRole.vo);
+				mapModel.commitWizard(_selectedRole, placeVOByRole[_selectedRole]);
 		}
 		// #pragma mark --  区域显示  ------------------------------------------------------------
 
@@ -168,7 +175,17 @@ package tl.frameworks.mediator
 			view.terrainView.fromMapVO(mapModel.mapVO);
 			view.lookAtMapCenter();
 			// 模型
+			removeAllWizards();
+			for each (var group:Vector.<RolePlaceVO> in mapModel.mapVO.entityGroups)
+			{
+				for (var i:int = 0; i < group.length; i++)
+				{
+					var vo:RolePlaceVO = group[i];
+					fromMapWizard(vo);
+				}
+			}
 			// 刚体
+			removeAllRigidBodies();
 			for (var i:int = 0; i < mapModel.mapVO.rigidBodies.length; i++)
 			{
 				var rigidBodyVO:RigidBodyVO = mapModel.mapVO.rigidBodies[i];
@@ -180,8 +197,20 @@ package tl.frameworks.mediator
 			// 灯光
 			LightProvider.getInstance().setSunLightDirection(mapModel.mapVO.sunLightDirection);
 			// 区域
-			view.zoneView.mapVO = mapModel.mapVO;
-			// 路点
+			view.zoneView.fromMapVO(mapModel.mapVO);
+			// 功能点
+			removeAllFuncPoints();
+			for (var i:int = 0; i < mapModel.mapVO.funcPoints.length; i++)
+			{
+				var funcPointVO:FuncPointVO = mapModel.mapVO.funcPoints[i];
+				selectedFuncPoint  = new FuncPointView(funcPointVO);
+				view.addChild(selectedFuncPoint);
+				funcPointsInScene.push(selectedFuncPoint);
+				// 提交后监听鼠标点击可选中
+				selectedFuncPoint.addEventListener(MouseEvent3D.MOUSE_DOWN, onFuncPointMouseDown);
+			}
+			// 天空盒
+			view.skyBoxView.setSkyBoxTextureName(mapModel.mapVO.skyboxTextureName);
 		}
 
 		private function onSPLAT_TEXTURE_CHANGED(n:TLEvent):void
@@ -191,6 +220,42 @@ package tl.frameworks.mediator
 
 		// #pragma mark --  WIZARD 角色添加删除和拖拽  ------------------------------------------------------------
 
+		/** 编辑器使用 记录一幅地图里放置的数据对应关系; 恢复完视图也需要绑定 */
+		private var placeVOByRole:Dictionary = new Dictionary();
+
+		/** 清空地图：wizard */
+		private function removeAllWizards():void
+		{
+			for (var i:int = 0; i < rolesInScene.length; i++)
+			{
+				var role:Role = rolesInScene[i];
+				role.clearRole();
+			}
+			rolesInScene  = new Vector.<Role>();
+			placeVOByRole = new Dictionary();
+			if(draggingNewRole) draggingNewRole.clearRole();
+			draggingNewRole = null;
+			isSelectedDragging=false;
+			selectedRole = null;
+		}
+
+		/** 从存档加入显示 */
+		private function fromMapWizard(placeVO:RolePlaceVO):void
+		{
+			var wizardObject:WizardObject = new WizardObject();
+			wizardObject.refreshByTable(placeVO.wizardId);
+			var newRole:Role = new Role();
+			newRole.actor3DInIt(wizardObject);
+			newRole.x = placeVO.x;
+			newRole.z = placeVO.z;
+			newRole.y = placeVO.y;
+			view.addChild(newRole);
+			rolesInScene.push(newRole);
+			// 提交后监听鼠标点击可选中
+			newRole.addEventListener(MouseEvent3D.MOUSE_DOWN, onRoleMouseDown);
+			//
+			placeVOByRole[newRole] = placeVO;
+		}
 		/** 实体角色 开始添加 */
 		private function onAddWizard(n:TLEvent):void
 		{
@@ -235,7 +300,7 @@ package tl.frameworks.mediator
 				} else
 				{
 					// 提交
-					mapModel.addWizard(draggingNewRole.vo);
+					mapModel.addWizard(draggingNewRole);
 					rolesInScene.push(draggingNewRole);
 					track("EditorScene3DMediator/onStageMouseUp addWizard");
 					// 提交后监听鼠标点击可选中
@@ -246,7 +311,7 @@ package tl.frameworks.mediator
 			} else if (_selectedRole)
 			{
 				// 移动了重新保存 仍旧保持选中状态
-				mapModel.saveWizard(_selectedRole.vo);
+				mapModel.commitWizard(_selectedRole, placeVOByRole[_selectedRole]);
 				// 停止移动
 				setTargetsMouseInteractive(true);
 				isSelectedDragging            = false;
@@ -701,12 +766,38 @@ package tl.frameworks.mediator
 		private var _selectedRigidBody:RigidBodyView;
 		private var rigidBodiesInScene:Vector.<RigidBodyView> = new <RigidBodyView>[];
 
+		private function removeAllRigidBodies():void
+		{
+
+			for (var i:int = 0; i < rigidBodiesInScene.length; i++)
+			{
+				var view1:RigidBodyView = rigidBodiesInScene[i];
+				view1.disposeWithChildren();
+			}
+			rigidBodiesInScene   = new Vector.<RigidBodyView>();
+			isNewRigidBody       = false;
+			isSelectedRBDragging = false;
+			_selectedRigidBody   = null;
+		}
 
 		// #pragma mark --  放置点		  ------------------------------------------------------------
 		private var funcPointsInScene:Vector.<FuncPointView> = new Vector.<FuncPointView>();
 		private var selectedFuncPoint:FuncPointView;
 		private var isNewFuncPoint:Boolean                   = false;
 		private var isSelectedFPDragging:Boolean             = false;
+
+		private function removeAllFuncPoints():void
+		{
+			for (var i:int = 0; i < funcPointsInScene.length; i++)
+			{
+				var fp:FuncPointView = funcPointsInScene[i];
+				fp.dispose();
+			}
+			funcPointsInScene    = new Vector.<FuncPointView>();
+			selectedFuncPoint    = null;
+			isNewFuncPoint       = false;
+			isSelectedFPDragging = false;
+		}
 
 		private function onAddFuncPoint(n:*):void
 		{

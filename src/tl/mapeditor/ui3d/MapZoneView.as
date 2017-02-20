@@ -9,11 +9,9 @@ package tl.mapeditor.ui3d
 	import away3d.primitives.CubeGeometry;
 
 	import flash.geom.Point;
-
 	import flash.utils.Dictionary;
 
 	import tl.core.GPUResProvider;
-
 	import tl.core.terrain.TLMapVO;
 	import tl.frameworks.defines.ZoneType;
 
@@ -94,6 +92,29 @@ package tl.mapeditor.ui3d
 		{
 			if(isHeightDirty)
 				validateHeight();
+		}
+
+		/** 从地图数据读入 重新设置 */
+		public function fromMapVO(mapVO:TLMapVO):void
+		{
+			// 记录高度变更后重设
+			this.mapVO = mapVO;
+			// 清理之前显示的(如有)
+			for (var i:int = numChildren - 1; i > 0; i--)
+			{
+				getChildAt(i).disposeWithChildren();
+			}
+			dic = new Dictionary();
+			//显示
+			for (var ty:int = 0; ty < mapVO.terrainVerticlesY; ty++)
+			{
+				for (var tx:int = 0; tx < mapVO.terrainVerticlesX; tx++)
+				{
+					var type :int=mapVO.getNodeVal(tx,ty);
+					if(type)
+						setZoneType(tx,ty,ZoneType.COLOR_BY_TYPE[ type]);
+				}
+			}
 		}
 	}
 }

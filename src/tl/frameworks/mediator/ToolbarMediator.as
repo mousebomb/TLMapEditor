@@ -154,10 +154,11 @@ package tl.frameworks.mediator
 					_isControl = true;
 					break;
 			}
-		}/** 选择完成执行 **/
-	private function onSelect(e:Event):void
-	{
-		dispatchWith(NotifyConst.LOAD_MAP,false,_file);
-	}
+		}
+		/** 选择完成执行 **/
+		private function onSelect(e:Event):void
+		{
+			dispatchWith(NotifyConst.LOAD_MAP,false,_file);
+		}
 	}
 }
