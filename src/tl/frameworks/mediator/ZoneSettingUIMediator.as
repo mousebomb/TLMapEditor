@@ -35,7 +35,7 @@ package tl.frameworks.mediator
 
 			view.init();
 			view.x = 90;
-			view.y = 372;
+			view.y = 200;
 			addViewListener(MouseEvent.CLICK, onMouseClick);
 			eventMap.mapListener(view , MouseEvent.ROLL_OUT, onMouseRollOut);
 		}

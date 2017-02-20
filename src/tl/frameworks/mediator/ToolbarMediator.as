@@ -15,11 +15,14 @@ package tl.frameworks.mediator
 	import org.mousebomb.framework.MediatorBase;
 	import org.robotlegs.mvcs.Mediator;
 
+	import tl.core.role.RolePlaceVO;
+
 	import tl.frameworks.NotifyConst;
 	import tl.frameworks.defines.ToolBrushType;
 	import tl.frameworks.model.TLEditorMapModel;
 	import tl.frameworks.model.vo.CreateMapVO;
 	import tl.mapeditor.Config;
+	import tl.mapeditor.ToolBoxType;
 	import tl.mapeditor.ui.Toolbar;
 	import tl.mapeditor.ui.common.MyButton;
 	import tool.StageFrame;
@@ -130,7 +133,23 @@ package tl.frameworks.mediator
 				case Keyboard.X :
 					if(!_isControl)
 						break;
-					dispatchWith(NotifyConst.NEW_WIZARD_UI)
+					dispatchWith(NotifyConst.NEW_WIZARD_UI);
+					break;
+				case Keyboard.D :
+					if(!_isControl)
+						break;
+					dispatchWith(NotifyConst.SWITCH_TOOLBOX, false, ToolBoxType.WIZARD_LIBRARY);
+					break;
+				case Keyboard.H :
+					if(!_isControl)
+						break;
+					dispatchWith(NotifyConst.SWITCH_TOOLBOX, false, ToolBoxType.BAR_NAME_28);
+					break;
+				case Keyboard.F :
+					if(!_isControl)
+						break;
+					dispatchWith(NotifyConst.SWITCH_TOOLBOX, false, ToolBoxType.BAR_NAME_30);
+					break;
 				case Keyboard.NUMPAD_ADD:
 					dispatchWith(NotifyConst.TOOL_BRUSH_SIZE_ADD, false, 1);
 					dispatchWith(NotifyConst.TOOL_RIGIDBODY_SIZE_ADD, false, 10/9);
@@ -140,8 +159,11 @@ package tl.frameworks.mediator
 					dispatchWith(NotifyConst.TOOL_RIGIDBODY_SIZE_ADD, false, .9);
 					break;
 				case Keyboard.K:
-					dispatchWith(NotifyConst.TOOL_SKYBOX_SET,false,"snow");
-					dispatchWith(NotifyConst.LIGHT_DIRECTION_SET,false,new Vector3D(300-Math.random()*150,-300,300-Math.random()*150));
+//					dispatchWith(NotifyConst.TOOL_SKYBOX_SET,false,"snow");
+//					dispatchWith(NotifyConst.LIGHT_DIRECTION_SET,false,new Vector3D(300-Math.random()*150,-300,300-Math.random()*150));
+						//测试代码，测试点选模型对象: 只有放置过模型才可以测
+						var rolePlaceVO:RolePlaceVO = mapModel.mapVO.entityGroups[mapModel.mapVO.entityGroupNames[0]][0];
+						dispatchWith(NotifyConst.UI_SELECT_WIZARD,false,rolePlaceVO);
 					break;
 			}
 		}

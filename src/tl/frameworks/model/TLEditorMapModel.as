@@ -7,22 +7,17 @@ package tl.frameworks.model
 	import flash.geom.Point;
 	import flash.geom.Vector3D;
 	import flash.utils.ByteArray;
-	import flash.utils.CompressionAlgorithm;
-	import flash.utils.Dictionary;
 
 	import org.mousebomb.Math.MousebombMath;
 	import org.mousebomb.framework.GlobalFacade;
 
 	import tl.core.funcpoint.FuncPointVO;
-
-	import tl.core.old.WizardObject;
 	import tl.core.rigidbody.RigidBodyVO;
 	import tl.core.role.Role;
 	import tl.core.role.RolePlaceVO;
 	import tl.core.terrain.*;
 	import tl.frameworks.NotifyConst;
 	import tl.frameworks.defines.WizardType;
-	import tl.mapeditor.ui3d.FuncPointView;
 
 	import tool.StageFrame;
 
@@ -66,8 +61,6 @@ package tl.frameworks.model
 		/** 加入模型 */
 		public function addWizard(role:Role):RolePlaceVO
 		{
-			track("TLEditorMapModel/addWizard");
-
 			return addWizardToGroup(role ,WizardType.LABEL[role.vo.type]);
 		}
 
@@ -78,6 +71,7 @@ package tl.frameworks.model
 			{
 				_curMapVO.entityGroups[wizardType] = group = new <RolePlaceVO>[];
 				_curMapVO.entityGroupNames.push(wizardType);
+				dispatchWith(NotifyConst.GROUP_ADDED,false,wizardType);
 			}
 			var placeData :RolePlaceVO = new RolePlaceVO();
 			placeData.wizardId = role.vo.id;
@@ -85,6 +79,8 @@ package tl.frameworks.model
 			placeData.y =role.y;
 			placeData.z = role.z;
 			group.push(placeData);
+			placeData.wizard = role;
+			dispatchWith(NotifyConst.GROUP_WIZARD_LIST_CHANGED,false,wizardType);
 			return placeData;
 		}
 
@@ -95,11 +91,47 @@ package tl.frameworks.model
 				placeData.x = role.x;
 				placeData.y = role.y;
 				placeData.z = role.z;
+				dispatchWith(NotifyConst.GROUP_WIZARD_LI_CHANGED,false,placeData);
 			}else{
 				GlobalFacade.sendNotify(NotifyConst.STATUS,this,"精灵放置数据不存在");
 			}
 		}
 
+
+		/** 新建一个层 */
+		public function addEntityGroup(groupName:String):void
+		{
+			if(_curMapVO.entityGroupNames.indexOf(groupName)>-1)
+			{
+				GlobalFacade.sendNotify(NotifyConst.STATUS,this,"名称已存在，忽略");
+				return;
+			}
+			_curMapVO.entityGroupNames.push(groupName);
+			_curMapVO.entityGroups[groupName] = new Vector.<RolePlaceVO>();
+			// 通知：新建一个层成功
+			dispatchWith(NotifyConst.GROUP_ADDED,false,groupName);
+		}
+
+		/** 层 改名 */
+		public function renameEntityGroup(groupName:String, toName:String):Boolean
+		{
+			var index : int = _curMapVO.entityGroupNames.indexOf(groupName);
+			if(index ==-1)
+				return false;
+			_curMapVO.entityGroupNames[index] = toName;
+			return true;
+		}
+
+		/** 将一个精灵 从层组移动到另一个层组 */
+		public function moveIntoGroup(placeData:RolePlaceVO,fromGroupName:String,toGroupName:String):void
+		{
+			var group :  Vector.<RolePlaceVO>= _curMapVO.entityGroups[fromGroupName];
+			var oldIndex : int = group.indexOf(placeData);
+			group.splice(oldIndex,1);
+			dispatchWith(NotifyConst.GROUP_WIZARD_LIST_CHANGED,false,fromGroupName);
+			_curMapVO.entityGroups[toGroupName].push(placeData);
+			dispatchWith(NotifyConst.GROUP_WIZARD_LIST_CHANGED,false,toGroupName);
+		}
 
 		// #pragma mark --  地形和刷		  ------------------------------------------------------------
 

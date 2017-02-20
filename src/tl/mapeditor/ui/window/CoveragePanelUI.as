@@ -4,26 +4,13 @@
 package tl.mapeditor.ui.window
 {
 
-	import away3d.core.render.BackgroundImageRenderer;
-
-	import fl.containers.BaseScrollPane;
 	import fl.controls.List;
-	import fl.controls.ScrollBar;
 
 	import flash.display.Bitmap;
-	import flash.display.BitmapData;
-	import flash.display.Sprite;
 	import flash.events.MouseEvent;
-	import flash.geom.Rectangle;
 
-	import org.mousebomb.ui.ScrollContainer;
-
-	import tl.core.old.WizardObject;
-
-	import tl.mapeditor.ui.common.MyButton;
 	import tl.mapeditor.ui.common.MySprite;
 	import tl.mapeditor.ui.common.MyTextField;
-
 	import tl.mapeditor.ui.common.UIBase;
 	import tl.utils.Tool;
 
@@ -47,7 +34,7 @@ package tl.mapeditor.ui.window
 			this.addChild(text);
 			text.x = 10;
 			text.y = titleY + 5;
-			text.text = '类型选择';
+			text.text = '图层选择';
 
 			bgSpr = new MySprite();
 			this.addChild(bgSpr);
@@ -80,12 +67,20 @@ package tl.mapeditor.ui.window
 			wizardList.x = 5;
 			wizardList.y = 5;
 			wizardList.setSize(230, 400);
-			wizardList.labelField = 'name';
-			wizardList.iconField = 'name';
+			wizardList.labelFunction = wizardLabelFunction;
+			wizardList.iconFunction = wizardIconFunction
 		}
 		private function iconFunction (obj:Object):Bitmap
 		{
 			return new Bitmap(new Skin_add_up())
+		}
+		private function wizardLabelFunction (obj:Object):String
+		{
+			return obj.toString();
+		}
+		private function wizardIconFunction (obj:Object):Bitmap
+		{
+			return null;
 		}
 
 		override protected function onClickClose(e:MouseEvent = null):void

@@ -3,6 +3,8 @@
  */
 package tl.mapeditor.scenes
 {
+	import away3d.cameras.lenses.OrthographicLens;
+	import away3d.core.base.Object3D;
 	import away3d.entities.Mesh;
 	import away3d.primitives.PlaneGeometry;
 
@@ -19,6 +21,7 @@ package tl.mapeditor.scenes
 
 	import tl.core.terrain.MapView;
 	import tl.mapeditor.ui3d.MapZoneView;
+	import tl.mapeditor.ui3d.MousePointTrack;
 
 	import tool.StageFrame;
 
@@ -37,6 +40,7 @@ package tl.mapeditor.scenes
 
 		/** 上盖ui层 3D标注类 */
 		public var coverView:ObjectContainer3D;
+		public var mousePointTrack:MousePointTrack;
 
 		/** 上盖地图区域显示 3D标注 */
 		public var zoneView:MapZoneView;
@@ -69,6 +73,9 @@ package tl.mapeditor.scenes
 
 			skyBoxView= new TLSkyBox();
 			addChild(skyBoxView);
+			//
+			mousePointTrack = new MousePointTrack();
+			addChild(mousePointTrack);
 		}
 
 
@@ -113,9 +120,14 @@ package tl.mapeditor.scenes
 			setLookTarget(terrainView.bounds.halfExtentsX, terrainView.bounds.halfExtentsZ, terrainView.bounds.halfExtentsY);
 		}
 
+		public function lookAtEntity(obj:Object3D):void
+		{
+			setLookTarget(obj.x, obj.z, obj.y);
+		}
+
 		public function camForward(delta:int):void
 		{
-			_camHC.distance += delta*5;
+			_camHC.distance -= delta*5;
 		}
 
 		/** 进入俯视模式 */

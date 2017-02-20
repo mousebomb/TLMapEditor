@@ -9,7 +9,9 @@ package tl.mapeditor.ui
 
 	import tl.mapeditor.ToolBoxType;
 	import tl.mapeditor.ui.window.FunctionPointUI;
+	import tl.mapeditor.ui.window.LightingPanelUI;
 	import tl.mapeditor.ui.window.PropertyPanelUI;
+	import tl.mapeditor.ui.window.SkyBoxSettingUI;
 	import tl.mapeditor.ui.window.ThumbnailUI;
 	import tl.mapeditor.ui.window.WizardBarUI;
 
@@ -28,6 +30,8 @@ package tl.mapeditor.ui
 		/** 当前显示的toolbox类型 */
 		private const _type:String ;
 		private var _functionPoint:FunctionPointUI;
+		private var _skyBoxSetting:SkyBoxSettingUI;
+		private var _lightingPanel:LightingPanelUI;
 
 		public function EditorUI()
 		{
@@ -73,6 +77,25 @@ package tl.mapeditor.ui
 						_functionPoint.parent.removeChild(_functionPoint);
 					}	else {
 						addChild(_functionPoint);
+					}
+					break;
+
+				case ToolBoxType.BAR_NAME_12:
+					_skyBoxSetting ||= new SkyBoxSettingUI();
+					if(_skyBoxSetting.parent)
+					{
+						_skyBoxSetting.parent.removeChild(_skyBoxSetting);
+					}	else {
+						addChild(_skyBoxSetting);
+					}
+					break;
+				case ToolBoxType.BAR_NAME_14:
+					_lightingPanel ||= new LightingPanelUI()
+					if(_lightingPanel.parent)
+					{
+						_lightingPanel.parent.removeChild(_lightingPanel);
+					}	else {
+						addChild(_lightingPanel);
 					}
 					break;
 				case ToolBoxType.BAR_NAME_28:

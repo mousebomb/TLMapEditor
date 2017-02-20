@@ -4,6 +4,7 @@
 package tl.core.role
 {
 	import away3d.containers.ObjectContainer3D;
+	import away3d.core.pick.PickingColliderType;
 
 	import tl.core.old.WizardAction;
 

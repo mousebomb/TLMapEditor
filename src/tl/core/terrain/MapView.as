@@ -32,9 +32,9 @@ package tl.core.terrain
 
 		public var bounds:AxisAlignedBoundingBox = new AxisAlignedBoundingBox();
 
-
-		/** 平面用来hittest 不飘的 */
-		public var planeHitTest:Mesh;
+//
+//		/** 平面用来hittest 不飘的 */
+//		public var planeHitTest:Mesh;
 
 
 		/** 从地图显示 */
@@ -58,15 +58,15 @@ package tl.core.terrain
 //			mouseEnabled = true;
 			isShowGrid = false;
 			//
-			if(planeHitTest==null)
-			{
-				planeHitTest = new Mesh(new PlaneGeometry(1, 1, 1, 1));
-				addChild( planeHitTest );
-				planeHitTest.mouseEnabled=true;
-			}
-			planeHitTest.scaleX = bounds.max.x;
-			planeHitTest.scaleZ = bounds.max.z;
-			planeHitTest.position=new Vector3D(bounds.halfExtentsX,bounds.halfExtentsY,bounds.halfExtentsZ);
+//			if(planeHitTest==null)
+//			{
+//				planeHitTest = new Mesh(new PlaneGeometry(1, 1, 1, 1));
+//				addChild( planeHitTest );
+//				planeHitTest.mouseEnabled=true;
+//			}
+//			planeHitTest.scaleX = bounds.max.x;
+//			planeHitTest.scaleZ = bounds.max.z;
+//			planeHitTest.position=new Vector3D(bounds.halfExtentsX,bounds.halfExtentsY,bounds.halfExtentsZ);
 		}
 
 		/** 地形棋格 */

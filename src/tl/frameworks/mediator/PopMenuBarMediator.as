@@ -67,6 +67,7 @@ package tl.frameworks.mediator
 							dispatchWith(NotifyConst.SAVE_MAP,false);
 						break;
 					case ToolBoxType.BAR_NAME_25 :
+						dispatchWith(NotifyConst.CLOSE_UI);
 						dispatchWith(NotifyConst.NEW_BRUSHSETTING_UI);
 						break;
 					case ToolBoxType.BAR_NAME_26 :

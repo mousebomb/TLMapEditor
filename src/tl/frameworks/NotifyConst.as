@@ -58,6 +58,13 @@ package tl.frameworks
 		/** CSV加载完毕 */
 		public static const CSV_LOADED:String     = "CSV_LOADED";
 
+		/** 层组增加了一层 @data = String 新层组的名字 */
+		public static const GROUP_ADDED :String = "GROUP_ADDED";
+
+		/** 某个层组内 精灵列表变化 @data = String 层组的名字 */
+		public static const GROUP_WIZARD_LIST_CHANGED :String = "GROUP_WIZARD_LIST_CHANGED";
+		/** 某个层组内 某个精灵放置变化 @data = RolePlaceVO  */
+		public static const GROUP_WIZARD_LI_CHANGED :String = "GROUP_WIZARD_LI_CHANGED";
 
 		/** 预览3D界面显示 @data={x,y} */
 		public static const UI_PREVIEW_SHOW :String = "UI_PREVIEW_SHOW";
@@ -72,6 +79,8 @@ package tl.frameworks
 
 		/** 开始按下拖拽，准备在场景内放置精灵 @data=WizardObject */
 		public static const UI_START_ADD_WIZARD:String = "UI_START_ADD_WIZARD";
+		/** UI点选已放置的模型精灵 @data=RolePlaceVO */
+		public static const UI_SELECT_WIZARD :String = "UI_SELECT_WIZARD";
 
 		/** 添加功能点  @data 点类型 */
 		public static const UI_ADD_FUNCPOINT :String = "UI_ADD_FUNCPOINT";
@@ -115,6 +124,8 @@ package tl.frameworks
 		public static const NEW_STATISTICS_UI:String = 'new_statistics_ui';
 		/**显示模型设置界面*/
 		public static const NEW_WIZARD_UI:String = 'new_wizard_ui';
+		/**关闭ui界面*/
+		public static const CLOSE_UI:String = 'CLOSE_UI';
 
 		public function NotifyConst()
 		{

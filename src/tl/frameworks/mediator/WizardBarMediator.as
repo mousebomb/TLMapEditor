@@ -39,7 +39,7 @@ package tl.frameworks.mediator
 		{
 
 			view.onSelectModelCallBack = onSelectModelCallBack;
-			view.init("模型库", 260, 540);
+			view.init("模型库", 260, 546);
 			addContextListener(NotifyConst.SELECT_WIZARDOBJECT_TYPE, onSelectType)
 			eventMap.mapListener(view.searchBtn,MouseEvent.CLICK, onClickSearch);
 			eventMap.mapListener(view.selectBtn, MouseEvent.CLICK, onClickSelect);
@@ -47,7 +47,7 @@ package tl.frameworks.mediator
 			onCsvLoaded( null );
 			addContextListener(NotifyConst.CSV_LOADED, onCsvLoaded);
 			onResize();
-			eventMap.mapListener(view.stage,Event.RESIZE, onResize);
+			//eventMap.mapListener(view.stage,Event.RESIZE, onResize);
 			view.moveUI = onViewMove;
 			dispatchWith(NotifyConst.UI_PREVIEW_SHOW, false, {x:view.x + 10, y:view.y + 35});
 		}

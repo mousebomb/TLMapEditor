@@ -60,7 +60,7 @@ package tl.mapeditor.ui.window
 
 			_rootSpr = new MySprite();
 			this.addChild(_rootSpr);
-			_rootSpr.y = 320 + titleY;
+			_rootSpr.y = 310 + titleY;
 
 			text = Tool.getMyTextField(400, -1, 16, 0x999999, "center");
 			text.text = '+Ctrl键可调整图层顺序';
@@ -85,17 +85,19 @@ package tl.mapeditor.ui.window
 				text.mouseEnabled = text.mouseWheelEnabled = false;
 				_rootSpr.addChild(text);
 				text.y = 36 * i ;
-				text.x = 5;
+				text.x = 32;
 
 				dragBar = new MyDragBar();
+				if(i == 1)
+					dragBar.isNegative = true;
 				_rootSpr.addChild(dragBar);
 				dragBar.name = 'SurfaceChartletUI_' + i;
 				dragBar.maxValue = labelArr[i + 3]
 				dragBar.y = 36 * i;
-				dragBar.x = 80;
+				dragBar.x = 112;
 				vectorDragBar.push(dragBar);
 
-				text = Tool.getMyTextField(50, -1, 12, 0x999999, "center");
+				text = Tool.getMyTextField(70, -1, 12, 0x999999, "center");
 				text.background = true;
 				text.backgroundColor = 0x191919;
 				text.border = true;
@@ -104,7 +106,7 @@ package tl.mapeditor.ui.window
 				text.mouseEnabled = text.mouseWheelEnabled = false;
 				_rootSpr.addChild(text);
 				text.y = 36 * i ;
-				text.x = 370;
+				text.x = dragBar.x + dragBar.myWidth + 10;
 				vectorTxt.push(text)
 			}
 
@@ -112,13 +114,13 @@ package tl.mapeditor.ui.window
 			showBtn.name = '显示贴图刷';
 			this.addChild(showBtn);
 			showBtn.x = 60;
-			showBtn.y = 440;
+			showBtn.y = 435;
 
 			hideBtn = Tool.getMyBtn('隐藏贴图刷', 120);
 			hideBtn.name = '隐藏贴图刷';
 			this.addChild(hideBtn);
 			hideBtn.x = 240;
-			hideBtn.y = 440;
+			hideBtn.y = 435;
 		}
 
 		override protected function onClickClose(e:MouseEvent = null):void

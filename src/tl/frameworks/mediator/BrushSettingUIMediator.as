@@ -35,16 +35,24 @@ package tl.frameworks.mediator
 		{
 			super.onRegister();
 
-			view.init("地形笔刷设置", 425, 180);
+			view.init("地形笔刷设置", 425, 280);
 			view.x = 350;
 			view.y = 32;
 
 			var positionArr:Array = [mapModel.brushSize, mapModel.brushStrong, mapModel.brushSoftness]
-			 for (var i:int = 0; i < 3; i++)
+			 for (var i:int = 0; i < 5; i++)
 			 {
 				 view.vectorDragBar[i].addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-				 view.vectorDragBar[i].dragSprX = positionArr[i];
-				 view.vectorTxt[i].text = view.vectorDragBar[i].dragBarPercent + '';
+				 if(view.vectorDragBar[i].isNegative)
+				 {
+					 view.vectorTxt[i].text = positionArr[i] + '';
+					 view.vectorDragBar[i].dragBarPercent = (positionArr[i] + view.vectorDragBar[i].halfValue)/view.vectorDragBar[i].maxValue;
+				 }
+				 else
+				 {
+					 view.vectorTxt[i].text = '' + positionArr[i] ;
+					 view.vectorDragBar[i].dragBarPercent = positionArr[i]/view.vectorDragBar[i].maxValue;
+				 }
 			 }
 
 			StageFrame.stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
@@ -52,6 +60,13 @@ package tl.frameworks.mediator
 				onClickShow(null);
 			view.hideBtn.addEventListener(MouseEvent.CLICK, onClickHide);
 			view.showBtn.addEventListener(MouseEvent.CLICK, onClickShow);
+			addContextListener(NotifyConst.CLOSE_UI, onClose);
+		}
+
+		private function onClose(event:*):void
+		{
+			if(view.parent)
+				view.parent.removeChild(view)
 		}
 
 		override public function onRemove():void
@@ -77,27 +92,29 @@ package tl.frameworks.mediator
 			var drag:MyDragBar = event.currentTarget as MyDragBar;
 			drag.onMouseDown(event);
 			_drag = drag.name;
-			var vx:int = event.movementX;
-			var vy:int = event.movementX;
-			trace(StageFrame.renderIdx,"BrushSettingUIMediator/onMouseDown", vx, vy);
 		}
 
 		public function onMouseUp(event:MouseEvent):void
 		{
-			for (var i:int = 0; i < 3; i++)
+			for (var i:int = 0; i < 5; i++)
 			{
 				view.vectorDragBar[i].onMouseUp(event);
-				view.vectorTxt[i].text = view.vectorDragBar[i].dragBarPercent + '';
+				var index:int;
+				if(view.vectorDragBar[i].isNegative)
+					index = view.vectorDragBar[i].dragBarPercent * view.vectorDragBar[i].maxValue - (view.vectorDragBar[i].maxValue >> 1);
+				else
+					index = view.vectorDragBar[i].dragBarPercent * view.vectorDragBar[i].maxValue;
+				view.vectorTxt[i].text = index + '';
 			}
 			if(_drag)
 			{
 				if(_drag == 'BrushSettingUI_0')
 				{
-					dispatchWith(NotifyConst.TOOL_BRUSH_QIANGDU, false, view.vectorDragBar[0].dragBarPercent);
+					dispatchWith(NotifyConst.TOOL_BRUSH_SIZE, false, int(view.vectorTxt[0].text));
 				} 	else if(_drag == 'BrushSettingUI_1') {
-					dispatchWith(NotifyConst.TOOL_BRUSH_SIZE, false, view.vectorDragBar[1].dragBarPercent);
+					dispatchWith(NotifyConst.TOOL_BRUSH_QIANGDU, false, int(view.vectorTxt[1].text));
 				} 	else if(_drag == 'BrushSettingUI_2') {
-					dispatchWith(NotifyConst.TOOL_BRUSH_ROUHE, false, view.vectorDragBar[2].dragBarPercent);
+					dispatchWith(NotifyConst.TOOL_BRUSH_ROUHE, false, int(view.vectorTxt[2].text));
 				}
 			}
 			_drag = null;

@@ -8,11 +8,17 @@ package tl.mapeditor.ui.common
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 
+	import tool.StageFrame;
+
 	public class MyDragBar extends MySprite
 	{
-		public var dragSpr:MySprite;
-		public var maxValue:Number = 100;
+		private var _maxValue:Number  = 100;
+		public var halfValue:Number;
+		public var isNegative:Boolean = false;
 		private var dragRect:Rectangle;
+		private var dragSpr:MySprite;
+		private var _dragBarPercent:Number;
+		private var _isDown:Boolean;
 		public function MyDragBar()
 		{
 			init();
@@ -21,11 +27,14 @@ package tl.mapeditor.ui.common
 		private function init():void
 		{
 			var bmd:BitmapData = new Skin_drag_1();
-			this.drawByBtmd(bmd);
+			bm = new Bitmap(bmd);
+			this.addChild(bm);
+			this.myWidth = bm.width = 200;
+
 
 			bmd = new Skin_drag_0();
 
-			var bm:Bitmap = new Bitmap(bmd)
+			var bm:Bitmap = new Bitmap(bmd);
 			dragSpr = new MySprite();
 			dragSpr.mouseEnabled = true;
 			this.addChild(dragSpr);
@@ -34,35 +43,45 @@ package tl.mapeditor.ui.common
 			dragSpr.addChild(bm);
 			bm.x = -8;
 
-			dragRect = new Rectangle(8, -1, 269, 0);
+			dragRect = new Rectangle(0, -1, 200, 0);
 
-		}
-		public function set dragSprX(value:Number):void
-		{
-			dragSpr.x = value / maxValue * 269 + 8;
 		}
 		public function onMouseDown(event:MouseEvent):void
 		{
+			_isDown = true;
 			dragSpr.startDrag(true, dragRect );
 		}
 		public function onMouseUp(event:MouseEvent):void
 		{
 			dragSpr.stopDrag();
+			if(_isDown)
+				_dragBarPercent = dragSpr.x / 200;
+			_isDown = false;
 		}
 
+		public function set dragBarPercent(value:Number):void
+		{
+			if(value > 1)
+				value = 1;
+			else if (value < 0)
+				value = 0;
+			_dragBarPercent = value;
+			dragSpr.x = value * 200;
+		}
 		public function get dragBarPercent():Number
 		{
-			var num:Number;
-			var percent:Number = (dragSpr.x - 8) / 269;
-			if(maxValue > 1)
-				num = Number((percent * maxValue).toFixed(0));
-			else
-				num = Number((percent * maxValue).toFixed(2));
-			if(num < maxValue * 0.01)
-			{
-				num = maxValue * 0.01;
-			}
-			return num;
+			return _dragBarPercent;
+		}
+
+		public function get maxValue():Number
+		{
+			return _maxValue;
+		}
+
+		public function set maxValue(value:Number):void
+		{
+			_maxValue = value;
+			halfValue = value >> 1;
 		}
 	}
 }

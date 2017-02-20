@@ -13,10 +13,12 @@ package tl.frameworks.command
 	import tl.frameworks.mediator.CreateFileUIMediator;
 	import tl.frameworks.mediator.FunctionPointUIMediator;
 	import tl.frameworks.mediator.HelpUIMediator;
+	import tl.frameworks.mediator.LightingPanelUIMediator;
 	import tl.frameworks.mediator.LogUIMediator;
 	import tl.frameworks.mediator.PopMenuBarMediator;
 	import tl.frameworks.mediator.PreviewView3DMediator;
 	import tl.frameworks.mediator.PropertyPanelUIMediator;
+	import tl.frameworks.mediator.SkyBoxSettingUIMediator;
 	import tl.frameworks.mediator.StatisticsUIMediator;
 	import tl.frameworks.mediator.SurfaceChartletUIMediator;
 	import tl.frameworks.mediator.ThumbnailUIMediator;
@@ -50,8 +52,10 @@ package tl.frameworks.command
 	import tl.mapeditor.ui.window.CoveragePanelUI;
 	import tl.mapeditor.ui.window.FunctionPointUI;
 	import tl.mapeditor.ui.window.HelpUI;
+	import tl.mapeditor.ui.window.LightingPanelUI;
 	import tl.mapeditor.ui.window.LogUI;
 	import tl.mapeditor.ui.window.PropertyPanelUI;
+	import tl.mapeditor.ui.window.SkyBoxSettingUI;
 	import tl.mapeditor.ui.window.StatisticsUI;
 	import tl.mapeditor.ui.window.SurfaceChartletUI;
 	import tl.mapeditor.ui.window.ThumbnailUI;
@@ -115,6 +119,8 @@ package tl.frameworks.command
 			mediatorMap.mapView(HelpUI, HelpUIMediator);
 			mediatorMap.mapView(StatisticsUI, StatisticsUIMediator);
 			mediatorMap.mapView(WizardSettingUI, WizardSettingUIMediator);
+			mediatorMap.mapView(SkyBoxSettingUI, SkyBoxSettingUIMediator);
+			mediatorMap.mapView(LightingPanelUI, LightingPanelUIMediator);
 
 			// map view Mediator 3D (3D的目前尚未实现自动addChild绑定，所以需要手动createMediator)
 			mediatorMap.mapView(EditorScene3D , EditorScene3DMediator,null,false,false);

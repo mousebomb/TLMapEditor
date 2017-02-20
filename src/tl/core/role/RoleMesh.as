@@ -8,6 +8,7 @@ package tl.core.role
 	import away3d.animators.transitions.CrossfadeTransition;
 	import away3d.containers.ObjectContainer3D;
 	import away3d.core.base.Object3D;
+	import away3d.core.pick.PickingColliderType;
 	import away3d.entities.Entity;
 	import away3d.entities.Mesh;
 	import away3d.library.assets.IAsset;
@@ -86,7 +87,7 @@ package tl.core.role
 //				playAction("run");
 				var sward :Mesh = new Mesh(new CubeGeometry(10,10,50));
 				bindToJoint(sward , "righthand");
-				addChild(sward);
+				parent.addChild(sward);
 				// TODO ENDOF debug only
 				// 恢复要进行的动作
 				validateAction();

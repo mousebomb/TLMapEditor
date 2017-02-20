@@ -81,7 +81,6 @@ package tl.mapeditor.ui.window
 			rightBtn.x = this.myWidth - 20 - right.width;
 			rightBtn.y = this.myHeight-titleY-10 - right.height >> 1;
 			rightBtn.labelText.x = -32;
-
 		}
 	}
 }

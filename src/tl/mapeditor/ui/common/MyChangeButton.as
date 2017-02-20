@@ -27,6 +27,7 @@ package tl.mapeditor.ui.common
 		private var _downBtmd1:BitmapData;
 		private var _disabledBtmd1:BitmapData;
 		private var _selectedBtmd1:BitmapData;
+		public var isVertical:Boolean = true;
 		
 		public function MyChangeButton()  {  super();  }
 		
@@ -40,13 +41,19 @@ package tl.mapeditor.ui.common
 			var enlargeBtn:MyButton = Tool.getMyBtn("", _upBtmd1.width, _upBtmd1.height, _upBtmd1, _overBtmd1, _downBtmd1, _disabledBtmd1, _selectedBtmd1);
 			this.addChild(enlargeBtn);
 			enlargeBtn.name = "EnlargeBtn";
-			enlargeBtn.x = narrowBtn.x;
-			enlargeBtn.y = narrowBtn.y + narrowBtn.myHeight;
-			
-			this.myWidth = _upBtmd.width;
-			this.myHeight = _upBtmd.height*2;
-			
-			this.addEventListener(MouseEvent.CLICK, onMouseClick);
+			if(isVertical)
+			{
+				enlargeBtn.x = narrowBtn.x;
+				enlargeBtn.y = narrowBtn.y + narrowBtn.myHeight;
+				this.myWidth = _upBtmd.width;
+				this.myHeight = _upBtmd.height*2;
+			}	else {
+				enlargeBtn.x = narrowBtn.x + narrowBtn.myWidth + 5;
+				enlargeBtn.y = narrowBtn.y;
+				this.myWidth = _upBtmd.width*2 + 5;
+				this.myHeight = _upBtmd.height;
+			}
+			//this.addEventListener(MouseEvent.CLICK, onMouseClick);
 		}
 		
 		private function onMouseClick(e:MouseEvent):void

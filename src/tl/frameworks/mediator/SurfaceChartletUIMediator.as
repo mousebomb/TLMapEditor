@@ -58,8 +58,16 @@ package tl.frameworks.mediator
 				if(i<3)
 				{
 					view.vectorDragBar[i].addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-					view.vectorDragBar[i].dragSprX = positionArr[i];
-					view.vectorTxt[i].text = view.vectorDragBar[i].dragBarPercent + '';
+					if(view.vectorDragBar[i].isNegative)
+					{
+						view.vectorTxt[i].text = positionArr[i] + '';
+						view.vectorDragBar[i].dragBarPercent = (positionArr[i] + view.vectorDragBar[i].halfValue)/view.vectorDragBar[i].maxValue;
+					}
+					else
+					{
+						view.vectorTxt[i].text = '' + positionArr[i] ;
+						view.vectorDragBar[i].dragBarPercent = positionArr[i]/view.vectorDragBar[i].maxValue;
+					}
 				}
 				view.vectorChartlet[i].addEventListener(MouseEvent.MOUSE_DOWN, onChartletMouseDown)
 				view.vectorChartlet[i].addEventListener(MouseEvent.MOUSE_UP, onChartletMouseUp)
@@ -81,6 +89,14 @@ package tl.frameworks.mediator
 			}
 			//地图资源创建完成
 			addContextListener(NotifyConst.MAP_VO_INITED,onMapVOInited);
+
+			addContextListener(NotifyConst.CLOSE_UI, onClose);
+		}
+
+		private function onClose(event:*):void
+		{
+			if(view.parent)
+				view.parent.removeChild(view)
 		}
 		/**显示笔刷*/
 		private function onClickShow(event:MouseEvent):void
@@ -227,15 +243,24 @@ package tl.frameworks.mediator
 				for (var i:int = 0; i < 3; i++)
 				{
 					view.vectorDragBar[i].onMouseUp(event);
-					view.vectorTxt[i].text = view.vectorDragBar[i].dragBarPercent + '';
+
+					var percent:Number;
+					if(view.vectorDragBar[i].isNegative)
+						percent = view.vectorDragBar[i].dragBarPercent * view.vectorDragBar[i].maxValue - (view.vectorDragBar[i].maxValue >> 1);
+					else
+						percent = view.vectorDragBar[i].dragBarPercent * view.vectorDragBar[i].maxValue;
+					if(view.vectorDragBar[i].maxValue == 1)
+						view.vectorTxt[i].text = percent.toFixed(2);
+					else
+						view.vectorTxt[i].text = percent.toFixed(0)
 				}
 				if(_drag == 'drageBar_0')
 				{
-					dispatchWith(NotifyConst.TOOL_BRUSH_QIANGDU, false, view.vectorDragBar[0].dragBarPercent);
+					dispatchWith(NotifyConst.TOOL_BRUSH_SIZE, false, int(view.vectorTxt[0].text));
 				} 	else if(_drag == 'drageBar_1') {
-					dispatchWith(NotifyConst.TOOL_BRUSH_SIZE, false, view.vectorDragBar[1].dragBarPercent);
+					dispatchWith(NotifyConst.TOOL_BRUSH_SPLATPOWER, false, int(view.vectorTxt[1].text));
 				} 	else if(_drag == 'drageBar_2') {
-					dispatchWith(NotifyConst.TOOL_BRUSH_ROUHE, false, view.vectorDragBar[2].dragBarPercent);
+					dispatchWith(NotifyConst.TOOL_BRUSH_ROUHE, false, int(view.vectorTxt[2].text));
 				}
 			}
 			_drag = null;

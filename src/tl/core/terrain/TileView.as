@@ -5,6 +5,7 @@ package tl.core.terrain
 {
 	import away3d.core.base.Geometry;
 	import away3d.core.base.SubGeometry;
+	import away3d.core.pick.PickingColliderType;
 	import away3d.entities.Mesh;
 	import away3d.materials.TextureMaterial;
 	import away3d.materials.methods.TLTerrainDiffuseMethod;
@@ -46,9 +47,10 @@ package tl.core.terrain
 			this.z = _tileVO.worldZ;
 //        this.addChild(_tileVO.worldAABB.boundingRenderable);
 //			this.showBounds = true;
-//			mouseEnabled = true;
+			mouseEnabled = true;
 //			this.addEventListener(MouseEvent3D.MOUSE_DOWN, onMouseDown);
 			//
+			this.pickingCollider = PickingColliderType.AUTO_FIRST_ENCOUNTERED;
 		}
 
 		public function genGeometryFromTileVO():Geometry

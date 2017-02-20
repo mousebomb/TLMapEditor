@@ -4,6 +4,7 @@
 package tl.frameworks.mediator
 {
 	import away3d.core.base.Object3D;
+	import away3d.entities.Entity;
 	import away3d.events.MouseEvent3D;
 
 	import flash.events.KeyboardEvent;
@@ -22,6 +23,7 @@ package tl.frameworks.mediator
 	import tl.core.rigidbody.RigidBodyVO;
 	import tl.core.rigidbody.RigidBodyView;
 	import tl.core.role.Role;
+	import tl.core.role.RolePlaceVO;
 	import tl.core.role.RolePlaceVO;
 	import tl.core.terrain.TLMapVO;
 	import tl.frameworks.NotifyConst;
@@ -52,6 +54,9 @@ package tl.frameworks.mediator
 			eventMap.mapListener(view.terrainView,MouseEvent3D.MOUSE_DOWN, onMouseDown);
 			eventMap.mapListener(view.terrainView,MouseEvent3D.MOUSE_UP, onMouseUp);
 			eventMap.mapListener(view.terrainView,MouseEvent3D.MOUSE_MOVE, onMouseMove);
+			eventMap.mapListener(view ,MouseEvent3D.MOUSE_MOVE,onMouseMoveAll);
+			eventMap.mapListener(view ,MouseEvent3D.MOUSE_OUT,onMouseOutAnything);
+			eventMap.mapListener(view ,MouseEvent3D.MOUSE_OVER,onMouseOverAnything);
 
 			eventMap.mapListener(StageFrame.stage, KeyboardEvent.KEY_DOWN, onKeyDown);
 			eventMap.mapListener(StageFrame.stage, KeyboardEvent.KEY_UP, onKeyUp);
@@ -78,6 +83,7 @@ package tl.frameworks.mediator
 			addContextListener(NotifyConst.TOOL_RIGIDBODY_ROTATION_ADD, onToolRigidBodyRotated);
 
 			addContextListener(NotifyConst.UI_START_ADD_WIZARD, onAddWizard);
+			addContextListener(NotifyConst.UI_SELECT_WIZARD, onUISelectWizard);
 			addContextListener(NotifyConst.MAP_TERRAIN_TEXTURE_CHANGED, onSPLAT_TEXTURE_CHANGED);
 			addContextListener(NotifyConst.TOGGLE_GRID, onToggleGrid);
 			addContextListener(NotifyConst.TOGGLE_ZONE, onToggleZone);
@@ -249,12 +255,26 @@ package tl.frameworks.mediator
 			newRole.x = placeVO.x;
 			newRole.z = placeVO.z;
 			newRole.y = placeVO.y;
+			placeVO.wizard = newRole;
 			view.addChild(newRole);
 			rolesInScene.push(newRole);
 			// 提交后监听鼠标点击可选中
 			newRole.addEventListener(MouseEvent3D.MOUSE_DOWN, onRoleMouseDown);
 			//
 			placeVOByRole[newRole] = placeVO;
+		}
+
+		/** 从UI点选一个场上的模型 */
+		private function onUISelectWizard(n:*):void
+		{
+			var vo :RolePlaceVO = n.data ;
+			// 放弃一切在做的操作，点选一个角色模型
+			clearSelection();
+			var role:Role                 = vo.wizard;
+			role.bodyUnit.showBounds      = true;
+			selectedRole = role;
+			// 镜头
+			view.lookAtEntity(role);
 		}
 		/** 实体角色 开始添加 */
 		private function onAddWizard(n:TLEvent):void
@@ -352,6 +372,12 @@ package tl.frameworks.mediator
 		/** 清除当前选择 */
 		public function clearSelection():void
 		{
+			if(draggingNewRole)
+			{
+				draggingNewRole.clearRole();
+				draggingNewRole = null;
+			}
+			isSelectedDragging=false;
 			if (_selectedRole)
 			{
 				_selectedRole.bodyUnit.showBounds = false;
@@ -524,6 +550,22 @@ package tl.frameworks.mediator
 			onMouseMoveRigidBody(event);
 			// 拖拽功能点
 			onMouseMoveFuncPoint(event);
+		}
+		
+		/// 探测指示
+
+		private function onMouseOutAnything(event:MouseEvent3D):void
+		{
+			view.mousePointTrack.updateAABB(null);
+			trace(StageFrame.renderIdx,"[EditorScene3DMediator]/onMouseOutAnything");
+		}
+		private function onMouseOverAnything( event:MouseEvent3D ):void {
+			view.mousePointTrack.updateAABB(event);
+			trace(StageFrame.renderIdx,"[EditorScene3DMediator]/onMouseOverAnything");
+		}
+		private function onMouseMoveAll(event:MouseEvent3D):void
+		{
+			view.mousePointTrack.update(event);
 		}
 
 
@@ -865,14 +907,14 @@ package tl.frameworks.mediator
 
 		public function set selectedRole(value:Role):void
 		{
-			if(value)
+//			if(value)
 				dispatchWith(NotifyConst.NEW_WIZARD_UI, false, value)
 			_selectedRole = value;
 		}
 
 		public function set selectedRigidBody(value:RigidBodyView):void
 		{
-			if(value)
+//			if(value)
 				dispatchWith(NotifyConst.NEW_WIZARD_UI, false, value)
 			_selectedRigidBody = value;
 		}

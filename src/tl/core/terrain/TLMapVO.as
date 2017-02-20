@@ -10,9 +10,12 @@ package tl.core.terrain
 	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
 
+	import org.mousebomb.framework.GlobalFacade;
+
 	import tl.core.funcpoint.FuncPointVO;
 	import tl.core.rigidbody.RigidBodyVO;
 	import tl.core.role.RolePlaceVO;
+	import tl.frameworks.NotifyConst;
 
 	public class TLMapVO
 	{
@@ -387,6 +390,6 @@ package tl.core.terrain
 		public var sunLightDirection :Vector3D = new Vector3D(-0.2, -0.78, -0.2) ;
 		// #pragma mark --  skybox  ------------------------------------------------------------
 		/** 天空盒纹理名 */
-		public var skyboxTextureName:String    ="sun";
+		public var skyboxTextureName:String    ="sky";
 	}
 }

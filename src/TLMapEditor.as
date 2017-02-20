@@ -7,6 +7,7 @@ package
 	import away3d.containers.View3D;
 	import away3d.core.managers.Stage3DManager;
 	import away3d.core.managers.Stage3DProxy;
+	import away3d.core.pick.PickingType;
 	import away3d.debug.Trident;
 	import away3d.events.Stage3DEvent;
 
@@ -136,6 +137,7 @@ package
 			StageFrame.stage3DProxy = _Stage3DProxy;
 			var camera:Camera3D     = new Camera3D();
 			_View3D                 = new View3D(new EditorScene3D(camera), camera);
+			_View3D.mousePicker = PickingType.RAYCAST_BEST_HIT;
 			_View3D.stage3DProxy    = _Stage3DProxy;
 			_View3D.shareContext    = true;						//允许共享执行
 //			_View3D.forceMouseMove = true;
