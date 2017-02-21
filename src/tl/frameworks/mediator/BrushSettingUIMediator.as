@@ -39,7 +39,7 @@ package tl.frameworks.mediator
 			view.x = 350;
 			view.y = 32;
 
-			var positionArr:Array = [mapModel.brushSize, mapModel.brushStrong, mapModel.brushSoftness]
+			var positionArr:Array = [mapModel.brushSize, mapModel.brushStrong, mapModel.brushSoftness,mapModel.brushHeightMax,mapModel.brushHeightMin];
 			 for (var i:int = 0; i < 5; i++)
 			 {
 				 view.vectorDragBar[i].addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
@@ -115,6 +115,10 @@ package tl.frameworks.mediator
 					dispatchWith(NotifyConst.TOOL_BRUSH_QIANGDU, false, int(view.vectorTxt[1].text));
 				} 	else if(_drag == 'BrushSettingUI_2') {
 					dispatchWith(NotifyConst.TOOL_BRUSH_ROUHE, false, int(view.vectorTxt[2].text));
+				}	else if(_drag == 'BrushSettingUI_3') {
+					dispatchWith(NotifyConst.TOOL_BRUSH_H_MAX, false, int(view.vectorTxt[3].text));
+				}	else if(_drag == 'BrushSettingUI_4') {
+					dispatchWith(NotifyConst.TOOL_BRUSH_H_MIN, false, int(view.vectorTxt[4].text));
 				}
 			}
 			_drag = null;

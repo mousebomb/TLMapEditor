@@ -3,6 +3,8 @@
  */
 package tl.mapeditor.ui.window
 {
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 
@@ -17,10 +19,11 @@ package tl.mapeditor.ui.window
 	public class ThumbnailUI extends UIBase
 	{
 		public var positionTxt:MyTextField;
-		private var _displayAreaSprite:MySprite;
-		private var _thumbnailSprite:MySprite;
-		private var _maskRect:Rectangle;
-		private var displayArea:MySprite;				//当前可拖动的显示区域
+		public var displayArea:MySprite;
+		public var moveRect:Rectangle;
+		private var displayAreaSprite:MySprite;
+		private var _mapBd:Bitmap;
+		//当前可拖动的显示区域
 		public function ThumbnailUI()
 		{
 			super();
@@ -41,30 +44,35 @@ package tl.mapeditor.ui.window
 			positionTxt.y = 2;
 			positionTxt.text = "x:0\ny:0";
 
-			_displayAreaSprite = new MySprite();
-			this.addChild(_displayAreaSprite);
-			_displayAreaSprite.mouseEnabled = false;
+			displayAreaSprite = new MySprite();
+			this.addChild(displayAreaSprite);
+			displayAreaSprite.mouseEnabled = false;
 
-			_thumbnailSprite = new MySprite();
-			_displayAreaSprite.addChild(_thumbnailSprite);
-			Tool.drawRectByGraphics(_thumbnailSprite.graphics, null, 32, 32);
-			_thumbnailSprite.width = this.myWidth-10;
-			_thumbnailSprite.height = this.myHeight-titleY-15;
-			_displayAreaSprite.x = (this.myWidth - _thumbnailSprite.width)/2;
-			_displayAreaSprite.y = titleY + 5;
-			//mask
-			_maskRect = new Rectangle(0, 0, _thumbnailSprite.width, _thumbnailSprite.height);
-			_displayAreaSprite.scrollRect = _maskRect;
+			displayAreaSprite.x = 10;
+			displayAreaSprite.y = 30;
+			moveRect = new Rectangle(0, 0, this.myWidth-20-32, this.myHeight-40-32);
+			//_displayAreaSprite.scrollRect = _maskRect;
 			//显示区域sprite
 			displayArea = new MySprite();
-			_displayAreaSprite.addChild(displayArea);
+			displayAreaSprite.addChild(displayArea);
+			Tool.drawRectByGraphics(displayArea.graphics, null, 32, 32, 0, 0, 0, 0, 1, 0xFF0000);
 			displayArea.buttonMode = true;
 		}
 
 		override protected function onClickClose(e:MouseEvent = null):void
 		{
-
 			super.onClickClose(e);
+		}
+
+		public function showThumbnailInfo(bmd:BitmapData):void
+		{
+			if(!_mapBd)
+				_mapBd = new Bitmap(bmd);
+			else
+				_mapBd.bitmapData = bmd;
+			_mapBd.width = this.myWidth - 20;
+			_mapBd.height = this.myHeight - titleY - 15;
+			displayAreaSprite.addChildAt(_mapBd, 0);
 		}
 	}
 }

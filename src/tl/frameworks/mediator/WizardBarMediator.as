@@ -132,12 +132,12 @@ package tl.frameworks.mediator
 		/** 选择类型后 **/
 		private function onMenuSelectCallBack(index:int):void
 		{
-			//设置数据
-			wizardVector = _modelDataVec[index];
-			if(!wizardVector)
+			if(!_modelDataVec[index])
 			{
 				return;
 			}
+			//设置数据
+			wizardVector = _modelDataVec[index];
 			//设置类型文本显示
 			view.modelTypeText.text = menuVec[index];
 			var len:int = wizardVector.length;

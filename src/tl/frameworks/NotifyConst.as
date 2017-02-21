@@ -30,6 +30,10 @@ package tl.frameworks
 		public static const TOOL_BRUSH_SIZE_ADD:String = "TOOL_BRUSH_SIZE_ADD";
 		/**设置地形刷的柔和 @data : Number */
 		public static const TOOL_BRUSH_ROUHE:String     = "TOOL_BRUSH_ROUHE";
+		/**设置地形刷的最大高度 @data : Number */
+		public static const TOOL_BRUSH_H_MAX :String = "TOOL_BRUSH_H_MAX";
+		/**设置地形刷的最小高度 @data : Number */
+		public static const TOOL_BRUSH_H_MIN :String = "TOOL_BRUSH_H_MIN";
 		/** 使用选择工具 */
 		public static const TOOL_SELECT:String         = "TOOL_SELECT";
 		/** 选择3D对象后旋转 @data = 旋转角度 (+-1~360) */
@@ -85,10 +89,14 @@ package tl.frameworks
 		/** 添加功能点  @data 点类型 */
 		public static const UI_ADD_FUNCPOINT :String = "UI_ADD_FUNCPOINT";
 
+		/** 编辑器要求移动镜头 @data=Point( 0.0~1.0,0.0~1.0 ) */
+		public static const UI_EDITOR_MOVE_CAM :String = "UI_EDITOR_MOVE_CAM";
+		/** 镜头被按快捷键移动了 ui需要更新  @data=Point( 0.0~1.0,0.0~1.0 ) */
+		public static const SCENE_CAM_MOVED :String = "SCENE_CAM_MOVED";
 
 		/**通知状态 @data =String */
-		public static const STATUS:String = "STATUS";
-		public static const LOG:String    = "LOG";
+		public static const STATUS:String      = "STATUS";
+		public static const LOG:String         = "LOG";
 
 		/** 地形纹理素材列表已加载 */
 		public static const TERRAIN_TEXTURES_LIST_LOADED:String = "TERRAIN_TEXTURES_LIST_LOADED";

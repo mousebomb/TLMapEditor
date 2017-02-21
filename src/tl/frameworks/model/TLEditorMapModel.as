@@ -143,6 +143,10 @@ package tl.frameworks.model
 		public var brushSplatPower:Number = 0.5;
 		/** 柔和 (暂未实现) */
 		public var brushSoftness:Number = 1.0;
+		/** 地形刷 最高高度值 */
+		public var brushHeightMax:Number  = TLMapVO.TERRAIN_HEIGHT_MAX;
+		/** 地形刷 最低高度值 */
+		public var brushHeightMin:Number  = TLMapVO.TERRAIN_HEIGHT_MIN;
 
 		/** 新建地形 编辑器创建 用*/
 		public function setupNewTerrain(terrainVerticlesX:int, terrainVerticlesY:int ,name:String ,heightMap:BitmapData =null):void
@@ -200,8 +204,11 @@ package tl.frameworks.model
 					if (curY < 0) continue;
 					if (curX > _curMapVO.terrainVerticlesX) continue;
 					if (curY > _curMapVO.terrainVerticlesY) continue;
-					curHeightAdd = heightAdd * calcPower(curRadius, size);
-					_curMapVO.setHeight(curX, curY, _curMapVO.getHeight(curX, curY) + curHeightAdd);
+					curHeightAdd        = heightAdd * calcPower(curRadius, size);
+					var toHeight:Number = _curMapVO.getHeight(curX, curY) + curHeightAdd;
+					if (toHeight > brushHeightMax)toHeight = brushHeightMax;
+					if (toHeight < brushHeightMin)toHeight = brushHeightMin;
+					_curMapVO.setHeight(curX, curY, toHeight);
 					trace(StageFrame.renderIdx, "TLMapModel/useHeightBrush", curX, curY, curRadius, "+" + curHeightAdd);
 				}
 			}

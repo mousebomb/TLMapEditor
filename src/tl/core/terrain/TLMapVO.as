@@ -38,6 +38,12 @@ package tl.core.terrain
 		public static const TERRAIN_ZSCALE:Number   = 1 / 16;
 		/** 长宽缩放比例 */
 		public static const TERRAIN_SCALE:Number    = 32;
+		/**FLOAT的极限*/
+		public static const TERRAIN_HEIGHT_MAX_INT :int = 32767;
+		public static const TERRAIN_HEIGHT_MIN_INT :int = -32768;
+		public static const TERRAIN_HEIGHT_MAX :Number = TERRAIN_HEIGHT_MAX_INT * TERRAIN_ZSCALE;
+		public static const TERRAIN_HEIGHT_MIN :Number = TERRAIN_HEIGHT_MIN_INT * TERRAIN_ZSCALE;
+		/**纹理叠加最大层数*/
 		public static const SPLATTEXTURES_MAX_LAYER :int = 4;
 		public static const TEXTURES_MAX_LAYER :int = SPLATTEXTURES_MAX_LAYER+1;
 		/** 分的块(tile) */
@@ -91,7 +97,7 @@ package tl.core.terrain
 					}
 					else
 					{
-						var intVal : int = bmd.getPixel(x, y) - 32768;
+						var intVal : int = bmd.getPixel(x, y) +TERRAIN_HEIGHT_MIN_INT;
 						terrainHeightMap[terrainIndex(x,y)] = (intVal) * TERRAIN_ZSCALE;
 						terrainHeightMapInt.push(intVal);
 					}
@@ -116,7 +122,7 @@ package tl.core.terrain
 			//
 			if (_debugBmd)
 			{
-				_debugBmd.setPixel(coordX, coordY, int(hei / TERRAIN_ZSCALE) + 32768);
+				_debugBmd.setPixel(coordX, coordY, int(hei / TERRAIN_ZSCALE) -TERRAIN_HEIGHT_MIN_INT);
 			}
 		}
 
@@ -188,7 +194,7 @@ package tl.core.terrain
 				{
 					for (var x:int = 0; x < terrainVerticlesX; x++)
 					{
-						_debugBmd.setPixel(x, y, terrainHeightMapInt[terrainIndex(x,y)] + 32768);
+						_debugBmd.setPixel(x, y, terrainHeightMapInt[terrainIndex(x,y)] -TERRAIN_HEIGHT_MIN_INT);
 					}
 				}
 

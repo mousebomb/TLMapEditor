@@ -138,7 +138,7 @@ package tl.core.terrain
 			textures[layerIndex] = atfTexture;
 			if (++texturesLoaded == mapVO.textureFiles.length)
 			{
-				trace(StageFrame.renderIdx,"MapView/onTextureLoadedOne");
+//				trace(StageFrame.renderIdx,"MapView/onTextureLoadedOne");
 				// 所有需要的纹理都加载完成后通知tile刷新
 				TileView.clearSharedMaterial();
 				TileView.setSharedMaterial(textures , mapVO.splatAlphaTexture , mapVO.numTileX,mapVO.numTileY );

@@ -6,6 +6,7 @@ package tl.frameworks.mediator
 	import fl.data.DataProvider;
 
 	import flash.events.Event;
+	import flash.events.KeyboardEvent;
 
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
@@ -14,6 +15,8 @@ package tl.frameworks.mediator
 	import org.mousebomb.framework.Notify;
 
 	import org.robotlegs.mvcs.Mediator;
+
+	import tl.core.mapnode.NodeTypeConst;
 
 	import tl.core.old.WizardObject;
 	import tl.core.role.RolePlaceVO;
@@ -35,6 +38,7 @@ package tl.frameworks.mediator
 		[Inject]
 		public var mapModel:TLEditorMapModel;
 		private var _vector:Vector.<String>;
+		private var _selectType:String;
 		public function CoveragePanelUIMediator()
 		{
 			super();
@@ -51,7 +55,8 @@ package tl.frameworks.mediator
 			eventMap.mapListener(view.wizardList, Event.CHANGE, onWizardObjectChanged);
 			onMapInit(null);
 			addContextListener(NotifyConst.MAP_VO_INITED , onMapInit);
-			view.parent.removeChild(view)
+			addContextListener(NotifyConst.GROUP_WIZARD_LIST_CHANGED, onMapInit);
+			addContextListener(NotifyConst.GROUP_WIZARD_LI_CHANGED, onWizardObjcetUpdate);
 		}
 		private function onMapInit(e:TLEvent):void
 		{
@@ -67,26 +72,29 @@ package tl.frameworks.mediator
 			view.typeList.dataProvider = data;
 			//默认选第一项
 			view.typeList.selectedIndex = 0;
-			var type:String = mapModel.mapVO.entityGroupNames[0];
-			showWizardType(type);
+			_selectType = mapModel.mapVO.entityGroupNames[0];
+			showWizardType();
+			view.stage.focus=null;
 		}
 
 		/** 选择类型后 **/
 		private function onTypeChange(event:Event):void
 		{
 			var index:int   = view.typeList.selectedIndex;
-			var type:String = mapModel.mapVO.entityGroupNames[index];
-			showWizardType(type);
+			_selectType = mapModel.mapVO.entityGroupNames[index];
+			showWizardType();
+			view.stage.focus=null;
 		}
-		private function showWizardType(type:String):void
+		private function showWizardType():void
 		{
 			// 显示实体列表
 			var vo:RolePlaceVO;
 			var data2:DataProvider =new DataProvider();
-			var leng:int = mapModel.mapVO.entityGroups[type].length
+			var leng:int = mapModel.mapVO.entityGroups[_selectType].length
+			if(leng == 0) return;
 			for (var i:int = 0; i < leng; i++)
 			{
-				vo = mapModel.mapVO.entityGroups[type][i];
+				vo = mapModel.mapVO.entityGroups[_selectType][i];
 				data2.addItem(vo);
 			}
 			view.wizardList.dataProvider = data2;
@@ -95,11 +103,13 @@ package tl.frameworks.mediator
 		{
 			var vo :RolePlaceVO = view.wizardList.selectedItem as RolePlaceVO;
 			if(!vo ) return;
-			dispatchWith(NotifyConst.STATUS,false,"选择模型ID"+vo.wizardId +" "+vo.wizard.vo.name);
-			//实例化精灵
-			dispatchWith(NotifyConst.SELECT_WIZARD_PREVIEW,false , vo.wizard.vo);
+			dispatchWith(NotifyConst.UI_SELECT_WIZARD, false, vo);
+			view.stage.focus=null;
+		}
 
-			trace(StageFrame.renderIdx,"WizardBarMediator/onChanged");
+		private function onWizardObjcetUpdate(event:*):void
+		{
+			showWizardType();
 		}
 	}
 }

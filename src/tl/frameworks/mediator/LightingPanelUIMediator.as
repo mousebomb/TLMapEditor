@@ -5,6 +5,7 @@ package tl.frameworks.mediator
 {
 	import flash.events.MouseEvent;
 	import flash.geom.Vector3D;
+	import flash.utils.setTimeout;
 
 	import org.robotlegs.mvcs.Mediator;
 
@@ -26,6 +27,7 @@ package tl.frameworks.mediator
 		public var view:LightingPanelUI;
 		[Inject]
 			public var mapModel: TLEditorMapModel;
+		private var _isMouseDown:Boolean;
 		public function LightingPanelUIMediator()
 		{
 			super();
@@ -56,10 +58,22 @@ package tl.frameworks.mediator
 					view.vectorTxt[i].text = '-' + positionArr[i] ;
 					view.vectorDragBar[i].dragBarPercent = positionArr[i]/view.vectorDragBar[i].maxValue;
 				}
-				view.vectorChageBtn[i].addEventListener(MouseEvent.CLICK, onClickChangeBtn)
+				view.vectorChageBtn[i].addEventListener(MouseEvent.MOUSE_DOWN, onChangeBtnMouseDown)
+				view.vectorChageBtn[i].addEventListener(MouseEvent.MOUSE_UP, onChangeBtnMouseUp)
 			}
 
 			StageFrame.stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+		}
+		private function onChangeBtnMouseDown(event:MouseEvent):void
+		{
+			_isMouseDown = true;
+			var btn:* = event.target;
+			var clickName:String = String(event.currentTarget.name).substr(-1,1);
+			updateInfo(btn, clickName);
+		}
+		private function onChangeBtnMouseUp(event:MouseEvent):void
+		{
+			_isMouseDown = false;
 		}
 		private function onMouseDown(event:MouseEvent):void
 		{
@@ -67,10 +81,10 @@ package tl.frameworks.mediator
 			drag.onMouseDown(event);
 		}
 
-		private function onClickChangeBtn(event:MouseEvent):void
+		private function updateInfo(btn:MyButton, clickName:String):void
 		{
-			var btn:* = event.target;
-			var clickName:String = String(event.currentTarget.name).substr(-1,1)
+			if(!_isMouseDown) return;
+			setTimeout(updateInfo, 200, btn, clickName)
 			var addNum:Number = -0.01;
 			var isChange:Boolean;
 			if(btn.name == 'NarrowBtn' || btn.name == 'EnlargeBtn')

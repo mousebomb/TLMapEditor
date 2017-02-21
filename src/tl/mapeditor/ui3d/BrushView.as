@@ -5,9 +5,12 @@ package tl.mapeditor.ui3d
 {
 	import away3d.core.base.Geometry;
 	import away3d.entities.Mesh;
+	import away3d.materials.ColorMaterial;
 	import away3d.materials.TextureMaterial;
 	import away3d.materials.utils.DefaultMaterialManager;
 	import away3d.primitives.SphereGeometry;
+
+	import tl.core.GPUResProvider;
 
 	import tl.core.terrain.TLMapVO;
 
@@ -21,12 +24,7 @@ package tl.mapeditor.ui3d
 	{
 		public function BrushView()
 		{
-			var _textureMaterial:TextureMaterial;
-			_textureMaterial                    = new TextureMaterial(DefaultMaterialManager.getDefaultTexture(), true, false, true);
-			_textureMaterial.alphaPremultiplied = false;
-			_textureMaterial.specular           = 0.0;
-
-			super(new SphereGeometry(BASE_SIZE), _textureMaterial);
+			super(new SphereGeometry(BASE_SIZE), new ColorMaterial(0x00cc00, 0.5));
 			scaleY = 0.5;
 		}
 

@@ -6,6 +6,8 @@ package tl.core.rigidbody
 	import away3d.entities.Mesh;
 	import away3d.primitives.CubeGeometry;
 
+	import tl.core.GPUResProvider;
+
 	/** 刚体 */
 	public class RigidBodyView extends Mesh
 	{
@@ -14,7 +16,7 @@ package tl.core.rigidbody
 		public function RigidBodyView(vo_:RigidBodyVO)
 		{
 			vo = vo_;
-			super (new CubeGeometry(1,100,1));
+			super (new CubeGeometry(1,20,1));
 			validate();
 		}
 
@@ -24,12 +26,12 @@ package tl.core.rigidbody
 			this.scaleZ = vo.rect.height;
 			x           = vo.rect.x;
 			z           = vo.rect.y;
-			y           = vo.y - 50;
+			y           = vo.y - 10;
 		}
 
 		public function commit():void
 		{
-			vo.setXZWD(x, z, y, scaleX, scaleZ);
+			vo.setXZWD(x, z, y, scaleX, scaleZ,20);
 			vo.setRotation(rotationY);
 		}
 

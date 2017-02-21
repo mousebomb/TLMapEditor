@@ -166,6 +166,7 @@ package tl.frameworks.mediator
 						dispatchWith(NotifyConst.UI_SELECT_WIZARD,false,rolePlaceVO);
 					break;
 			}
+			_isControl = false;
 		}
 
 		private function onKeyDown(event:KeyboardEvent):void

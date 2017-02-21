@@ -32,7 +32,7 @@ package tl.core.terrain
 	public class TileView extends Mesh
 	{
 		private static var sharedTerrainMaterial: TextureMaterial ;
-		public static var minimalDiffuse:BitmapTexture = new BitmapTexture(new BitmapData(1, 1, true, 0));
+		public static var minimalDiffuse:BitmapTexture = new BitmapTexture(new BitmapData(1, 1, true, 0xffffffff));
 
 		private var _tileVO:TLTileVO;
 

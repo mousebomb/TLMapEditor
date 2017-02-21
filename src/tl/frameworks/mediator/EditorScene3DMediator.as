@@ -4,12 +4,14 @@
 package tl.frameworks.mediator
 {
 	import away3d.core.base.Object3D;
+	import away3d.core.base.Object3D;
 	import away3d.entities.Entity;
 	import away3d.events.MouseEvent3D;
 
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
+	import flash.geom.Point;
 	import flash.geom.Vector3D;
 	import flash.ui.Keyboard;
 	import flash.utils.Dictionary;
@@ -78,6 +80,8 @@ package tl.frameworks.mediator
 			addContextListener(NotifyConst.TOOL_BRUSH_SIZE,onToolBrushSize);
 			addContextListener(NotifyConst.TOOL_BRUSH_QIANGDU,onToolBrushStrong);
 			addContextListener(NotifyConst.TOOL_BRUSH_SPLATPOWER,onToolBrushSplatPower);
+			addContextListener(NotifyConst.TOOL_BRUSH_H_MAX,onTOOL_BRUSH_H_MAX);
+			addContextListener(NotifyConst.TOOL_BRUSH_H_MIN,onTOOL_BRUSH_H_MIN);
 			addContextListener(NotifyConst.TOOL_NEW_RIGIDBODY, onNewRigidBody);
 			addContextListener(NotifyConst.TOOL_RIGIDBODY_SIZE_ADD, onToolRigidBodySizeAdd);
 			addContextListener(NotifyConst.TOOL_RIGIDBODY_ROTATION_ADD, onToolRigidBodyRotated);
@@ -95,6 +99,8 @@ package tl.frameworks.mediator
 			addContextListener(NotifyConst.TOOL_SKYBOX_SET,onTOOL_SKYBOX_SET);
 
 			addContextListener(NotifyConst.LIGHT_DIRECTION_SET,onLIGHT_DIRECTION_SET);
+			addContextListener(NotifyConst.UI_EDITOR_MOVE_CAM,onUI_EDITOR_MOVE_CAM);
+			addViewListener(NotifyConst.SCENE_CAM_MOVED,onViewCamMoved);
 
 		}
 
@@ -320,7 +326,7 @@ package tl.frameworks.mediator
 				} else
 				{
 					// 提交
-					mapModel.addWizard(draggingNewRole);
+					placeVOByRole[draggingNewRole] = mapModel.addWizard(draggingNewRole);
 					rolesInScene.push(draggingNewRole);
 					track("EditorScene3DMediator/onStageMouseUp addWizard");
 					// 提交后监听鼠标点击可选中
@@ -433,15 +439,19 @@ package tl.frameworks.mediator
 			switch (event.keyCode)
 			{
 				case Keyboard.UP:
+				case Keyboard.W:
 					view.camZSpeed = 0;
 					break;
 				case Keyboard.DOWN:
+				case Keyboard.S:
 					view.camZSpeed = 0;
 					break;
 				case Keyboard.LEFT:
+				case Keyboard.A:
 					view.camXSpeed = 0;
 					break;
 				case Keyboard.RIGHT:
+				case Keyboard.D:
 					view.camXSpeed = 0;
 					break;
 			}
@@ -459,16 +469,20 @@ package tl.frameworks.mediator
 				switch (event.keyCode)
 				{
 					case Keyboard.UP:
-						target.z+=moveStep;
+					case Keyboard.W:
+						moveTarget(target,0,-moveStep);
 						break;
 					case Keyboard.DOWN:
-						target.z-=moveStep;
+					case Keyboard.S:
+						moveTarget(target,0,moveStep);
 						break;
 					case Keyboard.LEFT:
-						target.x-=moveStep;
+					case Keyboard.A:
+						moveTarget(target,-moveStep,0);
 						break;
 					case Keyboard.RIGHT:
-						target.x+=moveStep;
+					case Keyboard.D:
+						moveTarget(target,moveStep,0);
 						break;
 					case Keyboard.PAGE_UP:
 						target.y += moveStep;
@@ -490,19 +504,43 @@ package tl.frameworks.mediator
 				switch (event.keyCode)
 				{
 					case Keyboard.UP:
+					case Keyboard.W:
 						view.camZSpeed = 1;
 						break;
 					case Keyboard.DOWN:
+					case Keyboard.S:
 						view.camZSpeed = -1;
 						break;
 					case Keyboard.LEFT:
+					case Keyboard.A:
 						view.camXSpeed = -1;
 						break;
 					case Keyboard.RIGHT:
+					case Keyboard.D:
 						view.camXSpeed = 1;
 						break;
 				}
 			}
+		}
+
+		private var _tmpPoint:Point=new Point();
+		[Inline]
+		private final function moveTarget(target:Object3D,zStep:Number, xStep:Number):void
+		{
+			view.calcMixedSpeed(zStep,xStep,_tmpPoint);
+			target.x += _tmpPoint.x;
+			target.z+=_tmpPoint.y;
+		}
+
+		private function onUI_EDITOR_MOVE_CAM( n: * ):void
+		{
+			//  移动镜头
+			view.lookAtMapPercent(n.data);
+		}
+
+		private function onViewCamMoved(e:*):void
+		{
+			dispatchWith(NotifyConst.SCENE_CAM_MOVED,false,view.lookPercentTile);
 		}
 
 		private function onMouseWheel(event:MouseEvent):void
@@ -557,11 +595,9 @@ package tl.frameworks.mediator
 		private function onMouseOutAnything(event:MouseEvent3D):void
 		{
 			view.mousePointTrack.updateAABB(null);
-			trace(StageFrame.renderIdx,"[EditorScene3DMediator]/onMouseOutAnything");
 		}
 		private function onMouseOverAnything( event:MouseEvent3D ):void {
 			view.mousePointTrack.updateAABB(event);
-			trace(StageFrame.renderIdx,"[EditorScene3DMediator]/onMouseOverAnything");
 		}
 		private function onMouseMoveAll(event:MouseEvent3D):void
 		{
@@ -670,6 +706,15 @@ package tl.frameworks.mediator
 			mapModel.brushSize += n.data;
 			if (brushView)
 			{brushView.brushSize += n.data;}
+		}
+
+		private function onTOOL_BRUSH_H_MAX( n: * ):void
+		{
+			mapModel.brushHeightMax = n.data;
+		}
+		private function onTOOL_BRUSH_H_MIN( n: * ):void
+		{
+			mapModel.brushHeightMin = n.data;
 		}
 
 		// #pragma mark --  周期性 刷图  ------------------------------------------------------------

@@ -254,12 +254,12 @@ package tl.frameworks.mediator
 					else
 						view.vectorTxt[i].text = percent.toFixed(0)
 				}
-				if(_drag == 'drageBar_0')
+				if(_drag == 'SurfaceChartletUI_0')
 				{
 					dispatchWith(NotifyConst.TOOL_BRUSH_SIZE, false, int(view.vectorTxt[0].text));
-				} 	else if(_drag == 'drageBar_1') {
-					dispatchWith(NotifyConst.TOOL_BRUSH_SPLATPOWER, false, int(view.vectorTxt[1].text));
-				} 	else if(_drag == 'drageBar_2') {
+				} 	else if(_drag == 'SurfaceChartletUI_1') {
+					dispatchWith(NotifyConst.TOOL_BRUSH_SPLATPOWER, false, Number(view.vectorTxt[1].text));
+				} 	else if(_drag == 'SurfaceChartletUI_2') {
 					dispatchWith(NotifyConst.TOOL_BRUSH_ROUHE, false, int(view.vectorTxt[2].text));
 				}
 			}

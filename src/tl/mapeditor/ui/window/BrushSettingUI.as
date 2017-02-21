@@ -42,7 +42,7 @@ package tl.mapeditor.ui.window
 			var dragBar:MyDragBar;
 			vectorTxt = new <MyTextField>[];
 			vectorDragBar = new <MyDragBar>[];
-			var labelArr:Array = ['笔刷大小', '笔刷强度', '柔和', '最高值', '最低值', 300, 200, 1, 2047, -2047];
+			var labelArr:Array = ['笔刷大小', '笔刷强度', '柔和', '最高值', '最低值', 300, 200, 1, 2047, -2048];
 			for (var i:int=0; i<5; i++)
 			{
 				text = Tool.getMyTextField(70, -1, 12, 0x999999, "center");

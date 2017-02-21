@@ -3,7 +3,6 @@
  */
 package tl.core.rigidbody
 {
-	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.utils.ByteArray;
@@ -21,13 +20,13 @@ package tl.core.rigidbody
 			rect.x = x- rect.width/2;
 			rect.y = z- rect.height/2;
 		}
-		public function setXZWD(x:Number , z:Number,y:Number, w:Number, d:Number , h:Number  = 100.0):void
+		public function setXZWD(x:Number , z:Number,y:Number, w:Number, d:Number , h:Number  = 20.0):void
 		{
-			rect.x = x-w/2;
-			rect.width = w;
-			rect.y = z-d/2;
+			rect.x      = x - w / 2;
+			rect.width  = w;
+			rect.y      = z - d / 2;
 			rect.height = d;
-			this.y = y + h /2;
+			this.y      = y + h / 2;
 		}
 
 		public function setRotation(yRotation:Number):void

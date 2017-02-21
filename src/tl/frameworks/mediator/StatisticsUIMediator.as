@@ -52,7 +52,7 @@ package tl.frameworks.mediator
 			{
 				var type:String = mapModel.mapVO.entityGroupNames[i];
 				wLeng = mapModel.mapVO.entityGroups[type].length;
-				if(i < half || half == 1)
+				if(i < half || half == 0)
 				{
 					_label += type + ':' + wLeng + '\n'
 				}	else {
