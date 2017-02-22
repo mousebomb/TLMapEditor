@@ -192,5 +192,39 @@ package tl.core.terrain
 
 
 
+		// #pragma mark --  显示格子信息（区域）  ------------------------------------------------------------
+		/** 地形区域显示格 */
+		private var _isShowZone :Boolean;
+
+		public function get isShowZone():Boolean
+		{
+			return _isShowZone;
+		}
+
+		public function set isShowZone(value:Boolean):void
+		{
+			if(_isShowZone == value ) return ;
+			_isShowZone = value;
+			if(_isShowZone)
+			{
+				for (var i:int = 0; i < mapVO.tiles.length; i++)
+				{
+					var tileVO:TLTileVO   = mapVO.tiles[i];
+					var tileView:TileNodeView = new TileNodeView(tileViewDic[tileVO],tileVO.parentTerrain.debugNodeMap);
+					tileZoneViewDic[tileVO]   = tileView;
+					tileView.y = 1.5;
+					addChild(tileView);
+				}
+			}else{
+				for each (var view:TileNodeView in tileZoneViewDic)
+				{
+					view.dispose();//away3d的dispose自带removeFromParent
+				}
+				tileZoneViewDic = new Dictionary();
+			}
+		}
+		/** 地形区域显示格 */
+		private var tileZoneViewDic:Dictionary = new Dictionary();
+
 	}
 }

@@ -183,7 +183,8 @@ package tl.frameworks.mediator
 
 		private function onToggleZone(e:*):void
 		{
-			view.isShowZone = !view.isShowZone;
+			view.terrainView.isShowZone = !view.terrainView.isShowZone;
+//			view.isShowZone = !view.isShowZone;
 		}
 
 		// #pragma mark --  网格显示  ------------------------------------------------------------
@@ -708,7 +709,7 @@ package tl.frameworks.mediator
 				brushView.brushSplatPower = mapModel.brushSplatPower;
 			}else if (curBrushType == ToolBrushType.BRUSH_TYPE_ZONE )
 			{
-				view.isShowZone=true;
+				view.terrainView.isShowZone=true;
 				view.lookDown();
 			}
 			// 刷子阶段 不监听其它鼠标单击

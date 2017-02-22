@@ -373,6 +373,11 @@ package tl.core.terrain
 		public function setNodeVal(x:int, y:int, val:int):void
 		{
 			nodes[nodeIndex(x,y)] = val;
+			if(_debugNodeMap)
+			{
+				_debugNodeMap.setVal(x, y,  val);
+				_debugNodeMap.invalidateContent();
+			}
 		}
 		public function getNodeVal(x:int,y:int):int
 		{
@@ -384,6 +389,30 @@ package tl.core.terrain
 		public final function nodeIndex(x:int,y:int):int
 		{
 			return x+y*terrainVerticlesX;
+		}
+
+		/** 测试和编辑器用 显示格子区域颜色的材质 */
+		private var _debugNodeMap :NodeMapTexture;
+		public function get debugNodeMap():NodeMapTexture
+		{
+			if (_debugNodeMap && (_debugNodeMap.mapW != terrainVerticlesX || _debugNodeMap.mapH != terrainVerticlesY ))
+			{
+				_debugNodeMap.dispose();
+				_debugNodeMap = null;
+			}
+			if (_debugNodeMap == null)
+			{
+				_debugNodeMap = new NodeMapTexture(terrainVerticlesX, terrainVerticlesY );
+				for (var y:int = 0; y < terrainVerticlesY; y++)
+				{
+					for (var x:int = 0; x < terrainVerticlesX; x++)
+					{
+						_debugNodeMap.setVal(x, y, nodes[nodeIndex(x,y)]);
+					}
+				}
+				_debugNodeMap.invalidateContent();
+			}
+			return _debugNodeMap;
 		}
 
 
