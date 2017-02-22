@@ -4,6 +4,7 @@
 package tl.mapeditor.ui3d
 {
 	import away3d.containers.ObjectContainer3D;
+	import away3d.core.base.Geometry;
 	import away3d.entities.Mesh;
 	import away3d.materials.ColorMaterial;
 	import away3d.primitives.CubeGeometry;
@@ -41,6 +42,7 @@ package tl.mapeditor.ui3d
 			return dic[key(tileX,tileY)];
 		}
 
+		private static var cubeGeom :Geometry=new CubeGeometry(TLMapVO.TERRAIN_SCALE, TLMapVO.TERRAIN_SCALE, TLMapVO.TERRAIN_SCALE);
 		public function setZoneType(tileX:int, tileY:int, color:uint):void
 		{
 			var tile :Mesh = getTile(tileX,tileY);
@@ -50,7 +52,7 @@ package tl.mapeditor.ui3d
 			}else{
 				if(!tile)
 				{
-					tile    = new Mesh(new CubeGeometry(TLMapVO.TERRAIN_SCALE, TLMapVO.TERRAIN_SCALE, TLMapVO.TERRAIN_SCALE), getColorMaterial(color));
+					tile    = new Mesh(cubeGeom, getColorMaterial(color));
 					tile.x           = (tileX+.5) * TLMapVO.TERRAIN_SCALE;
 					tile.z           = -(tileY +.5)* TLMapVO.TERRAIN_SCALE;
 					tile.y = mapVO.getHeight( tileX ,tileY );

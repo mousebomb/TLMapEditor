@@ -11,9 +11,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TLMapEditor.ipr" afterPath="$PROJECT_DIR$/TLMapEditor.ipr" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TLMapEditor.iws" afterPath="$PROJECT_DIR$/TLMapEditor.iws" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/TLMapEditor/TLMapEditor-app.xml" afterPath="$PROJECT_DIR$/out/production/TLMapEditor/TLMapEditor-app.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tl/frameworks/mediator/EditorScene3DMediator.as" afterPath="$PROJECT_DIR$/src/tl/frameworks/mediator/EditorScene3DMediator.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tl/frameworks/model/TLEditorMapModel.as" afterPath="$PROJECT_DIR$/src/tl/frameworks/model/TLEditorMapModel.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tl/mapeditor/ui3d/BrushView.as" afterPath="$PROJECT_DIR$/src/tl/mapeditor/ui3d/BrushView.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tl/mapeditor/ui3d/MapZoneView.as" afterPath="$PROJECT_DIR$/src/tl/mapeditor/ui3d/MapZoneView.as" />
     </list>
     <ignored path="TLMapEditor.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -37,11 +35,11 @@
     <splitter split-orientation="horizontal" split-proportion="0.5">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="EditorScene3DMediator.as" pinned="false" current-in-tab="true">
+          <file leaf-file-name="EditorScene3DMediator.as" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/tl/frameworks/mediator/EditorScene3DMediator.as">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="361">
-                  <caret line="710" column="31" selection-start-line="710" selection-start-column="31" selection-end-line="710" selection-end-column="31" />
+                <state relative-caret-position="391">
+                  <caret line="712" column="13" selection-start-line="712" selection-start-column="13" selection-end-line="712" selection-end-column="13" />
                   <folding>
                     <element signature="e#77#120#0" expanded="true" />
                   </folding>
@@ -59,6 +57,16 @@
               </provider>
             </entry>
           </file>
+          <file leaf-file-name="MapZoneView.as" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/tl/mapeditor/ui3d/MapZoneView.as">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="600">
+                  <caret line="54" column="47" selection-start-line="54" selection-start-column="47" selection-end-line="54" selection-end-column="47" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
         </leaf>
       </split-first>
       <split-second>
@@ -66,8 +74,8 @@
           <file leaf-file-name="TLEditorMapModel.as" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/tl/frameworks/model/TLEditorMapModel.as">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-3081">
-                  <caret line="139" column="16" selection-start-line="139" selection-start-column="16" selection-end-line="139" selection-end-column="16" />
+                <state relative-caret-position="114">
+                  <caret line="345" column="0" selection-start-line="345" selection-start-column="0" selection-end-line="345" selection-end-column="0" />
                   <folding>
                     <element signature="e#74#106#0" expanded="true" />
                   </folding>
@@ -118,7 +126,6 @@
         <option value="$PROJECT_DIR$/src/tl/mapeditor/ui3d/FuncPointView.as" />
         <option value="$PROJECT_DIR$/src/tl/core/mapentity/RolePlaceVO.as" />
         <option value="$PROJECT_DIR$/src/tl/frameworks/defines/WizardType.as" />
-        <option value="$PROJECT_DIR$/src/tl/mapeditor/ui3d/MapZoneView.as" />
         <option value="$PROJECT_DIR$/src/tl/core/role/RolePlaceVO.as" />
         <option value="$PROJECT_DIR$/src/tl/core/role/Role.as" />
         <option value="$PROJECT_DIR$/src/tl/core/role/RoleMesh.as" />
@@ -149,6 +156,7 @@
         <option value="$PROJECT_DIR$/src/tl/frameworks/model/TLEditorMapModel.as" />
         <option value="$PROJECT_DIR$/src/tl/mapeditor/ui3d/BrushView.as" />
         <option value="$PROJECT_DIR$/src/tl/frameworks/mediator/EditorScene3DMediator.as" />
+        <option value="$PROJECT_DIR$/src/tl/mapeditor/ui3d/MapZoneView.as" />
       </list>
     </option>
   </component>
@@ -534,7 +542,7 @@
       <workItem from="1486948879477" duration="998000" />
       <workItem from="1486950552368" duration="17044000" />
       <workItem from="1486974842134" duration="96373000" />
-      <workItem from="1487553822273" duration="73183000" />
+      <workItem from="1487553822273" duration="74026000" />
     </task>
     <task id="LOCAL-00001" summary="坐标系转换">
       <created>1481705149647</created>
@@ -834,7 +842,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="601777000" />
+    <option name="totallyTimeSpent" value="602620000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -864,7 +872,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.42600423" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42600423" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32875264" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -974,14 +982,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src_a3d/away3d/materials/compilation/ShaderCompiler.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="172">
-          <caret line="874" column="95" selection-start-line="874" selection-start-column="95" selection-end-line="874" selection-end-column="95" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src_a3d/away3d/core/base/SubGeometry.as">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="172">
@@ -1375,16 +1375,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/tl/frameworks/model/TLEditorMapModel.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3081">
-          <caret line="139" column="16" selection-start-line="139" selection-start-column="16" selection-end-line="139" selection-end-column="16" />
-          <folding>
-            <element signature="e#74#106#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/tl/mapeditor/ui3d/BrushView.as">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="800">
@@ -1393,13 +1383,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/tl/frameworks/model/TLEditorMapModel.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="345" column="0" selection-start-line="345" selection-start-column="0" selection-end-line="345" selection-end-column="0" />
+          <folding>
+            <element signature="e#74#106#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/tl/frameworks/mediator/EditorScene3DMediator.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="710" column="31" selection-start-line="710" selection-start-column="31" selection-end-line="710" selection-end-column="31" />
+        <state relative-caret-position="391">
+          <caret line="712" column="13" selection-start-line="712" selection-start-column="13" selection-end-line="712" selection-end-column="13" />
           <folding>
             <element signature="e#77#120#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tl/mapeditor/ui3d/MapZoneView.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="54" column="47" selection-start-line="54" selection-start-column="47" selection-end-line="54" selection-end-column="47" />
+          <folding />
         </state>
       </provider>
     </entry>
