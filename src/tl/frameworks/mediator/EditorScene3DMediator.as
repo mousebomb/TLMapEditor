@@ -3,6 +3,7 @@
  */
 package tl.frameworks.mediator
 {
+	import away3d.containers.ObjectContainer3D;
 	import away3d.core.base.Object3D;
 	import away3d.core.base.Object3D;
 	import away3d.entities.Entity;
@@ -35,6 +36,11 @@ package tl.frameworks.mediator
 	import tl.frameworks.model.CSV.SGCsvManager;
 	import tl.frameworks.model.TLEditorMapModel;
 	import tl.mapeditor.scenes.EditorScene3D;
+	import tl.mapeditor.ui.controls.Gizmo3DBase;
+	import tl.mapeditor.ui.controls.RotateGizmo3D;
+	import tl.mapeditor.ui.controls.ScaleGizmo3D;
+	import tl.mapeditor.ui.controls.TranslateGizmo3D;
+	import tl.mapeditor.ui.events.Gizmo3DEvent;
 	import tl.mapeditor.ui3d.BrushView;
 	import tl.mapeditor.ui3d.FuncPointView;
 
@@ -59,6 +65,10 @@ package tl.frameworks.mediator
 			eventMap.mapListener(view ,MouseEvent3D.MOUSE_MOVE,onMouseMoveAll);
 			eventMap.mapListener(view ,MouseEvent3D.MOUSE_OUT,onMouseOutAnything);
 			eventMap.mapListener(view ,MouseEvent3D.MOUSE_OVER,onMouseOverAnything);
+			//拖拽柄
+			currentGizmo=view.scaleGizmo;
+			eventMap.mapListener(view.scaleGizmo,Gizmo3DEvent.MOVE, handleGizmoAction);
+			eventMap.mapListener(view.scaleGizmo,Gizmo3DEvent.RELEASE, handleGizmoActionRelease);
 
 			eventMap.mapListener(StageFrame.stage, KeyboardEvent.KEY_DOWN, onKeyDown);
 			eventMap.mapListener(StageFrame.stage, KeyboardEvent.KEY_UP, onKeyUp);
@@ -80,6 +90,7 @@ package tl.frameworks.mediator
 			addContextListener(NotifyConst.TOOL_BRUSH_SIZE,onToolBrushSize);
 			addContextListener(NotifyConst.TOOL_BRUSH_QIANGDU,onToolBrushStrong);
 			addContextListener(NotifyConst.TOOL_BRUSH_SPLATPOWER,onToolBrushSplatPower);
+			addContextListener(NotifyConst.TOOL_BRUSH_ROUHE,onToolBrushSoftness);
 			addContextListener(NotifyConst.TOOL_BRUSH_H_MAX,onTOOL_BRUSH_H_MAX);
 			addContextListener(NotifyConst.TOOL_BRUSH_H_MIN,onTOOL_BRUSH_H_MIN);
 			addContextListener(NotifyConst.TOOL_NEW_RIGIDBODY, onNewRigidBody);
@@ -150,6 +161,7 @@ package tl.frameworks.mediator
 			{
 				target = _selectedRole;
 			}
+			view.mousePointTrack.updateAABB(null);
 			return target;
 		}
 
@@ -228,6 +240,34 @@ package tl.frameworks.mediator
 		private function onSPLAT_TEXTURE_CHANGED(n:TLEvent):void
 		{
 			view.terrainView.isTextureDirty = true;
+		}
+
+		// #pragma mark --  拖拽柄  ------------------------------------------------------------
+		public var currentGizmo:Gizmo3DBase;
+
+		private function gizmoSetTarget( target :ObjectContainer3D ):void
+		{
+			currentGizmo.show(target);
+			currentGizmo.active=true;
+
+		}
+		private function clearGizmo3D():void
+		{
+			if (currentGizmo) {
+				currentGizmo.active = false;
+				currentGizmo.hide();
+			}
+		}
+
+		private function handleGizmoActionRelease(e:Gizmo3DEvent):void
+		{
+			trace(StageFrame.renderIdx,"[EditorScene3DMediator]/handleGizmoActionRelease",e.mode, e.object, e.currentValue, e.startValue, e.endValue);
+			selectedTargetTransformCommit();
+		}
+
+		private function handleGizmoAction(e:Gizmo3DEvent):void
+		{
+			trace(StageFrame.renderIdx,"[EditorScene3DMediator]/handleGizmoAction", e.mode, e.object, e.currentValue, e.startValue, e.endValue);
 		}
 
 		// #pragma mark --  WIZARD 角色添加删除和拖拽  ------------------------------------------------------------
@@ -401,6 +441,7 @@ package tl.frameworks.mediator
 				isSelectedFPDragging         = false;
 				selectedFuncPoint            = null;
 			}
+			clearGizmo3D();
 			if(curBrushType==ToolBrushType.BRUSH_TYPE_NONE)
 				setTargetsMouseInteractive(true);
 		}
@@ -597,6 +638,7 @@ package tl.frameworks.mediator
 			view.mousePointTrack.updateAABB(null);
 		}
 		private function onMouseOverAnything( event:MouseEvent3D ):void {
+			if(isSelectedDragging|| isSelectedRBDragging || isSelectedFPDragging) return;
 			view.mousePointTrack.updateAABB(event);
 		}
 		private function onMouseMoveAll(event:MouseEvent3D):void
@@ -615,9 +657,9 @@ package tl.frameworks.mediator
 				brushView.x          = downPos.x;
 				brushView.z          = downPos.z;
 				brushView.y =  mapModel.getHeight(downPos.x, downPos.z);
-				// 除了地形高度刷100ms一次，其它刷子移动也执行 并且其它刷子y要设置
+				// 除了地形高度刷100ms一次，区域刷子移动也执行 并且其它刷子y要设置 TODO 区域刷子移动也不够，要能改大小
 				if(_isBrushPressed &&
-						(curBrushType == ToolBrushType.BRUSH_TYPE_TERRAINTEXTURE || curBrushType== ToolBrushType.BRUSH_TYPE_ZONE))
+						(curBrushType == curBrushType== ToolBrushType.BRUSH_TYPE_ZONE))
 				{
 					doBrush();
 				}
@@ -677,6 +719,10 @@ package tl.frameworks.mediator
 
 		}
 
+		private function onToolBrushSoftness(n:*):void
+		{
+			mapModel.brushSoftness = n.data;
+		}
 		private function onToolBrushSplatPower(n:*):void
 		{
 			trace(StageFrame.renderIdx,"[EditorScene3DMediator]/onToolBrushSplatPower alpha强度",n.data);
@@ -734,8 +780,8 @@ package tl.frameworks.mediator
 				view.zoneView.isHeightDirty = true;
 			} else if (curBrushType == ToolBrushType.BRUSH_TYPE_TERRAINTEXTURE)
 			{
-				// 刷子的真实层 和强度  纹理刷强度是 1-100  换算成 0.01~1.0 之间
-				mapModel.useTextureBrush(mapModel.curTextureBrushLayerIndex, brushView.x, brushView.z, mapModel.brushSplatPower, mapModel.brushSize, mapModel.brushSize);
+				// 刷子的真实层 和强度  纹理刷强度是 0.01~1.00 之间
+				mapModel.useTextureBrush(mapModel.curTextureBrushLayerIndex, brushView.x, brushView.z, mapModel.brushSplatPower, mapModel.brushSize, mapModel.brushSize*mapModel.brushSoftness);
 			} else if(curBrushType == ToolBrushType.BRUSH_TYPE_ZONE)
 			{
 				// 画区域(阻挡等)
@@ -845,6 +891,8 @@ package tl.frameworks.mediator
 				isSelectedRBDragging           = false;
 				isNewRigidBody                 = false;
 				setTargetsMouseInteractive(true);
+				//
+				gizmoSetTarget(_selectedRigidBody);
 			}
 		}
 

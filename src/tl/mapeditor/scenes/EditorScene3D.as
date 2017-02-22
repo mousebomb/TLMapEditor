@@ -24,6 +24,10 @@ package tl.mapeditor.scenes
 	import tl.core.terrain.MapView;
 	import tl.frameworks.NotifyConst;
 	import tl.frameworks.TLEvent;
+	import tl.mapeditor.ui.controls.Gizmo3DBase;
+	import tl.mapeditor.ui.controls.RotateGizmo3D;
+	import tl.mapeditor.ui.controls.ScaleGizmo3D;
+	import tl.mapeditor.ui.controls.TranslateGizmo3D;
 	import tl.mapeditor.ui3d.MapZoneView;
 	import tl.mapeditor.ui3d.MousePointTrack;
 
@@ -80,6 +84,8 @@ package tl.mapeditor.scenes
 			//
 			mousePointTrack = new MousePointTrack();
 			addChild(mousePointTrack);
+
+			initGizmo3D();
 		}
 
 		/** 为当前摄像机朝向 计算一个二维化后的法线矢量方向 */
@@ -149,7 +155,6 @@ package tl.mapeditor.scenes
 			_camHC.lookAtPosition = _lookTarget;
 			lookPercentTile.x = p.x;
 			lookPercentTile.y = p.y;
-			dispatchEvent(lookTargetChanged);
 		}
 
 		/** 当前镜头显示的是百分比的位置哪里 */
@@ -197,8 +202,8 @@ package tl.mapeditor.scenes
 		/** 进入俯视模式 */
 		public function lookDown():void
 		{
-			_camHC.panAngle = -180;
-			_camHC.tiltAngle=  90;
+			_camHC.panAngle = 180;
+			_camHC.tiltAngle=  89;
 			_camHC.lookAtPosition = _lookTarget;
 		}
 
@@ -224,5 +229,23 @@ package tl.mapeditor.scenes
 				removeChild(zoneView);
 			}
 		}
+
+		// #pragma mark --  拖拽柄  ------------------------------------------------------------
+//		public var translateGizmo:TranslateGizmo3D;
+//		public var rotateGizmo:RotateGizmo3D;
+		public var scaleGizmo:ScaleGizmo3D;
+
+		/** 拖拽柄*/
+		private function initGizmo3D():void
+		{
+			//Create Gizmos
+//			translateGizmo = new TranslateGizmo3D();
+//			addChild(translateGizmo);
+//			rotateGizmo = new RotateGizmo3D();
+//			addChild(rotateGizmo);
+			scaleGizmo = new ScaleGizmo3D();
+			addChild(scaleGizmo);
+		}
+
 	}
 }

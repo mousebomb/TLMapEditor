@@ -24,8 +24,8 @@ package tl.core.rigidbody
 		{
 			this.scaleX = vo.rect.width;
 			this.scaleZ = vo.rect.height;
-			x           = vo.rect.x;
-			z           = vo.rect.y;
+			x           = vo.rect.x + vo.rect.width/2;
+			z           = vo.rect.y + vo.rect.height/2;
 			y           = vo.y - 10;
 		}
 

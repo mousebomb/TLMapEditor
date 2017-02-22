@@ -4,9 +4,7 @@
 package tl.mapeditor.ui3d
 {
 	import away3d.bounds.AxisAlignedBoundingBox;
-	import away3d.bounds.BoundingVolumeBase;
 	import away3d.containers.ObjectContainer3D;
-	import away3d.core.base.Object3D;
 	import away3d.entities.Entity;
 	import away3d.entities.Mesh;
 	import away3d.entities.SegmentSet;
@@ -19,6 +17,7 @@ package tl.mapeditor.ui3d
 	import flash.geom.Vector3D;
 
 	import tl.core.terrain.TileView;
+	import tl.mapeditor.ui.controls.Gizmo3DBase;
 
 	public class MousePointTrack extends ObjectContainer3D
 	{
@@ -71,7 +70,7 @@ package tl.mapeditor.ui3d
 			}
 			//
 			var obj:Entity = event.object as Entity;
-			if(obj && obj.mouseEnabled && !(obj is TileView))
+			if(obj && obj.mouseEnabled && !(obj is TileView) && (obj.parent.name!="gizmoContent"))
 			{
 				var objAABB:AxisAlignedBoundingBox=obj.worldBounds as AxisAlignedBoundingBox;
 
