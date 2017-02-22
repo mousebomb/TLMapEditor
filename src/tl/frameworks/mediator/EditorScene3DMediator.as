@@ -708,14 +708,11 @@ package tl.frameworks.mediator
 				brushView.brushSplatPower = mapModel.brushSplatPower;
 			}else if (curBrushType == ToolBrushType.BRUSH_TYPE_ZONE )
 			{
-				brushView.asZoneBrush();
 				view.isShowZone=true;
 				view.lookDown();
 			}
 			// 刷子阶段 不监听其它鼠标单击
 			setTargetsMouseInteractive( false );
-
-			track("EditorScene3DMediator/onToolBrush", mapModel.curTextureBrushLayerIndex, mapModel.mapVO.textureFiles[mapModel.curTextureBrushLayerIndex]);
 
 		}
 
@@ -785,7 +782,7 @@ package tl.frameworks.mediator
 			} else if(curBrushType == ToolBrushType.BRUSH_TYPE_ZONE)
 			{
 				// 画区域(阻挡等)
-				mapModel.setZoneType(brushView.x ,brushView.z , mapModel.curZoneType);
+				mapModel.setZoneType(brushView.x ,brushView.z , mapModel.curZoneType,mapModel.brushSize);
 			} else
 			{
 				// ...

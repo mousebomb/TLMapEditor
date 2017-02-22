@@ -72,11 +72,5 @@ package tl.mapeditor.ui3d
 			this.scaleY = sizeOnBase;
 		}
 
-		public function asZoneBrush():void
-		{
-			// 一个格子大
-			this.brushSize = TLMapVO.TERRAIN_SCALE;			this.scaleY = .1;
-
-		}
 	}
 }

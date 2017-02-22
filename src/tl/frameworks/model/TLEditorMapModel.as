@@ -36,22 +36,6 @@ package tl.frameworks.model
 //			trace(StageFrame.renderIdx,"[TLEditorMapModel]/setCurMousePos tilePOS:",mouseTilePos);
 		}
 
-		// #pragma mark --  设置区域  ------------------------------------------------------------
-		/**操作状态 当前设置区域 */
-		public var curZoneType:int = -1;
-
-		/** 设置某个坐标的区域类型 */
-		public function setZoneType(pxX:Number, pxZ:Number, type : int ):void
-		{
-			// 像素坐标换算成顶点坐标
-			var centerX:int = pxX / TLMapVO.TERRAIN_SCALE;
-			var centerY:int = -pxZ / TLMapVO.TERRAIN_SCALE;
-			trace(StageFrame.renderIdx,"[TLEditorMapModel]/setZoneType",pxX,pxZ,type);
-			mapVO.setNodeVal(centerX,centerY,type);
-			// 派发事件
-			dispatchWith(NotifyConst.MAP_NODE_VAL_CHANGED,false,{tileX:centerX,tileY:centerY,type:type});
-		}
-
 
 		/** 需同步锁定操作 */
 		public var busyLoading:Boolean = false;
@@ -131,6 +115,46 @@ package tl.frameworks.model
 			dispatchWith(NotifyConst.GROUP_WIZARD_LIST_CHANGED,false,fromGroupName);
 			_curMapVO.entityGroups[toGroupName].push(placeData);
 			dispatchWith(NotifyConst.GROUP_WIZARD_LIST_CHANGED,false,toGroupName);
+		}
+
+
+		// #pragma mark --  设置区域  ------------------------------------------------------------
+		/**操作状态 当前设置区域 */
+		public var curZoneType:int = -1;
+
+		/** 设置某个坐标的区域类型 */
+		public function setZoneType(pxX:Number, pxZ:Number, type : int,pxRadius:Number ):void
+		{
+			// 像素坐标换算成顶点坐标
+			var centerX:int = pxX / TLMapVO.TERRAIN_SCALE;
+			var centerY:int = -pxZ / TLMapVO.TERRAIN_SCALE;
+			var size:int    = pxRadius / TLMapVO.TERRAIN_SCALE;
+			if (size < 1)size = 1;
+			var curX:int;
+			var curY:int;
+			var curRadius:Number;
+			var centerP:Point    = new Point(centerX, centerY);
+			var tmpP:Point       = new Point();
+			// 圆形区域内 向周围辐射
+			var cornerExpand:int = size - 1;
+			// 先求出圆形区域
+			for (curX = centerX - cornerExpand; curX <= centerX + cornerExpand; curX++)
+			{
+				for (curY = centerY - cornerExpand; curY <= centerY + cornerExpand; curY++)
+				{
+					tmpP.x    = curX;
+					tmpP.y    = curY;
+					curRadius = MousebombMath.distanceOf2Point(centerP, tmpP);
+					if (curRadius >= size) continue;
+					if (curX < 0) continue;
+					if (curY < 0) continue;
+					if (curX > _curMapVO.terrainVerticlesX) continue;
+					if (curY > _curMapVO.terrainVerticlesY) continue;
+					mapVO.setNodeVal(curX,curY,type);
+					// 派发事件
+					dispatchWith(NotifyConst.MAP_NODE_VAL_CHANGED,false,{tileX:curX,tileY:curY,type:type});
+				}
+			}
 		}
 
 		// #pragma mark --  地形和刷		  ------------------------------------------------------------
