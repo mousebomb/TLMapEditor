@@ -12,6 +12,7 @@ package tl.mapeditor.scenes
 	import tl.core.Embeds;
 
 	import tl.core.LightProvider;
+	import tl.core.skybox.TLSkyBox;
 
 	/** 用于ui上预览3d模型的 */
 	public class PreviewScene3D extends Scene3D
@@ -21,9 +22,13 @@ package tl.mapeditor.scenes
 		{
 			super();
 			addChild(new Trident());
-			this.addChild(new SkyBox(new BitmapCubeTexture(new Embeds.EnvPosX().bitmapData, new Embeds.EnvNegX().bitmapData, new Embeds.EnvPosY().bitmapData, new Embeds.EnvNegY().bitmapData, new Embeds.EnvPosZ().bitmapData, new Embeds.EnvNegZ().bitmapData)));
-//			this.addChild(new SkyBox(new ATFCubeTexture(new Embeds.SKYBOX_ATF())));
+			skyBoxView = new TLSkyBox();
+			addChild(skyBoxView);
 		}
+
+
+		/**天空盒*/
+		public var skyBoxView:TLSkyBox;
 
 
 	}

@@ -5,17 +5,11 @@ package tl.core.terrain
 {
 	import away3d.bounds.AxisAlignedBoundingBox;
 	import away3d.containers.ObjectContainer3D;
-	import away3d.entities.Mesh;
-	import away3d.primitives.PlaneGeometry;
 	import away3d.textures.ATFTexture;
-	import away3d.textures.ATFTexture;
-
-	import flash.geom.Vector3D;
 
 	import flash.utils.Dictionary;
 
 	import tl.core.GPUResProvider;
-	import tl.core.LightProvider;
 
 	import tool.StageFrame;
 

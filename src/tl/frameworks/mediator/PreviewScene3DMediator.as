@@ -16,6 +16,7 @@ package tl.frameworks.mediator
 	import tl.core.role.Role;
 	import tl.frameworks.NotifyConst;
 	import tl.frameworks.TLEvent;
+	import tl.frameworks.model.TLEditorMapModel;
 	import tl.mapeditor.scenes.PreviewScene3D;
 
 	import tool.StageFrame;
@@ -42,9 +43,26 @@ package tl.frameworks.mediator
 			cam.moveBackward(150);
 			addContextListener(NotifyConst.SELECT_WIZARD_PREVIEW, onSELECT_WIZARD_PREVIEW);
 			addContextListener(NotifyConst.SELECT_TERRAIN_TEXTURE_PREVIEW, onSELECT_TerrainTexturePREVIEW);
+
+			addContextListener(NotifyConst.MAP_VO_INITED, onMapVOInited);
+			addContextListener(NotifyConst.TOOL_SKYBOX_SET,onTOOL_SKYBOX_SET);
 			//
 			StageFrame.addAnimFun(onRotate);
 			//
+		}
+
+		[Inject]
+		public var mapModel:TLEditorMapModel;
+		private function onMapVOInited(e:*):void
+		{
+			// 天空盒
+			view.skyBoxView.setSkyBoxTextureName(mapModel.mapVO.skyboxTextureName);
+		}
+		/**设置天空盒*/
+		private function onTOOL_SKYBOX_SET( n: * ):void
+		{
+			var cubeTextureName:String = n.data;
+			view.skyBoxView.setSkyBoxTextureName(cubeTextureName);
 		}
 
 		private function onMouseDown(event:*):void
