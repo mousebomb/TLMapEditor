@@ -12,7 +12,7 @@ package tl.mapeditor
 
 		public static const VERSION_NUN:String = "0.010";	//版本号
 
-		public static var PROJECT_URL:String = "D:/SVN/tool/TLMapEditor/assets/";
+		public static var PROJECT_URL:String = "";
 
 
 

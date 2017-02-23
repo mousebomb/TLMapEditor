@@ -8,36 +8,35 @@ package tl.frameworks.command
 	import org.robotlegs.mvcs.Command;
 
 	import tl.core.GPUResProvider;
+	import tl.frameworks.NotifyConst;
 	import tl.frameworks.mediator.BrushSettingUIMediator;
 	import tl.frameworks.mediator.CoveragePanelUIMediator;
 	import tl.frameworks.mediator.CreateFileUIMediator;
+	import tl.frameworks.mediator.EditorScene3DMediator;
+	import tl.frameworks.mediator.EditorUIMediator;
 	import tl.frameworks.mediator.FunctionPointUIMediator;
 	import tl.frameworks.mediator.HelpUIMediator;
 	import tl.frameworks.mediator.LightingPanelUIMediator;
 	import tl.frameworks.mediator.LogUIMediator;
+	import tl.frameworks.mediator.OperationBarMediator;
 	import tl.frameworks.mediator.PopMenuBarMediator;
+	import tl.frameworks.mediator.PreviewScene3DMediator;
 	import tl.frameworks.mediator.PreviewView3DMediator;
 	import tl.frameworks.mediator.PropertyPanelUIMediator;
 	import tl.frameworks.mediator.SkyBoxSettingUIMediator;
 	import tl.frameworks.mediator.StatisticsUIMediator;
+	import tl.frameworks.mediator.StatusBarMediator;
 	import tl.frameworks.mediator.SurfaceChartletUIMediator;
+	import tl.frameworks.mediator.TerrainTextureBarMediator;
 	import tl.frameworks.mediator.ThumbnailUIMediator;
+	import tl.frameworks.mediator.ToolbarMediator;
+	import tl.frameworks.mediator.WizardBarMediator;
 	import tl.frameworks.mediator.WizardSettingUIMediator;
 	import tl.frameworks.mediator.ZoneSettingUIMediator;
+	import tl.frameworks.model.CSV.SGCsvManager;
 	import tl.frameworks.model.LogModel;
 	import tl.frameworks.model.SkyBoxTextureListModel;
-
 	import tl.frameworks.model.TLEditorMapModel;
-	import tl.frameworks.NotifyConst;
-	import tl.frameworks.mediator.EditorScene3DMediator;
-	import tl.frameworks.mediator.EditorUIMediator;
-	import tl.frameworks.mediator.PreviewScene3DMediator;
-	import tl.frameworks.mediator.StatusBarMediator;
-	import tl.frameworks.mediator.TerrainTextureBarMediator;
-	import tl.frameworks.mediator.ToolbarMediator;
-	import tl.frameworks.mediator.OperationBarMediator;
-	import tl.frameworks.mediator.WizardBarMediator;
-	import tl.frameworks.model.CSV.SGCsvManager;
 	import tl.frameworks.model.TerrainTextureListModel;
 	import tl.frameworks.model.WizardSettingModel;
 	import tl.frameworks.service.TLEditorMapService;
@@ -128,6 +127,7 @@ package tl.frameworks.command
 			mediatorMap.mapView(View3D, PreviewView3DMediator,null,false,false);
 
 			//
+			commandMap.execute(InitConfigCmd);
 			commandMap.execute(LoadCsvCmd);
 			commandMap.execute(InitEditorUICmd);
 			commandMap.execute(LoadTerrainTextureListCmd);

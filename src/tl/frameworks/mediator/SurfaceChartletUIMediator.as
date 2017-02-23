@@ -50,7 +50,7 @@ package tl.frameworks.mediator
 			eventMap.mapListener(view.stage,KeyboardEvent.KEY_UP, onKeyUp);
 			view.init("地表贴图面板", 425, 470);
 			view.x = StageFrame.stage.stageWidth - view.myWidth >> 1;
-			view.y = StageFrame.stage.stageHeight - view.myHeight >> 1;
+			view.y = 32;
 
 			var positionArr:Array = [editorMapModel.brushSize, editorMapModel.brushSplatPower, editorMapModel.brushSoftness]
 			for (var i:int = 0; i < 6; i++)
@@ -91,6 +91,7 @@ package tl.frameworks.mediator
 			addContextListener(NotifyConst.MAP_VO_INITED,onMapVOInited);
 
 			addContextListener(NotifyConst.CLOSE_UI, onClose);
+			addContextListener(NotifyConst.CLOSE_ALL_UI, onClose);
 		}
 
 		private function onClose(event:*):void

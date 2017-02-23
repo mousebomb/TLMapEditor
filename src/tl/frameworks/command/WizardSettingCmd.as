@@ -27,8 +27,9 @@ package tl.frameworks.command
 
 		override public function execute():void
 		{
-			if(!ui)
+			if(!ui || !event.data)
 			{
+				if(!event.data) return;
 				ui = new WizardSettingUI();
 			}
 			if(!event.data)

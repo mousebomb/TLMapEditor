@@ -34,8 +34,8 @@ package tl.frameworks.mediator
 			super.onRegister();
 
 			view.init("统计面板", 420, 360);
-			view.x = StageFrame.stage.stageWidth - view.myWidth >> 1;
-			view.y = StageFrame.stage.stageHeight - view.myHeight >> 1;
+			view.x = StageFrame.stage.stageWidth - view.myWidth ;
+			view.y = 32;
 
 			addContextListener(NotifyConst.MAP_VO_INITED , onMapInit);
 			addContextListener(NotifyConst.GROUP_WIZARD_LIST_CHANGED, onMapInit);

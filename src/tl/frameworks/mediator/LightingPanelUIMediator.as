@@ -36,9 +36,9 @@ package tl.frameworks.mediator
 		override public function onRegister():void
 		{
 			super.onRegister();
-			view.init('灯光设置', 425, 160);
-			view.x = StageFrame.stage.stageWidth - view.myWidth >> 1;
-			view.y = StageFrame.stage.stageHeight - view.myHeight >> 1;
+			view.init('灯光设置', 425, 160);HelpUIMediator
+			view.x = 90;
+			view.y = 372;
 
 			if(mapModel.mapVO)
 				var positionArr:Array = [mapModel.mapVO.sunLightDirection.x, mapModel.mapVO.sunLightDirection.z, -mapModel.mapVO.sunLightDirection.y]
@@ -63,6 +63,13 @@ package tl.frameworks.mediator
 			}
 
 			StageFrame.stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+			addContextListener(NotifyConst.CLOSE_ALL_UI, onClose);
+		}
+
+		private function onClose(event:*):void
+		{
+			if(view.parent)
+				view.parent.removeChild(view)
 		}
 		private function onChangeBtnMouseDown(event:MouseEvent):void
 		{

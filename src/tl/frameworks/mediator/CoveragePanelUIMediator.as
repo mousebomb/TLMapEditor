@@ -49,14 +49,22 @@ package tl.frameworks.mediator
 
 			_vector = WizardBarMediator.menuVec;
 			view.init("图层面板", 460, 470);
-			view.x = StageFrame.stage.stageWidth - view.myWidth >> 1;
-			view.y = StageFrame.stage.stageHeight - view.myHeight >> 1;
+			view.x = StageFrame.stage.stageWidth - view.myWidth;
+			view.y = 32;
 			eventMap.mapListener(view.typeList, Event.CHANGE, onTypeChange);
 			eventMap.mapListener(view.wizardList, Event.CHANGE, onWizardObjectChanged);
 			onMapInit(null);
 			addContextListener(NotifyConst.MAP_VO_INITED , onMapInit);
 			addContextListener(NotifyConst.GROUP_WIZARD_LIST_CHANGED, onMapInit);
 			addContextListener(NotifyConst.GROUP_WIZARD_LI_CHANGED, onWizardObjcetUpdate);
+			addContextListener(NotifyConst.CLOSE_ALL_UI, onClose);
+			addContextListener(NotifyConst.CLOSE_ALL_UI, onClose);
+		}
+
+		private function onClose(event:*):void
+		{
+			if(view.parent)
+				view.parent.removeChild(view)
 		}
 		private function onMapInit(e:TLEvent):void
 		{

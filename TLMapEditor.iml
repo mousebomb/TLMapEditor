@@ -14,7 +14,11 @@
         <compiler-options>
           <option name="additionalOptions" value="-advanced-telemetry -keep-as3-metadata+=Inject -keep-as3-metadata+=PostConstruction" />
         </compiler-options>
-        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/TLMapEditor-app.xml" package-file-name="TLMapEditor" />
+        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/TLMapEditor-app.xml" package-file-name="TLMapEditor">
+          <files-to-package>
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/src/config.inf" path-in-package="config.inf" />
+          </files-to-package>
+        </packaging-air-desktop>
         <packaging-android />
         <packaging-ios />
       </configuration>

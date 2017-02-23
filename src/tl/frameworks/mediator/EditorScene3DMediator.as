@@ -355,26 +355,31 @@ package tl.frameworks.mediator
 			draggingNewRole.y    = mapModel.getHeightWithRigidBody(downPos.x, downPos.z);
 		}
 
+		private function commitDraggingNewRole():void
+		{
+			if (draggingNewRole.parent == null)
+			{
+				// 尚未放入场景，则为放弃
+				draggingNewRole.clearRole();
+				draggingNewRole = null;
+			} else
+			{
+				// 提交
+				placeVOByRole[draggingNewRole] = mapModel.addWizard(draggingNewRole);
+				rolesInScene.push(draggingNewRole);
+				track("EditorScene3DMediator/onStageMouseUp addWizard");
+				// 提交后监听鼠标点击可选中
+				setTargetsMouseInteractive(true);
+				draggingNewRole.addEventListener(MouseEvent3D.MOUSE_DOWN, onRoleMouseDown);
+			}
+			draggingNewRole = null;
+		}
+
 		private function onStageMouseUp(e:MouseEvent):void
 		{
 			if (draggingNewRole)
 			{
-				if (draggingNewRole.parent == null)
-				{
-					// 尚未放入场景，则为放弃
-					draggingNewRole.clearRole();
-					draggingNewRole = null;
-				} else
-				{
-					// 提交
-					placeVOByRole[draggingNewRole] = mapModel.addWizard(draggingNewRole);
-					rolesInScene.push(draggingNewRole);
-					track("EditorScene3DMediator/onStageMouseUp addWizard");
-					// 提交后监听鼠标点击可选中
-					setTargetsMouseInteractive(true);
-					draggingNewRole.addEventListener(MouseEvent3D.MOUSE_DOWN, onRoleMouseDown);
-				}
-				draggingNewRole = null;
+				commitDraggingNewRole();
 			} else if (_selectedRole)
 			{
 				// 移动了重新保存 仍旧保持选中状态
@@ -674,6 +679,10 @@ package tl.frameworks.mediator
 
 		private function onMouseDown(event:MouseEvent3D):void
 		{
+			if(draggingNewRole)
+			{
+				commitDraggingNewRole();
+			}
 			clearSelection();
 			var downPos:Vector3D = event.scenePosition;
 			if (curBrushType == ToolBrushType.BRUSH_TYPE_HEIGHT || curBrushType == ToolBrushType.BRUSH_TYPE_TERRAINTEXTURE || curBrushType== ToolBrushType.BRUSH_TYPE_ZONE)

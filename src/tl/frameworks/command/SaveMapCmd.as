@@ -11,6 +11,7 @@ package tl.frameworks.command
 	import org.robotlegs.mvcs.Command;
 
 	import tl.frameworks.model.TLEditorMapModel;
+	import tl.mapeditor.Config;
 
 	public class SaveMapCmd extends Command
 	{
@@ -24,7 +25,7 @@ package tl.frameworks.command
 
 		public override function execute():void
 		{
-			var f:File = File.desktopDirectory;
+			var f:File = File.desktopDirectory.resolvePath(Config.MAP_URL);
 			f.save(mapModel.saveMapData(), "1001.tlmap");
 		}
 	}

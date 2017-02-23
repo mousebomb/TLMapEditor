@@ -32,7 +32,7 @@ package tl.mapeditor.ui.window
 		public var moveUI:Function;					//移动UI回调
 		public var modelIdText:MyTextField;
 		public var searchBtn:MyButton;				//查找按钮
-		public var onSelectModelCallBack:Function;	//模型选择回调函数
+		private var _onSelectModelCallBack:Function;	//模型选择回调函数
 		private const _showNum:int = 13;
 		//模型id
 		//模型数据
@@ -147,7 +147,7 @@ package tl.mapeditor.ui.window
 			modelListVC.init(sizeArr, _showNum);
 			modelListVC.isSelectFirst = true;	//开启默认选择第一个
 			modelListVC.y = titleView.y + titleView.myHeight;
-			modelListVC.selectCallBack = onSelectModelCallBack;
+			modelListVC.selectCallBack = _onSelectModelCallBack;
 			modelListVC.setData(null);	//初始化时清空所有数据
 			//切页按钮
 			modelPageBtn = new MyPageButton();
@@ -165,6 +165,18 @@ package tl.mapeditor.ui.window
 			super.onMouseUp(e);
 			if(moveUI)
 				moveUI();
+		}
+
+		public function get onSelectModelCallBack():Function
+		{
+			return _onSelectModelCallBack;
+		}
+
+		public function set onSelectModelCallBack(value:Function):void
+		{
+			_onSelectModelCallBack = value;
+			if(modelListVC)
+				modelListVC.selectCallBack = value;
 		}
 	}
 }

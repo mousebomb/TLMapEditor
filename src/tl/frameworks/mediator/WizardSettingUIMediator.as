@@ -4,7 +4,9 @@
 package tl.frameworks.mediator
 {
 	import flash.events.Event;
+	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
+	import flash.ui.Keyboard;
 	import flash.utils.setTimeout;
 
 	import org.robotlegs.mvcs.Mediator;
@@ -31,6 +33,7 @@ package tl.frameworks.mediator
 		private var _isMouseDown:Boolean = false;
 		private var _currentEvent:String;
 		private var _currentMove:int;
+		private var _isControl:Boolean;				//ctrl键按下标志
 		public function WizardSettingUIMediator()
 		{
 			super();
@@ -50,8 +53,17 @@ package tl.frameworks.mediator
 			eventMap.mapListener(view.leftBtn,MouseEvent.MOUSE_UP, onClickBtnUp);
 			eventMap.mapListener(view.rightBtn,MouseEvent.MOUSE_UP, onClickBtnUp);
 			addContextListener(NotifyConst.SELECT_WIZARDOBJECT_SETTING, onSelectedWizardObject)
+			eventMap.mapListener(view.stage,KeyboardEvent.KEY_DOWN, onKeyDown);
+			eventMap.mapListener(view.stage,KeyboardEvent.KEY_UP, onKeyUp);
 			onSelectedWizardObject(null)
 			onResize();
+			addContextListener(NotifyConst.CLOSE_ALL_UI, onClose);
+		}
+
+		private function onClose(event:*):void
+		{
+			if(view.parent)
+				view.parent.removeChild(view)
 		}
 
 		private function onClickBtnDown(event:MouseEvent):void
@@ -93,6 +105,32 @@ package tl.frameworks.mediator
 			{
 				dispatchWith(_currentEvent, false, _currentMove);
 				StageFrame.addNextFrameFun(continueMove);
+				if(_currentMove < 0)
+				{
+					_currentMove = -5;
+				}	else {
+					_currentMove = 5;
+				}
+			}
+		}
+
+		private function onKeyUp(event:KeyboardEvent):void
+		{
+			switch (event.keyCode)
+			{
+				case Keyboard.CONTROL :
+					_isControl = false;
+					break;
+			}
+		}
+
+		private function onKeyDown(event:KeyboardEvent):void
+		{
+			switch (event.keyCode)
+			{
+				case Keyboard.CONTROL :
+					_isControl = true;
+					break;
 			}
 		}
 

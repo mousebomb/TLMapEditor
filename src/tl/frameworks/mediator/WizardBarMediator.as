@@ -4,7 +4,9 @@
 package tl.frameworks.mediator
 {
 	import flash.events.Event;
+	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
+	import flash.ui.Keyboard;
 	import flash.utils.Dictionary;
 
 	import org.mousebomb.framework.Notify;
@@ -27,6 +29,9 @@ package tl.frameworks.mediator
 			super();
 		}
 
+		private static var nextId : int =0;
+		public var id :int =0;
+
 		[Inject]
 		public var view: WizardBarUI;
 		[Inject]
@@ -34,22 +39,61 @@ package tl.frameworks.mediator
 
 		/** 模型 分分类的列表*/
 		private var _modelDataVec:Vector.<Array>;
+		private var _isControl:Boolean;
 
 		override public function onRegister():void
 		{
-
+			id = nextId++;
+			trace(StageFrame.renderIdx,"[WizardBarMediator]/onRegister",id);
 			view.onSelectModelCallBack = onSelectModelCallBack;
 			view.init("模型库", 260, 546);
 			addContextListener(NotifyConst.SELECT_WIZARDOBJECT_TYPE, onSelectType)
 			eventMap.mapListener(view.searchBtn,MouseEvent.CLICK, onClickSearch);
 			eventMap.mapListener(view.selectBtn, MouseEvent.CLICK, onClickSelect);
 			eventMap.mapListener(view.modelPageBtn,MyPageButton.PAGING, onPaging);
+			eventMap.mapListener(view.stage,KeyboardEvent.KEY_DOWN, onKeyDown);
+			eventMap.mapListener(view.stage,KeyboardEvent.KEY_UP, onKeyUp);
 			onCsvLoaded( null );
 			addContextListener(NotifyConst.CSV_LOADED, onCsvLoaded);
 			onResize();
 			//eventMap.mapListener(view.stage,Event.RESIZE, onResize);
 			view.moveUI = onViewMove;
 			dispatchWith(NotifyConst.UI_PREVIEW_SHOW, false, {x:view.x + 10, y:view.y + 35});
+			addContextListener(NotifyConst.CLOSE_ALL_UI, onClose);
+		}
+
+
+
+		private function onKeyUp(event:KeyboardEvent):void
+		{
+			trace(StageFrame.renderIdx,"[WizardBarMediator]/onKeyUp",id);
+			switch (event.keyCode)
+			{
+				case Keyboard.V :
+					if(event.ctrlKey && _selectWizard)
+						dispatchWith(NotifyConst.UI_START_ADD_WIZARD,false, _selectWizard);
+				case Keyboard.CONTROL :
+					_isControl = true;
+					break;
+			}
+		}
+
+
+		private function onKeyDown(event:KeyboardEvent):void
+		{
+			trace(StageFrame.renderIdx,"[WizardBarMediator]/onKeyDown",id);
+			switch (event.keyCode)
+			{
+				case Keyboard.CONTROL :
+					_isControl = true;
+					break;
+			}
+		}
+
+		private function onClose(event:*):void
+		{
+			if(view.parent)
+				view.parent.removeChild(view)
 		}
 
 		private function onSelectType(event:TLEvent):void
@@ -79,6 +123,9 @@ package tl.frameworks.mediator
 
 		override public function onRemove():void
 		{
+			trace(StageFrame.renderIdx,"[WizardBarMediator]/onRemove",id);
+			view.onSelectModelCallBack = null;
+			view.moveUI = null;
 			dispatchWith(NotifyConst.UI_PREVIEW_HIDE);
 		}
 
@@ -149,6 +196,7 @@ package tl.frameworks.mediator
 		private var _curSelectedWizardObject :WizardObject ;
 		private const _showNum:int = 13;
 		private var _nowWizardObjectArr:Array;
+		private var _selectWizard:WizardObject;			//当前选中模型
 
 		/** 当前选中的模型 */
 		public function get curSelectedWizardObject():WizardObject
@@ -159,11 +207,13 @@ package tl.frameworks.mediator
 		/** 选择模型执行 **/
 		private function onSelectModelCallBack(index:uint):void
 		{
+			trace(StageFrame.renderIdx,"[WizardBarMediator]/onSelectModelCallBack",id);
 			if(!_nowWizardObjectArr || _nowWizardObjectArr.length <= index) return;
 			//实例化精灵
 			var wo :WizardObject = _nowWizardObjectArr[index];
 			if(wo == null ) return;
 			view.modelIdText.text = wo.id;
+			_selectWizard = wo;
 			dispatchWith(NotifyConst.STATUS,false,"选择模型ID"+wo.id +" "+wo.name);
 			//实例化精灵
 			dispatchWith(NotifyConst.SELECT_WIZARD_PREVIEW,false , wo);

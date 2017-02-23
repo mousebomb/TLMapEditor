@@ -40,8 +40,8 @@ package tl.frameworks.mediator
 			super.onRegister();
 
 			view.init('设置天空盒', 360, 240);
-			view.x = StageFrame.stage.stageWidth - view.myWidth >> 1;
-			view.y = StageFrame.stage.stageHeight - view.myHeight >> 1;
+			view.x = StageFrame.stage.stageWidth - view.myWidth ;
+			view.y = 32;
 			var len:int = view.vectorBtn.length;
 			for(var i:int=0; i<len; i++)
 			{
@@ -50,6 +50,13 @@ package tl.frameworks.mediator
 			addViewListener(NotifyConst.SKYBOX_TEXTURES_LIST_LOADED,onListComplete);
 			if(model.list)
 				onListComplete(null)
+			addContextListener(NotifyConst.CLOSE_ALL_UI, onClose);
+		}
+
+		private function onClose(event:*):void
+		{
+			if(view.parent)
+				view.parent.removeChild(view)
 		}
 
 		private function onClickBtn(event:MouseEvent):void

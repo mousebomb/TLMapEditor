@@ -31,10 +31,17 @@ package tl.frameworks.mediator
 
 			view.init("日志", 320, 240);
 			view.showLog(logModel._log);
-			view.x = StageFrame.stage.stageWidth - view.myWidth >> 1;
-			view.y = StageFrame.stage.stageHeight - view.myHeight >> 1;
+			view.x = StageFrame.stage.stageWidth - view.myWidth;
+			view.y = 32;
 
 			addContextListener(NotifyConst.STATUS, onSTATUS);
+			addContextListener(NotifyConst.CLOSE_ALL_UI, onClose);
+		}
+
+		private function onClose(event:*):void
+		{
+			if(view.parent)
+				view.parent.removeChild(view)
 		}
 
 		private function onSTATUS(e:TLEvent):void

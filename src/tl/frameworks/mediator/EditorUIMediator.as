@@ -76,6 +76,10 @@ package tl.frameworks.mediator
 					dispatchWith(NotifyConst.CLOSE_UI);
 					dispatchWith(NotifyConst.NEW_SURFACECHARTLET_UI);
 					break;
+				case ToolBoxType.BAR_NAME_25 :
+					dispatchWith(NotifyConst.CLOSE_UI);
+					dispatchWith(NotifyConst.NEW_BRUSHSETTING_UI);
+					break;
 				default :
 					view.switchToolBox(e.data);
 					break;

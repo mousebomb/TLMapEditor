@@ -72,7 +72,7 @@ package tl.frameworks.mediator
 				case Keyboard.O:
 					if(!_isControl)
 						break;
-					_file = new File();
+					_file = File.applicationDirectory.resolvePath(Config.MAP_URL);
 					//选择事件
 					_file.addEventListener(Event.SELECT, onSelect, false, 0, true);
 					_file.browseForOpen("打开地图文件", [_fileFilter]);
@@ -133,9 +133,9 @@ package tl.frameworks.mediator
 				case Keyboard.X :
 					if(!_isControl)
 						break;
-					dispatchWith(NotifyConst.NEW_WIZARD_UI);
+					dispatchWith(NotifyConst.NEW_WIZARD_UI, false, 1);
 					break;
-				case Keyboard.D :
+				case Keyboard.M :
 					if(!_isControl)
 						break;
 					dispatchWith(NotifyConst.SWITCH_TOOLBOX, false, ToolBoxType.WIZARD_LIBRARY);
@@ -149,6 +149,11 @@ package tl.frameworks.mediator
 					if(!_isControl)
 						break;
 					dispatchWith(NotifyConst.SWITCH_TOOLBOX, false, ToolBoxType.BAR_NAME_30);
+					break;
+				case Keyboard.Z:
+					if(!_isControl)
+						break;
+					dispatchWith(NotifyConst.CLOSE_ALL_UI);
 					break;
 				case Keyboard.NUMPAD_ADD:
 					dispatchWith(NotifyConst.TOOL_BRUSH_SIZE_ADD, false, 1);
@@ -165,8 +170,10 @@ package tl.frameworks.mediator
 						var rolePlaceVO:RolePlaceVO = mapModel.mapVO.entityGroups[mapModel.mapVO.entityGroupNames[0]][0];
 						dispatchWith(NotifyConst.UI_SELECT_WIZARD,false,rolePlaceVO);
 					break;
+				case Keyboard.CONTROL :
+					_isControl = false;
+					break;
 			}
-			_isControl = false;
 		}
 
 		private function onKeyDown(event:KeyboardEvent):void

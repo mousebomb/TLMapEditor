@@ -11,7 +11,9 @@ package tl.mapeditor.ui.window
 	import tl.frameworks.model.TLEditorMapModel;
 
 	import tl.mapeditor.ui.common.MyButton;
+	import tl.mapeditor.ui.common.MyDragBar;
 	import tl.mapeditor.ui.common.MySprite;
+	import tl.mapeditor.ui.common.MyTextField;
 	import tl.utils.HCss;
 	import tl.utils.Tool;
 
@@ -19,6 +21,8 @@ package tl.mapeditor.ui.window
 	public class ZoneSettingUI extends MySprite
 	{
 		public var upSelectBtn:MyButton;
+		public var penTxt:MyTextField;
+		public var dragBar:MyDragBar;
 		public function ZoneSettingUI()
 		{
 			super ();
@@ -51,8 +55,28 @@ package tl.mapeditor.ui.window
 			upSelectBtn = MyButton(this.getChildByName("NotSetting"));
 			upSelectBtn.selected = true;
 
+			var vy:int = btn.y + btn.myHeight + 7;
+			penTxt = Tool.getMyTextField(90, -1, 12, 0x999999, "center");
+			penTxt.background = true;
+			penTxt.backgroundColor = 0x191919;
+			penTxt.border = true;
+			penTxt.borderColor = 0x3D3D3D;
+			penTxt.text = '笔刷大小:100';
+			penTxt.mouseEnabled = penTxt.mouseWheelEnabled = false;
+			this.addChild(penTxt);
+			penTxt.y = vy;
+			penTxt.x = 10;
 			this.myWidth = 110;
-			this.drawRect(this.myWidth, (btn.height+5)*i+10, 0x424242);
+
+			dragBar = new MyDragBar();
+			this.addChild(dragBar);
+			dragBar.name = 'ZoneSettingUI_' + i;
+			dragBar.maxValue = 300;
+			dragBar.y = vy + 23;
+			dragBar.x = 5;
+			dragBar.width = 100;
+
+			this.drawRect(this.myWidth, penTxt.y + 50, 0x424242);
 
 		}
 	}

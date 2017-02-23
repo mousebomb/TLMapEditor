@@ -210,7 +210,7 @@ package tl.frameworks.model.CSV
 		}
 		private function onPROGRESS(e:ProgressEvent):void 
 		{
-			trace("SGCsvManager/onPROGRESS" , int(e.bytesLoaded)+"/"+int(e.bytesTotal));
+//			trace("SGCsvManager/onPROGRESS" , int(e.bytesLoaded)+"/"+int(e.bytesTotal));
 		}
 		
 		public function get IsComplete():Boolean{  return _isComplete;  }

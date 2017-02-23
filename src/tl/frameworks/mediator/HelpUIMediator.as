@@ -5,6 +5,8 @@ package tl.frameworks.mediator
 {
 	import org.robotlegs.mvcs.Mediator;
 
+	import tl.frameworks.NotifyConst;
+
 	import tl.mapeditor.ui.window.HelpUI;
 
 	import tool.StageFrame;
@@ -27,14 +29,14 @@ package tl.frameworks.mediator
 
 			 var spacing:String = '        '
 			view.init("快捷键显示", 420, 240);
-			view.x = StageFrame.stage.stageWidth - view.myWidth >> 1;
-			view.y = StageFrame.stage.stageHeight - view.myHeight >> 1;
+			view.x = StageFrame.stage.stageWidth - view.myWidth >> 1 ;
+			view.y = 32;
 			_label ='Ctrl + N' + spacing + '新建文件' + '\n' +
 					'Ctrl + O' + spacing + '打开文件' + '\n' +
 					'Ctrl + S' + spacing + '保存文件' + '\n' +
 					'Ctrl + G' + spacing + '新建刚体' + '\n' +
 					'Ctrl + Q' + spacing + '显示网格' + '\n' +
-					'Ctrl + D' + spacing + '模型列表' + '\n' +
+					'Ctrl + M' + spacing + '模型列表' + '\n' +
 					'Ctrl + F' + spacing + '属性界面' + '\n' +
 					'Ctrl + H' + spacing + '缩略地图' + '\n' +
 					'Ctrl + V' + spacing + '取消刷子' + '\n';
@@ -44,8 +46,16 @@ package tl.frameworks.mediator
 					'Ctrl + L' + spacing + '打开地形刷' + '\n' +
 					'Ctrl + R' + spacing + '打开统计界面' + '\n' +
 					'Ctrl + E' + spacing + '打开图层界面' + '\n' +
-					'Ctrl + X' + spacing + '打开模型编辑' + '\n';
+					'Ctrl + X' + spacing + '打开模型编辑' + '\n'+
+					'Ctrl + Z' + spacing + '关闭所有UI界面' + '\n';
 			undeteText();
+			addContextListener(NotifyConst.CLOSE_ALL_UI, onClose);
+		}
+
+		private function onClose(event:*):void
+		{
+			if(view.parent)
+				view.parent.removeChild(view)
 		}
 
 		private function undeteText():void

@@ -134,6 +134,8 @@ package tl.frameworks
 		public static const NEW_WIZARD_UI:String = 'new_wizard_ui';
 		/**关闭ui界面*/
 		public static const CLOSE_UI:String = 'CLOSE_UI';
+		/**关闭所有ui界面*/
+		public static const CLOSE_ALL_UI:String = 'CLOSE_ALL_UI';
 
 		public function NotifyConst()
 		{

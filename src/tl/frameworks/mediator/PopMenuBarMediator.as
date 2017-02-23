@@ -66,10 +66,6 @@ package tl.frameworks.mediator
 						if(mapModel.mapVO)
 							dispatchWith(NotifyConst.SAVE_MAP,false);
 						break;
-					case ToolBoxType.BAR_NAME_25 :
-						dispatchWith(NotifyConst.CLOSE_UI);
-						dispatchWith(NotifyConst.NEW_BRUSHSETTING_UI);
-						break;
 					case ToolBoxType.BAR_NAME_26 :
 						dispatchWith(NotifyConst.NEW_COVERAGEPANEL_UI);
 						break;

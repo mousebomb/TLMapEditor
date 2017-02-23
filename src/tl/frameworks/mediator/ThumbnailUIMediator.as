@@ -39,6 +39,13 @@ package tl.frameworks.mediator
 			onMapInit(null);
 			addContextListener(NotifyConst.MAP_VO_INITED , onMapInit);
 			addContextListener(NotifyConst.SCENE_CAM_MOVED, onMapMove)
+			addContextListener(NotifyConst.CLOSE_ALL_UI, onClose);
+		}
+
+		private function onClose(event:*):void
+		{
+			if(view.parent)
+				view.parent.removeChild(view)
 		}
 
 		private function onMapMove(event:TLEvent):void

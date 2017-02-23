@@ -4,6 +4,7 @@
 package tl.frameworks.mediator
 {
 	import flash.events.MouseEvent;
+	import flash.geom.Rectangle;
 
 	import org.robotlegs.mvcs.Mediator;
 
@@ -22,7 +23,9 @@ package tl.frameworks.mediator
 		[Inject]
 		public var view:ZoneSettingUI;
 		[Inject]
-		public var editor:TLEditorMapModel ;
+		public var mapModel:TLEditorMapModel ;
+		private const _dragRect:Rectangle = new Rectangle(0, 0, 100, 0);
+		private var _isDrag:Boolean;
 		public function ZoneSettingUIMediator()
 		{
 			super();
@@ -37,63 +40,88 @@ package tl.frameworks.mediator
 			view.x = 90;
 			view.y = 200;
 			addViewListener(MouseEvent.CLICK, onMouseClick);
-			eventMap.mapListener(view , MouseEvent.ROLL_OUT, onMouseRollOut);
+			eventMap.mapListener(view.dragBar, MouseEvent.MOUSE_DOWN, onMouseDown);
+			eventMap.mapListener(view.stage, MouseEvent.MOUSE_UP, onMouseUp);
+
+			view.penTxt.text = '笔刷大小：' + mapModel.brushSize
+			view.dragBar.dragBarPercent  = mapModel.brushSize/300;
+			addContextListener(NotifyConst.CLOSE_ALL_UI, onClose);
 		}
 
-		private function onMouseRollOut(event:MouseEvent)
+		private function onClose(event:*):void
 		{
 			if(view.parent)
+				view.parent.removeChild(view)
+		}
+
+		private function onMouseUp(event:MouseEvent):void
+		{
+			if(_isDrag)
 			{
-				view.parent.removeChild(view);
+				view.dragBar.onMouseUp(event);
+				view.penTxt.text = '笔刷大小：' + Number(view.dragBar.dragBarPercent * 300).toFixed();
+				dispatchWith(NotifyConst.TOOL_BRUSH_SIZE, false, int(view.dragBar.dragBarPercent * 300));
+			}	else {
+				if(view.parent)
+				{
+					view.parent.removeChild(view);
+				}
 			}
-		};
+			_isDrag = false;
+		}
+
+		private function onMouseDown(event:MouseEvent):void
+		{
+			_isDrag = true;
+			view.dragBar.onMouseDown(event);
+		}
 		private function onMouseClick(e:MouseEvent):void
 		{
-			if( !(e.target is MyButton) || !editor.mapVO) return;
+			if( !(e.target is MyButton) || !mapModel.mapVO) return;
 			var btn:MyButton = e.target as MyButton;
 			switch(btn.name)
 			{
 				case "FallArea":			//跌落
-					editor.curZoneType = ZoneType.ZONE_TYPE_3;
+					mapModel.curZoneType = ZoneType.ZONE_TYPE_3;
 					break;
 				case "Obstacles":			//障碍
-					editor.curZoneType = ZoneType.ZONE_TYPE_1;
+					mapModel.curZoneType = ZoneType.ZONE_TYPE_1;
 					break;
 				case "Mask":				//遮挡
-					editor.curZoneType = ZoneType.ZONE_TYPE_2;
+					mapModel.curZoneType = ZoneType.ZONE_TYPE_2;
 					break;
 				case "ClearSetting":		//清除设置
-					editor.curZoneType = ZoneType.ZONE_TYPE_0;
+					mapModel.curZoneType = ZoneType.ZONE_TYPE_0;
 					break;
 				case "PKArea":				//PK区域
-					editor.curZoneType = ZoneType.ZONE_TYPE_4;
+					mapModel.curZoneType = ZoneType.ZONE_TYPE_4;
 					break;
 				case "SafetyArea":		//安全区域
-					editor.curZoneType = ZoneType.ZONE_TYPE_5;
+					mapModel.curZoneType = ZoneType.ZONE_TYPE_5;
 					break;
 				case "AreaA":				//区域A
-					editor.curZoneType = ZoneType.ZONE_TYPE_6;
+					mapModel.curZoneType = ZoneType.ZONE_TYPE_6;
 					break;
 				case "AreaB":				//区域B
-					editor.curZoneType = ZoneType.ZONE_TYPE_7;
+					mapModel.curZoneType = ZoneType.ZONE_TYPE_7;
 					break;
 				case "AreaC":				//区域C
-					editor.curZoneType = ZoneType.ZONE_TYPE_8;
+					mapModel.curZoneType = ZoneType.ZONE_TYPE_8;
 					break;
 				case "AreaD":				//区域D
-					editor.curZoneType = ZoneType.ZONE_TYPE_9;
+					mapModel.curZoneType = ZoneType.ZONE_TYPE_9;
 					break;
 				case "AreaE":				//区域E
-					editor.curZoneType = ZoneType.ZONE_TYPE_10;
+					mapModel.curZoneType = ZoneType.ZONE_TYPE_10;
 					break;
 				case "PKMask":				//PK透明区域
-					editor.curZoneType = ZoneType.ZONE_TYPE_11;
+					mapModel.curZoneType = ZoneType.ZONE_TYPE_11;
 					break;
 				case "SafetyMask":		//安全透明区域
-					editor.curZoneType = ZoneType.ZONE_TYPE_12;
+					mapModel.curZoneType = ZoneType.ZONE_TYPE_12;
 					break;
 				case "NotSetting":		//取消设置
-					editor.curZoneType = -1;
+					mapModel.curZoneType = -1;
 					break;
 			}
 			//移除上一个选中的按钮
@@ -102,7 +130,10 @@ package tl.frameworks.mediator
 			view.upSelectBtn = btn;
 			view.upSelectBtn.selected = true;
 
-//			dispatchWith(NotifyConst.SELECT_ZONE_SETTING,false, editor.curZoneType);
+			if(view.parent)
+			{
+				view.parent.removeChild(view);
+			}
 			if(btn.name == 'NotSetting')
 			{
 				dispatchWith(NotifyConst.TOOL_SELECT, false);
