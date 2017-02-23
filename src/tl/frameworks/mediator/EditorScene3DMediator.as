@@ -113,6 +113,8 @@ package tl.frameworks.mediator
 			addContextListener(NotifyConst.UI_EDITOR_MOVE_CAM,onUI_EDITOR_MOVE_CAM);
 			addViewListener(NotifyConst.SCENE_CAM_MOVED,onViewCamMoved);
 
+			addContextListener(NotifyConst.UI_DELETE_SELECTED,onUI_DELETE_SELECTED);
+
 		}
 
 		// #pragma mark --  天空盒和光照  ------------------------------------------------------------
@@ -177,8 +179,6 @@ package tl.frameworks.mediator
 
 		private function onMapNodeValChanged(n:*):void
 		{
-			var color : uint = ZoneType.COLOR_BY_TYPE[n.data.type];
-			(view.zoneView).setZoneType(n.data.tileX,n.data.tileY,color);
 		}
 
 		private function onToggleZone(e:*):void
@@ -221,8 +221,6 @@ package tl.frameworks.mediator
 			}
 			// 灯光
 			LightProvider.getInstance().setSunLightDirection(mapModel.mapVO.sunLightDirection);
-			// 区域
-			view.zoneView.fromMapVO(mapModel.mapVO);
 			// 功能点
 			removeAllFuncPoints();
 			for (var i:int = 0; i < mapModel.mapVO.funcPoints.length; i++)
@@ -290,6 +288,17 @@ package tl.frameworks.mediator
 			draggingNewRole = null;
 			isSelectedDragging=false;
 			selectedRole = null;
+		}
+
+		/** 删除一个wizard*/
+		private function removeWizard(role:Role):void
+		{
+			var index : int = rolesInScene.indexOf(role);
+			if(index>-1)
+					rolesInScene.splice(index,1);
+			mapModel.delWizard( placeVOByRole[role]);
+			delete placeVOByRole[role];
+			role.clearRole();
 		}
 
 		/** 从存档加入显示 */
@@ -783,8 +792,6 @@ package tl.frameworks.mediator
 				mapModel.useHeightBrush(brushView.x, brushView.z, mapModel.brushStrong, mapModel.brushSize);
 				// 显示 地形
 				view.terrainView.isHeightDirty = true;
-				// 区域
-				view.zoneView.isHeightDirty = true;
 			} else if (curBrushType == ToolBrushType.BRUSH_TYPE_TERRAINTEXTURE)
 			{
 				// 刷子的真实层 和强度  纹理刷强度是 0.01~1.00 之间
@@ -910,7 +917,6 @@ package tl.frameworks.mediator
 
 		private function removeAllRigidBodies():void
 		{
-
 			for (var i:int = 0; i < rigidBodiesInScene.length; i++)
 			{
 				var view1:RigidBodyView = rigidBodiesInScene[i];
@@ -920,6 +926,14 @@ package tl.frameworks.mediator
 			isNewRigidBody       = false;
 			isSelectedRBDragging = false;
 			_selectedRigidBody   = null;
+		}
+
+		private function removeRigidBody(r:RigidBodyView):void
+		{
+			mapModel.delRigidBody(r.vo);
+			var index : int = rigidBodiesInScene.indexOf(r);
+			if(index>-1) rigidBodiesInScene.splice(index,1);
+			r.disposeWithChildren();
 		}
 
 		// #pragma mark --  放置点		  ------------------------------------------------------------
@@ -939,6 +953,14 @@ package tl.frameworks.mediator
 			selectedFuncPoint    = null;
 			isNewFuncPoint       = false;
 			isSelectedFPDragging = false;
+		}
+
+		private function removeFuncPoint(fp:FuncPointView):void
+		{
+			mapModel.delFuncPoint(fp.vo);
+			var index : int =funcPointsInScene.indexOf(fp);
+			if(index>-1) funcPointsInScene.splice(index,1);
+			fp.dispose();
 		}
 
 		private function onAddFuncPoint(n:*):void
@@ -1017,6 +1039,34 @@ package tl.frameworks.mediator
 //			if(value)
 				dispatchWith(NotifyConst.NEW_WIZARD_UI, false, value)
 			_selectedRigidBody = value;
+		}
+
+		/** 删除当前选中项 */
+		private function onUI_DELETE_SELECTED( n: * ):void
+		{
+
+			var target:Object3D;
+			if (_selectedRigidBody && !isSelectedRBDragging)
+			{
+				target = _selectedRigidBody;
+				removeRigidBody(_selectedRigidBody);
+				selectedRigidBody  = null;
+			} else if (_selectedRole && !isSelectedDragging)
+			{
+				target = _selectedRole;
+				removeWizard(_selectedRole);
+				selectedRole = null;
+			}else if(selectedFuncPoint && !isSelectedFPDragging)
+			{
+				target = selectedFuncPoint;
+				removeFuncPoint(selectedFuncPoint);
+				selectedFuncPoint=null;
+			}
+			if(target)
+			{
+				view.mousePointTrack.updateAABB(null);
+				clearGizmo3D();
+			}
 		}
 	}
 }

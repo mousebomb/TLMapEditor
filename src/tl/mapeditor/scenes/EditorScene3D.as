@@ -3,35 +3,23 @@
  */
 package tl.mapeditor.scenes
 {
-	import away3d.cameras.lenses.OrthographicLens;
-	import away3d.core.base.Object3D;
-	import away3d.entities.Mesh;
-	import away3d.primitives.PlaneGeometry;
-
-	import flash.geom.Point;
-
-	import tl.core.*;
 	import away3d.cameras.Camera3D;
 	import away3d.cameras.lenses.PerspectiveLens;
 	import away3d.containers.ObjectContainer3D;
 	import away3d.containers.Scene3D;
 	import away3d.controllers.HoverController;
+	import away3d.core.base.Object3D;
 
+	import flash.geom.Point;
 	import flash.geom.Vector3D;
 
+	import tl.core.*;
 	import tl.core.skybox.TLSkyBox;
-
 	import tl.core.terrain.MapView;
 	import tl.frameworks.NotifyConst;
 	import tl.frameworks.TLEvent;
-	import tl.mapeditor.ui.controls.Gizmo3DBase;
-	import tl.mapeditor.ui.controls.RotateGizmo3D;
 	import tl.mapeditor.ui.controls.ScaleGizmo3D;
-	import tl.mapeditor.ui.controls.TranslateGizmo3D;
-	import tl.mapeditor.ui3d.MapZoneView;
 	import tl.mapeditor.ui3d.MousePointTrack;
-
-	import tool.StageFrame;
 
 	public class EditorScene3D extends Scene3D
 	{
@@ -49,9 +37,6 @@ package tl.mapeditor.scenes
 		/** 上盖ui层 3D标注类 */
 		public var coverView:ObjectContainer3D;
 		public var mousePointTrack:MousePointTrack;
-
-		/** 上盖地图区域显示 3D标注 */
-		public var zoneView:MapZoneView;
 
 		/** 摄像机控制器*/
 		private var _camHC:HoverController;
@@ -76,8 +61,6 @@ package tl.mapeditor.scenes
 
 			coverView = new ObjectContainer3D();
 			addChild(coverView);
-
-			zoneView = new MapZoneView();
 
 			skyBoxView= new TLSkyBox();
 			addChild(skyBoxView);
@@ -208,27 +191,6 @@ package tl.mapeditor.scenes
 		}
 
 
-
-		// #pragma mark --  显示格子信息（区域）  ------------------------------------------------------------
-		/** 地形区域显示格 */
-		private var _isShowZone :Boolean = false;
-
-		public function get isShowZone():Boolean
-		{
-			return _isShowZone;
-		}
-
-		public function set isShowZone(value:Boolean):void
-		{
-			if(_isShowZone == value ) return ;
-			_isShowZone = value;
-			if(_isShowZone)
-			{
-				addChild(zoneView);
-			}else{
-				removeChild(zoneView);
-			}
-		}
 
 		// #pragma mark --  拖拽柄  ------------------------------------------------------------
 //		public var translateGizmo:TranslateGizmo3D;

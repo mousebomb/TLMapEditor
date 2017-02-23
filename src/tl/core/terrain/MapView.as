@@ -57,6 +57,7 @@ package tl.core.terrain
 			//
 //			mouseEnabled = true;
 			isShowGrid = false;
+			isShowZone=false;
 			//
 //			if(planeHitTest==null)
 //			{
@@ -75,6 +76,7 @@ package tl.core.terrain
 		/** 清理场景 */
 		public function clear():void
 		{
+			isShowZone=false;
 			isShowGrid=false;
 			isTextureDirty = isHeightDirty=false;
 			if(mapVO && mapVO.tiles)

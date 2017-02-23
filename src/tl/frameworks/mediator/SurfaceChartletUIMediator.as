@@ -49,7 +49,7 @@ package tl.frameworks.mediator
 			eventMap.mapListener(view.stage,KeyboardEvent.KEY_DOWN, onKeyDown);
 			eventMap.mapListener(view.stage,KeyboardEvent.KEY_UP, onKeyUp);
 			view.init("地表贴图面板", 425, 470);
-			view.x = StageFrame.stage.stageWidth - view.myWidth >> 1;
+			view.x = StageFrame.stage.stageWidth - view.myWidth;
 			view.y = 32;
 
 			var positionArr:Array = [editorMapModel.brushSize, editorMapModel.brushSplatPower, editorMapModel.brushSoftness]

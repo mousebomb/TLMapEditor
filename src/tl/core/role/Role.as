@@ -71,6 +71,7 @@ package tl.core.role
 			_vo = null;
 			// body 总归需要 只释放
 			_bodyUnit.clear();
+			// TODO 解除事件监听
 			// 翅膀啥的释放 并置空
 			track("Role/clearRole");
 			disposeWithChildren();

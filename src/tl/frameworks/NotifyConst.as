@@ -86,6 +86,9 @@ package tl.frameworks
 		/** UI点选已放置的模型精灵 @data=RolePlaceVO */
 		public static const UI_SELECT_WIZARD :String = "UI_SELECT_WIZARD";
 
+		/** UI发起删除当前选中项 3D层自动判定 */
+		public static const UI_DELETE_SELECTED :String = "UI_DELETE_SELECTED";
+
 		/** 添加功能点  @data 点类型 */
 		public static const UI_ADD_FUNCPOINT :String = "UI_ADD_FUNCPOINT";
 

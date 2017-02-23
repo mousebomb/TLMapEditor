@@ -90,24 +90,24 @@ package tl.frameworks.mediator
 					dispatchWith(NotifyConst.SAVE_MAP,false);
 					break;
 				case Keyboard.B:
-					if(!_isControl || !mapModel.mapVO)
+					if(!mapModel.mapVO)
 						break;
-					dispatchWith(NotifyConst.TOOL_BRUSH, false,ToolBrushType.BRUSH_TYPE_HEIGHT);
+					dispatchWith(NotifyConst.CLOSE_UI);
+					dispatchWith(NotifyConst.NEW_BRUSHSETTING_UI);
+					//dispatchWith(NotifyConst.TOOL_BRUSH, false,ToolBrushType.BRUSH_TYPE_HEIGHT);
 					break;
 				case Keyboard.T:
-					if(!_isControl || !mapModel.mapVO)
+					if(!mapModel.mapVO)
 						break;
-					dispatchWith(NotifyConst.TOOL_BRUSH, false,ToolBrushType.BRUSH_TYPE_TERRAINTEXTURE);
+					dispatchWith(NotifyConst.CLOSE_UI);
+					dispatchWith(NotifyConst.NEW_SURFACECHARTLET_UI);
+					//dispatchWith(NotifyConst.TOOL_BRUSH, false,ToolBrushType.BRUSH_TYPE_TERRAINTEXTURE);
 					break;
 				case Keyboard.L:
-					if(!_isControl)
-						break;
 					dispatchWith(NotifyConst.NEW_ZONESETTING_UI);
 					//dispatchWith(NotifyConst.TOOL_BRUSH, false,ToolBrushType.BRUSH_TYPE_ZONE);
 					break;
 				case Keyboard.V:
-					if(!_isControl)
-						break;
 					dispatchWith(NotifyConst.TOOL_SELECT, false);
 					break;
 				case Keyboard.G:
@@ -121,33 +121,21 @@ package tl.frameworks.mediator
 					dispatchWith(NotifyConst.TOGGLE_GRID,false);
 					break;
 				case Keyboard.R:
-					if(!_isControl)
-						break;
 					dispatchWith(NotifyConst.NEW_STATISTICS_UI,false);
 					break;
 				case Keyboard.E:
-					if(!_isControl)
-						break;
 					dispatchWith(NotifyConst.NEW_COVERAGEPANEL_UI,false);
 					break;
 				case Keyboard.X :
-					if(!_isControl)
-						break;
 					dispatchWith(NotifyConst.NEW_WIZARD_UI, false, 1);
 					break;
 				case Keyboard.M :
-					if(!_isControl)
-						break;
 					dispatchWith(NotifyConst.SWITCH_TOOLBOX, false, ToolBoxType.WIZARD_LIBRARY);
 					break;
 				case Keyboard.H :
-					if(!_isControl)
-						break;
 					dispatchWith(NotifyConst.SWITCH_TOOLBOX, false, ToolBoxType.BAR_NAME_28);
 					break;
 				case Keyboard.F :
-					if(!_isControl)
-						break;
 					dispatchWith(NotifyConst.SWITCH_TOOLBOX, false, ToolBoxType.BAR_NAME_30);
 					break;
 				case Keyboard.Z:
@@ -166,9 +154,12 @@ package tl.frameworks.mediator
 				case Keyboard.K:
 //					dispatchWith(NotifyConst.TOOL_SKYBOX_SET,false,"snow");
 //					dispatchWith(NotifyConst.LIGHT_DIRECTION_SET,false,new Vector3D(300-Math.random()*150,-300,300-Math.random()*150));
-						//测试代码，测试点选模型对象: 只有放置过模型才可以测
-						var rolePlaceVO:RolePlaceVO = mapModel.mapVO.entityGroups[mapModel.mapVO.entityGroupNames[0]][0];
-						dispatchWith(NotifyConst.UI_SELECT_WIZARD,false,rolePlaceVO);
+//						//测试代码，测试点选模型对象: 只有放置过模型才可以测
+//						var rolePlaceVO:RolePlaceVO = mapModel.mapVO.entityGroups[mapModel.mapVO.entityGroupNames[0]][0];
+//						dispatchWith(NotifyConst.UI_SELECT_WIZARD,false,rolePlaceVO);
+					break;
+				case Keyboard.DELETE:
+					dispatchWith(NotifyConst.UI_DELETE_SELECTED);
 					break;
 				case Keyboard.CONTROL :
 					_isControl = false;

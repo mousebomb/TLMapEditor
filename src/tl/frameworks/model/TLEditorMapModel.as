@@ -81,6 +81,20 @@ package tl.frameworks.model
 			}
 		}
 
+		public function delWizard(place:RolePlaceVO):void
+		{
+			for (var key :* in _curMapVO.entityGroups)
+			{
+				var group :Vector.<RolePlaceVO> = _curMapVO.entityGroups[key];
+				var index : int = group.indexOf(place);
+				if(index >-1)
+				{
+					group.splice(index, 1);
+					return;
+				}
+			}
+			GlobalFacade.sendNotify(NotifyConst.STATUS,this,"要删的精灵放置数据不存在");
+		}
 
 		/** 新建一个层 */
 		public function addEntityGroup(groupName:String):void
