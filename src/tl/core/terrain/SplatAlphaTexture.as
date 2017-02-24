@@ -107,5 +107,12 @@ package tl.core.terrain
 		{
 			return _byteArrayData;
 		}
+
+
+		override public function dispose():void
+		{
+			_byteArrayData=null;
+			super.dispose();
+		}
 	}
 }

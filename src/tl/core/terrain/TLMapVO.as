@@ -426,5 +426,25 @@ package tl.core.terrain
 		// #pragma mark --  skybox  ------------------------------------------------------------
 		/** 天空盒纹理名 */
 		public var skyboxTextureName:String    ="sky";
+
+
+		// #pragma mark --  清理  ------------------------------------------------------------
+		public function clear():void
+		{
+			if(_debugNodeMap){
+				_debugNodeMap.dispose();
+				_debugNodeMap=null;
+			}
+			if(_debugBmd)
+			{
+				_debugBmd.dispose();
+				_debugBmd=null;
+			}
+			if(splatAlphaTexture)
+			{
+				splatAlphaTexture.dispose();
+				splatAlphaTexture=null;
+			}
+		}
 	}
 }

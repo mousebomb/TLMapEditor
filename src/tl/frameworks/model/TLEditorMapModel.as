@@ -189,7 +189,7 @@ package tl.frameworks.model
 		/** 新建地形 编辑器创建 用*/
 		public function setupNewTerrain(terrainVerticlesX:int, terrainVerticlesY:int ,name:String ,heightMap:BitmapData =null):void
 		{
-			_curMapVO                   = new TLMapVO();
+			newMapVO();
 			_curMapVO.name = name;
 			if(heightMap)
 			{

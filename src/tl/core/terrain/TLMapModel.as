@@ -65,9 +65,15 @@ package tl.core.terrain
 
 
 		// #pragma mark --  读取map  ------------------------------------------------------------
+		protected function newMapVO():void
+		{
+			if(_curMapVO)
+				_curMapVO.clear();
+			_curMapVO = new TLMapVO();
+		}
 		public function readMapVO(by:ByteArray):void
 		{
-			_curMapVO                   = new TLMapVO();
+			newMapVO();
 			by.uncompress();
 			// 版本号
 			var version :uint = by.readUnsignedInt();
