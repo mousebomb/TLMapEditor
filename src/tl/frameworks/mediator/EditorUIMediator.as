@@ -68,6 +68,9 @@ package tl.frameworks.mediator
 				case ToolBoxType.BAR_NAME_9:
 					dispatchWith(NotifyConst.NEW_ZONESETTING_UI);
 					break;
+				case ToolBoxType.BAR_NAME_11:
+					dispatchWith(NotifyConst.TOGGLE_BOUNDS);
+					break;
 				case ToolBoxType.BAR_NAME_13 :
 					if(editorMapModel.mapVO)
 						dispatchWith(NotifyConst.TOOL_NEW_RIGIDBODY,false);

@@ -69,9 +69,12 @@ package tl.core.role
 		public function clearRole():void
 		{
 			_vo = null;
+			//
+			_alwaysShowBounds=false;
+			_showBounds=false;
+			validateShowBounds();
 			// body 总归需要 只释放
 			_bodyUnit.clear();
-			// TODO 解除事件监听
 			// 翅膀啥的释放 并置空
 			track("Role/clearRole");
 			disposeWithChildren();
@@ -120,6 +123,45 @@ package tl.core.role
 		{
 			_mouseInteractive = value;
 			_bodyUnit.mouseEnabled = this.mouseEnabled = value;
+		}
+
+
+		// #pragma mark --  选中  ------------------------------------------------------------
+		private var _showBounds:Boolean = false;
+		public function set showBounds(showBounds:Boolean):void
+		{
+			_showBounds = showBounds;
+			validateShowBounds();
+		}
+
+		public function get showBounds():Boolean
+		{
+			return _showBounds;
+		}
+
+		/** 为debug或编辑器用 总是显示bounds */
+		private var _alwaysShowBounds :Boolean = false;
+
+
+		public function get alwaysShowBounds():Boolean
+		{
+			return _alwaysShowBounds;
+		}
+
+		public function set alwaysShowBounds(value:Boolean):void
+		{
+			_alwaysShowBounds = value;
+			validateShowBounds();
+		}
+
+		[Inline]
+		private final function validateShowBounds():void
+		{
+			var isShow :Boolean = _alwaysShowBounds || _showBounds;
+			for (var i:int = 0; i < numChildren; i++)
+			{
+				bodyUnit.showBounds = isShow;
+			}
 		}
 	}
 }

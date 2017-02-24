@@ -114,7 +114,19 @@ package tl.frameworks.mediator
 			addViewListener(NotifyConst.SCENE_CAM_MOVED,onViewCamMoved);
 
 			addContextListener(NotifyConst.UI_DELETE_SELECTED,onUI_DELETE_SELECTED);
+			addContextListener(NotifyConst.TOGGLE_BOUNDS,onTOGGLE_BOUNDS);
 
+		}
+		// #pragma mark --  切换显示包围盒  ------------------------------------------------------------
+		private var isAllShowBounds :Boolean = false;
+		private function onTOGGLE_BOUNDS( n: * ):void
+		{
+			isAllShowBounds = !isAllShowBounds;
+			for (var i:int = 0; i < rolesInScene.length; i++)
+			{
+				var role:Role = rolesInScene[i];
+				role.alwaysShowBounds = isAllShowBounds;
+			}
 		}
 
 		// #pragma mark --  天空盒和光照  ------------------------------------------------------------
@@ -200,6 +212,7 @@ package tl.frameworks.mediator
 			view.terrainView.fromMapVO(mapModel.mapVO);
 			view.lookAtMapCenter();
 			// 模型
+			isAllShowBounds=false;
 			removeAllWizards();
 			for each (var group:Vector.<RolePlaceVO> in mapModel.mapVO.entityGroups)
 			{
@@ -327,7 +340,7 @@ package tl.frameworks.mediator
 			// 放弃一切在做的操作，点选一个角色模型
 			clearSelection();
 			var role:Role                 = vo.wizard;
-			role.bodyUnit.showBounds      = true;
+			role.showBounds      = true;
 			selectedRole = role;
 			// 镜头
 			view.lookAtEntity(role);
@@ -363,6 +376,11 @@ package tl.frameworks.mediator
 			draggingNewRole.z    = downPos.z;
 			draggingNewRole.y    = mapModel.getHeightWithRigidBody(downPos.x, downPos.z);
 		}
+		//time(abs)		=SUM
+		//time  0		1m
+		//spend +2000	-100	-200	-300	-400	-500	-600	-700
+		//earn 			6
+		//left
 
 		private function commitDraggingNewRole():void
 		{
@@ -412,7 +430,7 @@ package tl.frameworks.mediator
 			clearSelection();
 
 			var role:Role                 = event.target as Role;
-			role.bodyUnit.showBounds      = true;
+			role.showBounds      = true;
 			selectedRole = role;
 			// 开始拖拽
 			isSelectedDragging            = true;
@@ -441,7 +459,7 @@ package tl.frameworks.mediator
 			isSelectedDragging=false;
 			if (_selectedRole)
 			{
-				_selectedRole.bodyUnit.showBounds = false;
+				_selectedRole.showBounds = false;
 				selectedRole                     = null;
 			}
 			if (_selectedRigidBody)
@@ -672,7 +690,7 @@ package tl.frameworks.mediator
 				brushView.x          = downPos.x;
 				brushView.z          = downPos.z;
 				brushView.y =  mapModel.getHeight(downPos.x, downPos.z);
-				// 除了地形高度刷100ms一次，区域刷子移动也执行 并且其它刷子y要设置 TODO 区域刷子移动也不够，要能改大小
+				// 除了地形高度刷100ms一次，区域刷子移动也执行 并且其它刷子y要设置
 				if(_isBrushPressed &&
 						(curBrushType == curBrushType== ToolBrushType.BRUSH_TYPE_ZONE))
 				{

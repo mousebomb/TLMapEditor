@@ -86,7 +86,7 @@ package tl.core.role
 				// // TODO del debug only
 //				playAction("run");
 				var sward :Mesh = new Mesh(new CubeGeometry(10,10,50));
-				bindToJoint(sward , "righthand");
+				bindToJoint(sward , "lefthand");
 				parent.addChild(sward);
 				// TODO ENDOF debug only
 				// 恢复要进行的动作

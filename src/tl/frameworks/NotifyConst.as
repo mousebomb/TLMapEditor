@@ -117,6 +117,8 @@ package tl.frameworks
 		public static const TOGGLE_GRID :String = "TOGGLE_GRID";
 		/**开关区域显示 @data 不需要 */
 		public static const TOGGLE_ZONE :String = "TOGGLE_ZONE";
+		/**包围盒显示与否 */
+		public static const TOGGLE_BOUNDS :String = "TOGGLE_BOUNDS";
 		/**打开图层面板*/
 		public static const NEW_COVERAGEPANEL_UI:String = 'new_coveragePanel_ui';
 		/**地形笔刷设置*/
