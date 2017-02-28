@@ -5,15 +5,13 @@ package tl.mapeditor.ui.window
 {
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
+	import flash.utils.Dictionary;
 
-	import tl.core.terrain.TLTileVO;
+	import tl.core.terrain.TLMapVO;
 	import tl.mapeditor.ui.common.MyButton;
-
 	import tl.mapeditor.ui.common.MyDragBar;
 	import tl.mapeditor.ui.common.MySprite;
-
 	import tl.mapeditor.ui.common.MyTextField;
-
 	import tl.mapeditor.ui.common.UIBase;
 	import tl.utils.Tool;
 
@@ -48,10 +46,11 @@ package tl.mapeditor.ui.window
 
 			var info:ChartletInfo ;
 			vectorChartlet = new <ChartletInfo>[]
-			for (var i:int = 0; i < 6; i++)
+			for (var i:int = 0; i < 5; i++)
 			{
 				info = new ChartletInfo();
 				info.init(i);
+				info.createBtn();
 				bgSpr.addChild(info);
 				info.x = i % 3 * 130 + 70 ;
 				info.y = int(i / 3) * 130 + 70;
@@ -128,15 +127,17 @@ package tl.mapeditor.ui.window
 			super.onClickClose(e);
 		}
 		/**显示地表贴图*/
-		public function showMapChartlet(_sourceArr:Array):void
+		public function showMapChartlet(_sourceArr:Vector.<String>, bmdDic:Dictionary):void
 		{
-			var info:ChartletInfo ;
+			var info:ChartletInfo;
 			var leng:int = _sourceArr.length;
-			 for (var i:int = 0; i < leng; i++)
-			 {
-				 info = vectorChartlet[i];
-				 info.showBgInfo(_sourceArr[i][0], _sourceArr[i][1]);
-			 }
+			for (var i:int = 0; i < leng; i++)
+			{
+				info = vectorChartlet[i];
+				info.showBgInfo(_sourceArr[i], bmdDic[_sourceArr[i]]);
+			}
+			for (i; i < TLMapVO.TEXTURES_MAX_LAYER; i++)
+				vectorChartlet[i].showBgInfo("", null);
 		}
 	}
 }

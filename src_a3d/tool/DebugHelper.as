@@ -60,7 +60,7 @@ package tool
 		public static function setView3D(view3D :View3D):void
 		{
 			a3dStats = new AwayStats(view3D, true, true);
-			a3dStats.x = stage.stageWidth - a3dStats.width;
+			a3dStats.x = stage.fullScreenWidth - a3dStats.width;
 			stage.addChild(a3dStats);
 		}
 

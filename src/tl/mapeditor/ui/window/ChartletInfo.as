@@ -6,6 +6,8 @@ package tl.mapeditor.ui.window
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 
+	import tl.mapeditor.ui.common.MyButton;
+
 	import tl.mapeditor.ui.common.MySprite;
 	import tl.mapeditor.ui.common.MyTextField;
 	import tl.utils.Tool;
@@ -15,6 +17,8 @@ package tl.mapeditor.ui.window
 	{
 		public var chartletId:int;
 		public var chartletName:String;
+		public var clearBtn:MyButton;
+		public var changeBtn:MyButton;
 		private var _infoTxt:MyTextField;
 		private var _bg:Bitmap;
 		private var _nameTxt:MyTextField;
@@ -42,8 +46,23 @@ package tl.mapeditor.ui.window
 			_infoTxt = Tool.getMyTextField(120, -1, 14, 0xFFFF00, "center");
 			_infoTxt.mouseEnabled = _infoTxt.mouseWheelEnabled = false;
 			this.addChild(_infoTxt);
-			_infoTxt.y = 30;
+			_infoTxt.y = -30;
 			_infoTxt.x = -60;
+		}
+
+		public function createBtn():void
+		{
+			changeBtn = Tool.getMyBtn('更换贴图', 60);
+			this.addChild(changeBtn);
+			changeBtn.x = -60;
+			changeBtn.y = 37;
+
+			clearBtn = Tool.getMyBtn('取消贴图', 60);
+			this.addChild(clearBtn);
+			clearBtn.x = 0;
+			clearBtn.y = 37;
+			changeBtn.name = '' + chartletId;
+			clearBtn.name = '' + chartletId;
 		}
 		public function updateIndex(id:int):void
 		{
@@ -52,16 +71,26 @@ package tl.mapeditor.ui.window
 				chartletId = id;
 				_nameTxt.text = '图层' + (chartletId + 1);
 			}
+			changeBtn.name = '' + chartletId;
+			clearBtn.name = '' + chartletId;
 		}
 
 		public function showBgInfo(name:String, bmd:BitmapData):void
 		{
 			chartletName = name;
 			_nameTxt.text = '图层' + (chartletId + 1);
-			_infoTxt.text = bmd.width + '*' + bmd.height;
-			_bg.bitmapData = bmd;
-			_bg.width = 120;
-			_bg.height = 120;
+			if(bmd)
+			{
+				_infoTxt.text = bmd.width + '*' + bmd.height;
+				_bg.bitmapData = bmd;
+				_bg.visible = true;
+				_bg.width = 120;
+				_bg.height = 120;
+			}	else {
+				_bg.visible = false;
+				_infoTxt.text = '没有贴图'
+			}
+
 		}
 	}
 }

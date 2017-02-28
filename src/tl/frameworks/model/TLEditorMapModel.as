@@ -272,7 +272,16 @@ package tl.frameworks.model
 		/** 设置图层材质 */
 		public function setLayerTexture(textureFile:String, layerIndex:int):void
 		{
-			_curMapVO.textureFiles[layerIndex] = textureFile;
+			if(textureFile==null || textureFile=="")
+			{
+				// 取消贴图 后面的往前排
+				_curMapVO.textureFiles.splice(layerIndex,1);
+			}else{
+				// 设置贴图 不可以大于目前最大
+				if(layerIndex > _curMapVO.textureFiles.length)
+					layerIndex = _curMapVO.textureFiles.length;
+				_curMapVO.textureFiles[layerIndex] = textureFile;
+			}
 			dispatchWith(NotifyConst.MAP_TERRAIN_TEXTURE_CHANGED, false);
 		}
 

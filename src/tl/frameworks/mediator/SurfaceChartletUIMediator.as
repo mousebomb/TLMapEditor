@@ -4,16 +4,23 @@
 package tl.frameworks.mediator
 {
 	import flash.display.BitmapData;
+	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
+	import flash.filesystem.File;
+	import flash.net.FileFilter;
 	import flash.ui.Keyboard;
+	import flash.ui.Mouse;
+	import flash.utils.Dictionary;
 
 	import org.robotlegs.mvcs.Mediator;
 
 	import tl.core.GPUResProvider;
+	import tl.core.terrain.TLMapVO;
 	import tl.frameworks.NotifyConst;
 	import tl.frameworks.defines.ToolBrushType;
 	import tl.frameworks.model.TLEditorMapModel;
+	import tl.mapeditor.ui.common.MyButton;
 	import tl.mapeditor.ui.common.MyDragBar;
 	import tl.mapeditor.ui.window.ChartletInfo;
 	import tl.mapeditor.ui.window.SurfaceChartletUI;
@@ -30,11 +37,16 @@ package tl.frameworks.mediator
 		[Inject]
 		public var gpuRes:GPUResProvider;
 		private var _drag:String;
-		private var _sourceArr:Array = [];
+		// 对应name和bitmap
+		private var _sourceImgDic :Dictionary = new Dictionary();
+		private var _sourceImgLoaded : int ;
 		private var _dragChartlet:ChartletInfo;			//当前拖动的图层
 		private var _firstX:Number;						//初始位置
 		private var _firstY:Number;
 		private var _canDrag:Boolean;					//可拖动标志
+		private var _file:File;
+		private var _fileFilter:FileFilter = new FileFilter("*.png", "*.png");
+		private var _selectIndex:int  ;
 		//初始位置
 
 		public function SurfaceChartletUIMediator()
@@ -53,7 +65,7 @@ package tl.frameworks.mediator
 			view.y = 32;
 
 			var positionArr:Array = [editorMapModel.brushSize, editorMapModel.brushSplatPower, editorMapModel.brushSoftness]
-			for (var i:int = 0; i < 6; i++)
+			for (var i:int = 0; i < 5; i++)
 			{
 				if(i<3)
 				{
@@ -69,11 +81,13 @@ package tl.frameworks.mediator
 						view.vectorDragBar[i].dragBarPercent = positionArr[i]/view.vectorDragBar[i].maxValue;
 					}
 				}
-				view.vectorChartlet[i].addEventListener(MouseEvent.MOUSE_DOWN, onChartletMouseDown)
-				view.vectorChartlet[i].addEventListener(MouseEvent.MOUSE_UP, onChartletMouseUp)
+				eventMap.mapListener(view.vectorChartlet[i],MouseEvent.MOUSE_DOWN, onChartletMouseDown);
+				eventMap.mapListener(view.vectorChartlet[i],MouseEvent.MOUSE_UP, onChartletMouseUp);
+				eventMap.mapListener(view.vectorChartlet[i].clearBtn,MouseEvent.CLICK, onMouseClear);
+				eventMap.mapListener(view.vectorChartlet[i].changeBtn,MouseEvent.CLICK, onMouseChange);
 			}
-			view.hideBtn.addEventListener(MouseEvent.CLICK, onClickHide);
-			view.showBtn.addEventListener(MouseEvent.CLICK, onClickShow);
+			eventMap.mapListener(view.hideBtn,MouseEvent.CLICK, onClickHide);
+			eventMap.mapListener(view.showBtn,MouseEvent.CLICK, onClickShow);
 			eventMap.mapListener(view.stage, MouseEvent.MOUSE_UP, onMouseUp);
 			if(editorMapModel.mapVO)
 			{
@@ -92,6 +106,32 @@ package tl.frameworks.mediator
 
 			addContextListener(NotifyConst.CLOSE_UI, onClose);
 			addContextListener(NotifyConst.CLOSE_ALL_UI, onClose);
+		}
+
+		private function onMouseChange(event:MouseEvent):void
+		{
+			var btn:MyButton = event.currentTarget as MyButton;
+			_selectIndex = int(btn.name);
+			_file = new File();
+			_file.addEventListener(Event.SELECT, onSelect, false, 0, true);			//选择后派发
+			_file.browseForOpen("打开地图文件", [_fileFilter]);
+		}
+		/** 选择完成执行 **/
+		private function onSelect(e:Event):void
+		{
+			var url:String = _file.nativePath;
+			var fileName:String = String(_file.name).split(".")[0];
+			editorMapModel.setLayerTexture(fileName, _selectIndex)
+			_file.removeEventListener(Event.SELECT, onSelect);
+
+			validatePickedList();
+		}
+
+		private function onMouseClear(event:MouseEvent):void
+		{
+			var btn:MyButton = event.currentTarget as MyButton;
+			editorMapModel.setLayerTexture('', int(btn.name))
+			validatePickedList();
 		}
 
 		private function onClose(event:*):void
@@ -119,21 +159,26 @@ package tl.frameworks.mediator
 		}
 		private function validatePickedList():void
 		{
-			_sourceArr = [];
+			_sourceImgLoaded = 0;
+			_sourceImgDic = new Dictionary();
 			// 土地，石头，青草，耕地，砖
-			for(var i:int=0; i<5; i++)
+			for(var i:int=0; i<TLMapVO.TEXTURES_MAX_LAYER; i++)
 			{
-				gpuRes.getTerrainTexturePreview(editorMapModel.mapVO.textureFiles[i],onAssetLoaded);
+				if(editorMapModel.mapVO.textureFiles.length <= i || editorMapModel.mapVO.textureFiles[i] == '')
+					onAssetLoaded("",null);
+				else
+					gpuRes.getTerrainTexturePreview(editorMapModel.mapVO.textureFiles[i],onAssetLoaded);
 			}
 		}
 
 		private function onAssetLoaded(name:String, bmd:BitmapData):void
 		{
-			_sourceArr.push([name, bmd]);
-			if(_sourceArr.length == 5)
+			_sourceImgDic[name] = bmd;
+
+			if(++_sourceImgLoaded >= TLMapVO.TEXTURES_MAX_LAYER)
 			{
 				//资源收集完毕
-				view.showMapChartlet(_sourceArr)
+				view.showMapChartlet( editorMapModel.mapVO.textureFiles ,_sourceImgDic);
 			}
 		}
 		override public function onRemove():void
@@ -155,6 +200,7 @@ package tl.frameworks.mediator
 
 		private function onChartletMouseDown(event:MouseEvent):void
 		{
+			if(event.target is MyButton) return;
 			var chartlet:ChartletInfo = event.currentTarget as ChartletInfo;
 			if(chartlet.chartletName && _canDrag)
 			{
@@ -169,6 +215,7 @@ package tl.frameworks.mediator
 
 		private function onChartletMouseUp(event:MouseEvent):void
 		{
+			if(event.target is MyButton) return;
 			var chartlet:ChartletInfo = event.currentTarget as ChartletInfo;
 			if(chartlet.chartletName)
 			{
@@ -227,7 +274,7 @@ package tl.frameworks.mediator
 							if(editorMapModel.mapVO)
 								editorMapModel.setLayerIndex(index, childIndex, true)
 						}
-						for(var i:int=0; i<6; i++)
+						for(var i:int=0; i<5; i++)
 						{
 							view.vectorChartlet[i].x = i % 3 * 130 + 70 ;
 							view.vectorChartlet[i].y = int(i / 3) * 130 + 70;
