@@ -16,6 +16,7 @@ package tl.frameworks.model
 	import tl.core.role.Role;
 	import tl.core.role.RolePlaceVO;
 	import tl.core.terrain.*;
+	import tl.core.terrain.TLMapVO;
 	import tl.frameworks.NotifyConst;
 	import tl.frameworks.defines.WizardType;
 
@@ -265,7 +266,7 @@ package tl.frameworks.model
 
 		/**** 材质 ****/
 
-		/** 当前刷子(选中)刷材质的层 */
+		/** 当前刷子(选中)刷材质的层 低层的画的时候会同时抹掉高层的 */
 		public var curTextureBrushLayerIndex:int = 1;
 
 		/** 设置图层材质 */
@@ -289,7 +290,7 @@ package tl.frameworks.model
 
 		/**
 		 * 使用纹理刷子刷一下
-		 * @param layerIndex 图层
+		 * @param layerIndex 图层 0~4 低层的绘制进去 高层的要抹掉
 		 * @param pxX 像素单位坐标
 		 * @param pxZ 像素单位坐标
 		 * @param power 强度  0.0~1.0
@@ -347,9 +348,23 @@ package tl.frameworks.model
 						// 内圈 无羽化
 						curAlphaAdd = power;
 					}
-
-					var newAlpha:Number = _curMapVO.getAlpha(curX, curY, layerIndex) + curAlphaAdd;
-					_curMapVO.setAlpha(curX, curY, layerIndex, newAlpha);
+					var newAlpha:Number;
+					if(layerIndex>0)
+					{
+						// 对当前层 add ， 注意 地表层没有alpha
+						newAlpha = _curMapVO.getAlpha(curX, curY, layerIndex) + curAlphaAdd;
+						_curMapVO.setAlpha(curX, curY, layerIndex, newAlpha);
+					}
+					// 对更高层 sub
+					 for (var i:int = layerIndex+1; i < TLMapVO.TEXTURES_MAX_LAYER; i++)
+					 {
+						 var oldAlpha :Number = _curMapVO.getAlpha(curX,curY , i);
+						 if(oldAlpha==0.0)
+							 continue;
+						 newAlpha = oldAlpha - curAlphaAdd;
+						 if(newAlpha<0.0) newAlpha = 0.0;
+						 _curMapVO.setAlpha(curX,curY,i,newAlpha);
+					 }
 //					trace(StageFrame.renderIdx,"TLMapModel/useTextureBrush",curX,curY,layerIndex, "+"+curAlphaAdd , newAlpha);
 				}
 			}

@@ -46,8 +46,10 @@ package tl.frameworks.mediator
 
 			addContextListener(NotifyConst.MAP_VO_INITED, onMapVOInited);
 			addContextListener(NotifyConst.TOOL_SKYBOX_SET,onTOOL_SKYBOX_SET);
+
+			addContextListener(NotifyConst.WIZARD_PREVIEW_ROTATE,onWIZARD_PREVIEW_ROTATE);
 			//
-			StageFrame.addAnimFun(onRotate);
+//			StageFrame.addAnimFun(onRotate);
 			//
 		}
 
@@ -82,6 +84,17 @@ package tl.frameworks.mediator
 			cam.position  = lookAtPos;
 			cam.moveBackward(150);
 		}
+		private function onWIZARD_PREVIEW_ROTATE( n: * ):void
+		{
+			rotateStep(n.data);
+		}
+		/** 旋转  +-1 ? */
+		private function rotateStep(num:int):void
+		{
+			if(wizard){
+				wizard.rotationY += num;
+			}
+		}
 
 		private var wizard:Role;
 		private function onSELECT_WIZARD_PREVIEW(n:TLEvent):void
@@ -93,6 +106,7 @@ package tl.frameworks.mediator
 			wizard.actor3DInIt(wo);
 			view.addChild(wizard);
 			wizard.mouseInteractive=true;
+			wizard.rotationY = 90;
 			wizard.addEventListener(MouseEvent3D.MOUSE_DOWN,onMouseDown);
 		}
 

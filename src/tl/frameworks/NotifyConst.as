@@ -80,6 +80,8 @@ package tl.frameworks
 		public static const SELECT_TERRAIN_TEXTURE_PREVIEW:String = "SELECT_TERRAIN_TEXTURE_PREVIEW";
 		/**设置选中模型*/
 		public static const SELECT_WIZARDOBJECT_SETTING:String = 'SELECT_WIZARDOBJECT_SETTING';
+		/** 让模型旋转 @data : int  +-1  */
+		public static const WIZARD_PREVIEW_ROTATE :String = "WIZARD_PREVIEW_ROTATE";
 
 		/** 开始按下拖拽，准备在场景内放置精灵 @data=WizardObject */
 		public static const UI_START_ADD_WIZARD:String = "UI_START_ADD_WIZARD";

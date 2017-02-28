@@ -6,8 +6,10 @@ package tl.frameworks.mediator
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
+	import flash.events.TimerEvent;
 	import flash.ui.Keyboard;
 	import flash.utils.Dictionary;
+	import flash.utils.Timer;
 
 	import org.mousebomb.framework.Notify;
 	import org.robotlegs.mvcs.Mediator;
@@ -17,6 +19,7 @@ package tl.frameworks.mediator
 	import tl.frameworks.TLEvent;
 	import tl.frameworks.model.CSV.SGCsvManager;
 	import tl.mapeditor.ToolBoxType;
+	import tl.mapeditor.ui.common.MyButton;
 	import tl.mapeditor.ui.common.MyPageButton;
 	import tl.mapeditor.ui.window.WizardBarUI;
 
@@ -53,6 +56,9 @@ package tl.frameworks.mediator
 			eventMap.mapListener(view.modelPageBtn,MyPageButton.PAGING, onPaging);
 			eventMap.mapListener(view.stage,KeyboardEvent.KEY_DOWN, onKeyDown);
 			eventMap.mapListener(view.stage,KeyboardEvent.KEY_UP, onKeyUp);
+			addViewListener(MouseEvent.MOUSE_DOWN,onRotationDown);
+			addViewListener(MouseEvent.MOUSE_UP,onRotationUp);
+			addViewListener(MouseEvent.MOUSE_OUT,onRotationUp);
 			onCsvLoaded( null );
 			addContextListener(NotifyConst.CSV_LOADED, onCsvLoaded);
 			onResize();
@@ -60,9 +66,44 @@ package tl.frameworks.mediator
 			view.moveUI = onViewMove;
 			dispatchWith(NotifyConst.UI_PREVIEW_SHOW, false, {x:view.x + 10, y:view.y + 35});
 			addContextListener(NotifyConst.CLOSE_ALL_UI, onClose);
+			//
+			_rotationTimer = new Timer(30);
+			eventMap.mapListener(_rotationTimer,TimerEvent.TIMER,onRotationOnce);
 		}
 
+		private function onRotationDown(e:MouseEvent):void
+		{
+			if(e.target is MyButton)
+			{
+				switch (e.target.name)
+				{
+					case "left":
+						_rotationSpeed = -10;
+						_rotationTimer.start();
+						break;
+					case "right":
+						_rotationSpeed = 10;
+						_rotationTimer.start();
+						break;
+				}
+			}
+		}
 
+		private function onRotationUp(e:MouseEvent):void
+		{
+			if (e.target is MyButton && (e.target.name == "left" || e.target.name == "right"))
+			{
+				_rotationTimer.stop();
+				_rotationTimer.reset();
+			}
+		}
+
+		private var _rotationSpeed :int = 0;
+		private var _rotationTimer :Timer  ;
+		private function onRotationOnce(e:TimerEvent ):void
+		{
+			dispatchWith(NotifyConst.WIZARD_PREVIEW_ROTATE, false,_rotationSpeed);
+		}
 
 		private function onKeyUp(event:KeyboardEvent):void
 		{
@@ -127,6 +168,8 @@ package tl.frameworks.mediator
 			view.onSelectModelCallBack = null;
 			view.moveUI = null;
 			dispatchWith(NotifyConst.UI_PREVIEW_HIDE);
+			_rotationTimer.reset();
+			_rotationTimer=null;
 		}
 
 		private function onResize(e:* = null):void

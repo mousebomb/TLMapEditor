@@ -173,7 +173,7 @@ package tl.frameworks.mediator
 			if(chartlet.chartletName)
 			{
 				//editorMapModel.setLayerTexture(chartlet.chartletName, chartlet.chartletId)
-				if(chartlet.chartletId > 0)
+//				if(chartlet.chartletId > 0)
 				{
 					//设置刷子材质
 					editorMapModel.curTextureBrushLayerIndex = chartlet.chartletId;

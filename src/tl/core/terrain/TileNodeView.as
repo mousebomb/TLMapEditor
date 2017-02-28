@@ -25,5 +25,11 @@ package tl.core.terrain
 			this.x = tile.x;
 			this.z = tile.z;
 		}
+
+
+		public static function clearSharedMaterial():void
+		{
+			sharedTerrainMaterial = null;
+		}
 	}
 }

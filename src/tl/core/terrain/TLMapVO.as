@@ -17,6 +17,8 @@ package tl.core.terrain
 	import tl.core.role.RolePlaceVO;
 	import tl.frameworks.NotifyConst;
 
+	import tool.StageFrame;
+
 	public class TLMapVO
 	{
 		public function TLMapVO()
@@ -239,7 +241,7 @@ package tl.core.terrain
 			textureFiles[0] = "db_107_01";// 土地
 			textureFiles[1] = "db_107_shitou01";//石头
 			textureFiles[2] = "db_607_caodi02";//青草
-			textureFiles[3] = "db_107_a03";//耕地
+			textureFiles[3] = "db_107_a02";//干裂地面
 			textureFiles[4] = "db_107_a01";//砖
 //			for (var y:int = 0; y < splatAlphaH; y++)
 //			{

@@ -123,7 +123,15 @@ package tl.mapeditor.ui.controls
 			zCube.z = 100 + (cubeGeom.depth/2);
 			content.addChild(zCube);						
 		}
-		
+
+
+		override public function show(sceneObject:ObjectContainer3D):void
+		{
+			super.show(sceneObject);
+			this.scaleX = currentMesh.scaleX/100;
+			this.scaleZ = currentMesh.scaleZ/100;
+		}
+
 		protected function handleMouseOut(event:MouseEvent3D):void
 		{
 			if (!active) 
@@ -356,7 +364,10 @@ package tl.mapeditor.ui.controls
 			sc.x = actualMesh.scaleX;
 			sc.y = actualMesh.scaleY;
 			sc.z = actualMesh.scaleZ;
-			
+
+			this.scaleX = sc.x/100;
+			this.scaleZ = sc.z/100;
+
 			dispatchEvent(new Gizmo3DEvent(Gizmo3DEvent.RELEASE, GizmoMode.SCALE, actualMesh, sc, startValue, sc));
 		}		
 		

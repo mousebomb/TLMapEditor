@@ -217,6 +217,7 @@ package tl.core.terrain
 					view.dispose();//away3d的dispose自带removeFromParent
 				}
 				tileZoneViewDic = new Dictionary();
+				TileNodeView.clearSharedMaterial();
 			}
 		}
 		/** 地形区域显示格 */
