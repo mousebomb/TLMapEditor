@@ -27,6 +27,9 @@ package tl.frameworks.mediator
 		private var _selectType:String;
 		private var _selectedRenderer:MyScrollBarRenderer;
 		private var _rendererVector:Vector.<MyScrollBarRenderer>
+		private var _moveRenderer:MyScrollBarRenderer;					//拖动数据
+		private var _isMove:Boolean;									//拖动标志
+
 		public function CoveragePanelUIMediator()
 		{
 			super();
@@ -46,6 +49,42 @@ package tl.frameworks.mediator
 			addContextListener(NotifyConst.GROUP_WIZARD_LI_CHANGED, onWizardObjcetUpdate);
 			addContextListener(NotifyConst.CLOSE_ALL_UI, onClose);
 			addContextListener(NotifyConst.CLOSE_ALL_UI, onClose);
+			eventMap.mapListener(view.scrollTarget, MouseEvent.MOUSE_DOWN, onMouseDown);
+			eventMap.mapListener(view.scrollTarget, MouseEvent.MOUSE_UP, onMouseUp);
+			eventMap.mapListener(view.scrollTarget, MouseEvent.MOUSE_MOVE, onMouseMove);
+		}
+
+		private function onMouseMove(event:MouseEvent):void
+		{
+			_isMove = true;
+		}
+
+		private function onMouseDown(event:MouseEvent):void
+		{
+			_isMove = false;
+			_moveRenderer = null;
+			var renderer:MyScrollBarRenderer = event.target as MyScrollBarRenderer;
+			if(renderer)
+			{
+				if(renderer.rendererData.type == 2)
+				{
+					_moveRenderer = renderer;
+				}
+			}
+		}
+
+		private function onMouseUp(event:MouseEvent):void
+		{
+			if(_isMove && _moveRenderer)
+			{
+				var renderer:MyScrollBarRenderer = event.target as MyScrollBarRenderer;
+				if(renderer.rendererData.type == 1)
+				{
+					var index:int = _rendererVector.indexOf(renderer);
+					var toGroupName:String = mapModel.mapVO.entityGroupNames[index];
+					mapModel. moveIntoGroup(_moveRenderer.rendererData.rolePlaceVO, _moveRenderer.rendererData.groupName, toGroupName)
+				}
+			}
 		}
 
 		private function onClose(event:*):void
@@ -99,6 +138,11 @@ package tl.frameworks.mediator
 
 			if(_selectedRenderer)
 			{
+				if(e && e.type == NotifyConst.GROUP_ADDED)
+				{
+					_selectedRenderer.isSelected = false;
+					_selectedRenderer = _rendererVector[leng-1]
+				}
 				var index:int = _rendererVector.indexOf(_selectedRenderer);
 				_selectType = mapModel.mapVO.entityGroupNames[index];
 			}	else {
@@ -160,7 +204,7 @@ package tl.frameworks.mediator
 					renderer = new MyScrollBarRenderer();
 				view.rendererSpr.addChild(renderer);
 				renderer.init(view.myWidth-85, 30);
-				renderer.updateRenderer({label:vo.toString(), rolePlaceVO:vo, type:2}, false);
+				renderer.updateRenderer({label:vo.toString(), rolePlaceVO:vo, type:2, groupName:_selectedRenderer.rendererData.label}, false);
 				renderer.y = i * 32;
 				renderer.x = 10;
 				renderer.addEventListener(MouseEvent.CLICK, onClickBtn, false, 0, true);

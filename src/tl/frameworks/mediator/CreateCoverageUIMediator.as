@@ -20,6 +20,7 @@ package tl.frameworks.mediator
 		public var view: CreateCoverageUI;
 		[Inject]
 		public var mapModel: TLEditorMapModel;
+		private var _createValue:String = '';
 		public function CreateCoverageUIMediator()
 		{
 			super();
@@ -27,9 +28,11 @@ package tl.frameworks.mediator
 
 		override public function onRegister():void
 		{
-			view.init("新建图层", 260, 120);
+			view.init("图层创建", 260, 120);
 			view.x = StageFrame.stage.stageWidth - view.myWidth >> 1;
 			view.y = StageFrame.stage.stageHeight - view.myHeight >> 1;
+			_createValue ='新建图层' + view.createValue;
+			view.createTxt.text = _createValue;
 			eventMap.mapListener(view.closeBtn, MouseEvent.CLICK, onClickClose)
 		}
 
@@ -40,6 +43,8 @@ package tl.frameworks.mediator
 				view.parent.removeChild(view);
 				var coverage:String = view.createTxt.text;
 				if(coverage == '') return;
+				if(coverage == _createValue)
+					view.createId ++;
 				mapModel.addEntityGroup(coverage)
 			}
 		}

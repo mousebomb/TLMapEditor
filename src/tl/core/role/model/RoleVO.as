@@ -8,6 +8,7 @@ package tl.core.role.model
 
 		/** 配置表内的数据 */
 		public var csvVO:CsvRoleVO ;
+
 		public function RoleVO()
 		{
 		}

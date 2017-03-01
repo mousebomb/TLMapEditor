@@ -14,6 +14,7 @@ package tl.mapeditor.ui.window
 	{
 		public var createTxt:MyTextField;
 		public var closeBtn:MyButton;
+		private var _createId:int;
 		public function CreateCoverageUI()
 		{
 			super();
@@ -48,5 +49,58 @@ package tl.mapeditor.ui.window
 			closeBtn.y = this.myHeight - closeBtn.height - 20;
 
 		}
+
+		public function get createId():int
+		{
+			return _createId;
+		}
+
+		public function set createId(value:int):void
+		{
+			_createId = value;
+		}
+
+		public function get createValue():String
+		{
+			var str:String
+			switch (_createId)
+			{
+				case 0 :
+					str = '一';
+					break;
+				case 1 :
+					str = '二';
+					break;
+				case 2 :
+					str = '三';
+					break;
+				case 3 :
+					str = '四';
+					break;
+				case 4 :
+					str = '五';
+					break;
+				case 5 :
+					str = '六'
+					break;
+				case 6 :
+					str = '七';
+					break;
+				case 7 :
+					str = '八';
+					break;
+				case 8 :
+					str = '九';
+					break;
+				case 9 :
+					str = '十';
+					break;
+				default :
+					str = (_createId + 1) + '';
+					break;
+			}
+			return str;
+		}
+
 	}
 }
