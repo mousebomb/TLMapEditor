@@ -11,6 +11,7 @@ package tl.frameworks.command
 	import tl.frameworks.NotifyConst;
 	import tl.frameworks.mediator.BrushSettingUIMediator;
 	import tl.frameworks.mediator.CoveragePanelUIMediator;
+	import tl.frameworks.mediator.CreateCoverageUIMediator;
 	import tl.frameworks.mediator.CreateFileUIMediator;
 	import tl.frameworks.mediator.EditorScene3DMediator;
 	import tl.frameworks.mediator.EditorUIMediator;
@@ -34,6 +35,7 @@ package tl.frameworks.command
 	import tl.frameworks.mediator.WizardSettingUIMediator;
 	import tl.frameworks.mediator.ZoneSettingUIMediator;
 	import tl.frameworks.model.CSV.SGCsvManager;
+	import tl.frameworks.model.CsvDataModel;
 	import tl.frameworks.model.LogModel;
 	import tl.frameworks.model.SkyBoxTextureListModel;
 	import tl.frameworks.model.TLEditorMapModel;
@@ -49,6 +51,7 @@ package tl.frameworks.command
 	import tl.mapeditor.ui.Toolbar;
 	import tl.mapeditor.ui.window.BrushSettingUI;
 	import tl.mapeditor.ui.window.CoveragePanelUI;
+	import tl.mapeditor.ui.window.CreateCoverageUI;
 	import tl.mapeditor.ui.window.FunctionPointUI;
 	import tl.mapeditor.ui.window.HelpUI;
 	import tl.mapeditor.ui.window.LightingPanelUI;
@@ -77,7 +80,7 @@ package tl.frameworks.command
 			injector.mapSingleton(SkyBoxTextureListModel);
 			injector.mapSingleton(LogModel);
 			injector.mapSingleton(WizardSettingModel);
-			injector.mapValue(SGCsvManager,SGCsvManager.getInstance());// SGCsvManager暂时改不掉，牵扯太多
+			injector.mapSingleton(CsvDataModel);
 			injector.mapValue(GPUResProvider,GPUResProvider.getInstance());
 			// service
 			injector.mapSingleton(TLEditorMapService);
@@ -97,6 +100,7 @@ package tl.frameworks.command
 			commandMap.mapEvent(NotifyConst.NEW_POPMENUBAR_UI, PopMenuBarCmd);
 			commandMap.mapEvent(NotifyConst.NEW_STATISTICS_UI, StatisticsCmd);
 			commandMap.mapEvent(NotifyConst.NEW_WIZARD_UI, WizardSettingCmd);
+			commandMap.mapEvent(NotifyConst.NEW_CREATE_COVERAGE_UI, CreateCoverageCmd)
 
 			// map view mediator
 			mediatorMap.mapView(EditorUI, EditorUIMediator);
@@ -120,6 +124,7 @@ package tl.frameworks.command
 			mediatorMap.mapView(WizardSettingUI, WizardSettingUIMediator);
 			mediatorMap.mapView(SkyBoxSettingUI, SkyBoxSettingUIMediator);
 			mediatorMap.mapView(LightingPanelUI, LightingPanelUIMediator);
+			mediatorMap.mapView(CreateCoverageUI, CreateCoverageUIMediator);
 
 			// map view Mediator 3D (3D的目前尚未实现自动addChild绑定，所以需要手动createMediator)
 			mediatorMap.mapView(EditorScene3D , EditorScene3DMediator,null,false,false);

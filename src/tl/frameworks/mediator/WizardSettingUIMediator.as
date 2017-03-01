@@ -138,7 +138,7 @@ package tl.frameworks.mediator
 		{
 			if(!model.showObj) return;
 			if(model.showObj is Role)
-				view.nameTxt.text = '设置' + model.showObj.vo.name + '位置';
+				view.nameTxt.text = '设置' + (model.showObj as Role).vo.csvVO.Name + '位置';
 			else
 				view.nameTxt.text = '设置刚体位置';
 		}

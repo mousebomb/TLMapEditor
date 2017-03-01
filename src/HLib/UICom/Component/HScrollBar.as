@@ -6,7 +6,9 @@ package HLib.UICom.Component
 	import feathers.controls.ScrollBar;
 	import feathers.controls.ScrollContainer;
 	import feathers.events.FeathersEventType;
-	
+
+	import flash.display.DisplayObjectContainer;
+
 	import starling.display.DisplayObjectContainer;
 	import starling.events.Event;
 	

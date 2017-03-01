@@ -8,16 +8,15 @@ package tl.frameworks.mediator
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
 	import flash.ui.Keyboard;
-	import flash.utils.Dictionary;
 	import flash.utils.Timer;
 
 	import org.mousebomb.framework.Notify;
 	import org.robotlegs.mvcs.Mediator;
 
-	import tl.core.old.WizardObject;
+	import tl.core.role.model.CsvRoleVO;
 	import tl.frameworks.NotifyConst;
 	import tl.frameworks.TLEvent;
-	import tl.frameworks.model.CSV.SGCsvManager;
+	import tl.frameworks.model.CsvDataModel;
 	import tl.mapeditor.ToolBoxType;
 	import tl.mapeditor.ui.common.MyButton;
 	import tl.mapeditor.ui.common.MyPageButton;
@@ -38,7 +37,7 @@ package tl.frameworks.mediator
 		[Inject]
 		public var view: WizardBarUI;
 		[Inject]
-		public var csvModel:SGCsvManager;
+		public var csvModel:CsvDataModel;
 
 		/** 模型 分分类的列表*/
 		private var _modelDataVec:Vector.<Array>;
@@ -59,7 +58,8 @@ package tl.frameworks.mediator
 			addViewListener(MouseEvent.MOUSE_DOWN,onRotationDown);
 			addViewListener(MouseEvent.MOUSE_UP,onRotationUp);
 			addViewListener(MouseEvent.MOUSE_OUT,onRotationUp);
-			onCsvLoaded( null );
+			if(csvModel.table_wizard.size)
+				onCsvLoaded( null );
 			addContextListener(NotifyConst.CSV_LOADED, onCsvLoaded);
 			onResize();
 			//eventMap.mapListener(view.stage,Event.RESIZE, onResize);
@@ -197,18 +197,15 @@ package tl.frameworks.mediator
 			//默认选第一个
 			if (!_modelDataVec)
 			{
-				var array:Array    = csvModel.table_wizard.DataArray;
 				_modelDataVec      = new Vector.<Array>(menuVec.length, true);
-				var i:int          = 0;
-				var dic:Dictionary = new Dictionary();
-				var wizardObject:WizardObject;
-				for each(var arr:Array in array)
+				var i:int          ;
+				var wizardObject:CsvRoleVO;
+				var keys:Array = csvModel.table_wizard.keys;
+				for (var j:int = 0; j < keys.length; j++)
 				{
-					if (int(arr[0]) == 0) continue;
-					wizardObject = new WizardObject();
-					wizardObject.refreshByTable(arr[0]);
-
-					i = int(wizardObject.type);
+					var key : * = keys[j];
+					wizardObject = csvModel.table_wizard.get( key );
+					i = int(wizardObject.Type);
 					if (i >= menuVec.length) i = menuVec.length - 1;
 
 					_modelDataVec[i] ||= [];
@@ -236,13 +233,13 @@ package tl.frameworks.mediator
 		}
 
 		/** 当前选中的模型 */
-		private var _curSelectedWizardObject :WizardObject ;
+		private var _curSelectedWizardObject :CsvRoleVO ;
 		private const _showNum:int = 13;
 		private var _nowWizardObjectArr:Array;
-		private var _selectWizard:WizardObject;			//当前选中模型
+		private var _selectWizard:CsvRoleVO;			//当前选中模型
 
 		/** 当前选中的模型 */
-		public function get curSelectedWizardObject():WizardObject
+		public function get curSelectedWizardObject():CsvRoleVO
 		{
 			return _curSelectedWizardObject;
 		}
@@ -253,11 +250,11 @@ package tl.frameworks.mediator
 			trace(StageFrame.renderIdx,"[WizardBarMediator]/onSelectModelCallBack",id);
 			if(!_nowWizardObjectArr || _nowWizardObjectArr.length <= index) return;
 			//实例化精灵
-			var wo :WizardObject = _nowWizardObjectArr[index];
+			var wo :CsvRoleVO = _nowWizardObjectArr[index];
 			if(wo == null ) return;
-			view.modelIdText.text = wo.id;
+			view.modelIdText.text = wo.Id;
 			_selectWizard = wo;
-			dispatchWith(NotifyConst.STATUS,false,"选择模型ID"+wo.id +" "+wo.name);
+			dispatchWith(NotifyConst.STATUS,false,"选择模型ID"+wo.Id +" "+wo.Name);
 			//实例化精灵
 			dispatchWith(NotifyConst.SELECT_WIZARD_PREVIEW,false , wo);
 		}
@@ -269,7 +266,7 @@ package tl.frameworks.mediator
 			var len:int = _nowWizardObjectArr.length;
 			var vector:Vector.<Array> = new Vector.<Array>(len, true);
 			for(var i:int = 0; i < len; i++)
-				vector[i] = ["", _nowWizardObjectArr[i].id, _nowWizardObjectArr[i].name];//第一个空字符串是因为0是显示按钮用的,用个空字符串填充
+				vector[i] = ["", _nowWizardObjectArr[i].Id, _nowWizardObjectArr[i].Name];//第一个空字符串是因为0是显示按钮用的,用个空字符串填充
 			//设置数据
 			view.modelListVC.setData(vector);
 		}
@@ -278,11 +275,11 @@ package tl.frameworks.mediator
 		{
 			var id:String = view.modelIdText.text;
 			var leng:int = wizardVector.length;
-			var obj:WizardObject
+			var obj:CsvRoleVO;
 			for (var i:int = 0; i < leng; i++)
 			{
 				obj = wizardVector[i];
-				if(obj.id == id)
+				if(obj.Id == id)
 				{
 					view.modelPageBtn.nowPage = int(i/_showNum) + 1;
 					break;

@@ -14,6 +14,7 @@ package tl.frameworks.mediator
 	import flash.events.TimerEvent;
 	import flash.geom.Point;
 	import flash.geom.Vector3D;
+	import flash.text.TextField;
 	import flash.ui.Keyboard;
 	import flash.utils.Dictionary;
 	import flash.utils.Timer;
@@ -22,18 +23,19 @@ package tl.frameworks.mediator
 
 	import tl.core.LightProvider;
 	import tl.core.funcpoint.FuncPointVO;
-	import tl.core.old.WizardObject;
 	import tl.core.rigidbody.RigidBodyVO;
 	import tl.core.rigidbody.RigidBodyView;
 	import tl.core.role.Role;
 	import tl.core.role.RolePlaceVO;
 	import tl.core.role.RolePlaceVO;
+	import tl.core.role.model.RoleVO;
 	import tl.core.terrain.TLMapVO;
 	import tl.frameworks.NotifyConst;
 	import tl.frameworks.TLEvent;
 	import tl.frameworks.defines.ToolBrushType;
 	import tl.frameworks.defines.ZoneType;
 	import tl.frameworks.model.CSV.SGCsvManager;
+	import tl.frameworks.model.CsvDataModel;
 	import tl.frameworks.model.TLEditorMapModel;
 	import tl.mapeditor.scenes.EditorScene3D;
 	import tl.mapeditor.ui.controls.Gizmo3DBase;
@@ -54,7 +56,7 @@ package tl.frameworks.mediator
 		[Inject]
 		public var mapModel:TLEditorMapModel;
 		[Inject]
-		public var csvModel:SGCsvManager;
+		public var csvModel:CsvDataModel;
 
 		override public function onRegister():void
 		{
@@ -317,8 +319,8 @@ package tl.frameworks.mediator
 		/** 从存档加入显示 */
 		private function fromMapWizard(placeVO:RolePlaceVO):void
 		{
-			var wizardObject:WizardObject = new WizardObject();
-			wizardObject.refreshByTable(placeVO.wizardId);
+			var wizardObject:RoleVO = new RoleVO();
+			wizardObject.csvVO= csvModel.table_wizard.get(placeVO.wizardId);
 			var newRole:Role = new Role();
 			newRole.actor3DInIt(wizardObject);
 			newRole.x = placeVO.x;
@@ -349,8 +351,8 @@ package tl.frameworks.mediator
 		private function onAddWizard(n:TLEvent):void
 		{
 			clearSelection();
-
-			var wizardObject:WizardObject = n.data;
+			var wizardObject:RoleVO = new RoleVO();
+			 wizardObject.csvVO = n.data;
 			// 记录开始拖拽添加，
 			draggingNewRole               = new Role();
 			draggingNewRole.actor3DInIt(wizardObject);
@@ -407,7 +409,7 @@ package tl.frameworks.mediator
 			if (draggingNewRole)
 			{
 				commitDraggingNewRole();
-			} else if (_selectedRole)
+			} else if (_selectedRole && isSelectedDragging)
 			{
 				// 移动了重新保存 仍旧保持选中状态
 				mapModel.commitWizard(_selectedRole, placeVOByRole[_selectedRole]);
@@ -510,6 +512,7 @@ package tl.frameworks.mediator
 
 		private function onKeyUp(event:KeyboardEvent):void
 		{
+			if(StageFrame.stage.focus is TextField) 	return;
 			switch (event.keyCode)
 			{
 				case Keyboard.UP:
@@ -533,6 +536,7 @@ package tl.frameworks.mediator
 
 		private function onKeyDown(event:KeyboardEvent):void
 		{
+			if(StageFrame.stage.focus is TextField) 	return;
 			// 对选中项的位移
 			var target:Object3D = selectedTargetTransformBegin();
 			if (target)

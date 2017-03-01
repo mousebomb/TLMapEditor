@@ -46,7 +46,10 @@ package tl.frameworks.model
 		/** 加入模型 */
 		public function addWizard(role:Role):RolePlaceVO
 		{
-			return addWizardToGroup(role ,WizardType.LABEL[role.vo.type]);
+			if(selectedGroupName)
+				return addWizardToGroup(role ,selectedGroupName);
+			else
+				return addWizardToGroup(role ,WizardType.LABEL[role.vo.csvVO.Type]);
 		}
 
 		private function addWizardToGroup(role:Role, wizardType:String):RolePlaceVO
@@ -59,7 +62,7 @@ package tl.frameworks.model
 				dispatchWith(NotifyConst.GROUP_ADDED,false,wizardType);
 			}
 			var placeData :RolePlaceVO = new RolePlaceVO();
-			placeData.wizardId = role.vo.id;
+			placeData.wizardId = role.vo.csvVO.Id;
 			placeData.x = role.x;
 			placeData.y =role.y;
 			placeData.z = role.z;
@@ -91,12 +94,15 @@ package tl.frameworks.model
 				if(index >-1)
 				{
 					group.splice(index, 1);
+					dispatchWith(NotifyConst.GROUP_WIZARD_LIST_CHANGED,false,key);
 					return;
 				}
 			}
 			GlobalFacade.sendNotify(NotifyConst.STATUS,this,"要删的精灵放置数据不存在");
 		}
 
+		/** 当前选中的层 默认为""或null时 则自动加入层 */
+		public var selectedGroupName : String ;
 		/** 新建一个层 */
 		public function addEntityGroup(groupName:String):void
 		{

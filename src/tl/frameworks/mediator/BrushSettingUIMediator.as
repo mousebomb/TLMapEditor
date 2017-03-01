@@ -42,7 +42,7 @@ package tl.frameworks.mediator
 			var positionArr:Array = [mapModel.brushSize, mapModel.brushStrong, mapModel.brushSoftness,mapModel.brushHeightMax,mapModel.brushHeightMin];
 			 for (var i:int = 0; i < 5; i++)
 			 {
-				 view.vectorDragBar[i].addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+				 eventMap.mapListener(view.vectorDragBar[i], MouseEvent.MOUSE_DOWN, onMouseDown);
 				 if(view.vectorDragBar[i].isNegative)
 				 {
 					 view.vectorTxt[i].text = positionArr[i] + '';
@@ -55,11 +55,11 @@ package tl.frameworks.mediator
 				 }
 			 }
 
-			StageFrame.stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+			eventMap.mapListener(StageFrame.stage, MouseEvent.MOUSE_UP, onMouseUp);
 			if(mapModel.mapVO)
 				onClickShow(null);
-			view.hideBtn.addEventListener(MouseEvent.CLICK, onClickHide);
-			view.showBtn.addEventListener(MouseEvent.CLICK, onClickShow);
+			eventMap.mapListener(view.hideBtn, MouseEvent.CLICK, onClickHide);
+			eventMap.mapListener(view.showBtn, MouseEvent.CLICK, onClickShow);
 			addContextListener(NotifyConst.CLOSE_UI, onClose);
 		}
 

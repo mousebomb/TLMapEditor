@@ -7,7 +7,10 @@ package tl.mapeditor.ui.window
 	import fl.controls.List;
 
 	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.events.MouseEvent;
+
+	import tl.mapeditor.ui.common.MyScrollBar;
 
 	import tl.mapeditor.ui.common.MySprite;
 	import tl.mapeditor.ui.common.MyTextField;
@@ -17,8 +20,9 @@ package tl.mapeditor.ui.window
 	/**图层面板界面*/
 	public class CoveragePanelUI extends UIBase
 	{
-		public var typeList:List;
-		public var wizardList:List;
+		public var myScrollBar:MyScrollBar;
+		public var scrollTarget:MySprite;
+		public var rendererSpr:MySprite;
 		public function CoveragePanelUI()
 		{
 			super();
@@ -30,45 +34,32 @@ package tl.mapeditor.ui.window
 			this.isInit = true;
 			super.init(title, $width, $height, bgColor, hasCloseBtn, isDrag);
 
-			var text:MyTextField = Tool.getMyTextField(190, -1, 12, 0x999999, "center");
-			this.addChild(text);
-			text.x = 10;
-			text.y = titleY + 5;
-			text.text = '图层选择';
 
-			bgSpr = new MySprite();
-			this.addChild(bgSpr);
-			Tool.drawRectByGraphics(bgSpr.graphics, null, 190, 410, 0x191818, 1, 0, 0, 1, 0x3D3D3D);
+			var bgSpr:MySprite = new MySprite();
+			Tool.drawRectByGraphics(bgSpr.graphics, null, this.myWidth-20, this.myHeight-60, 0x191818, 1, 0, 0, 1, 0x3D3D3D);
 			bgSpr.x = 10;
 			bgSpr.y = 50;
-			typeList = new List();
-			typeList.setSize(180, 400)
-			bgSpr.addChild(typeList);
-			typeList.labelField = 'type';
-			typeList.iconFunction = iconFunction;
-			typeList.x = 5;
-			typeList.y = 5;
+			this.addChild(bgSpr)
 
-			text = Tool.getMyTextField(240, -1, 12, 0x999999, "center");
-			this.addChild(text);
-			text.x = 190;
-			text.y = titleY + 5;
-			text.text = '模型选择';
+			scrollTarget = new MySprite();
+			bgSpr.addChild(scrollTarget);
 
-			var bgSpr:MySprite;
-			bgSpr = new MySprite();
-			this.addChild(bgSpr);
-			Tool.drawRectByGraphics(bgSpr.graphics, null, 240, 410, 0x191818, 1, 0, 0, 1, 0x3D3D3D);
-			bgSpr.x = 210;
-			bgSpr.y = 50;
 
-			wizardList = new List();
-			bgSpr.addChild(wizardList);
-			wizardList.x = 5;
-			wizardList.y = 5;
-			wizardList.setSize(230, 400);
-			wizardList.labelFunction = wizardLabelFunction;
-			wizardList.iconFunction = wizardIconFunction
+			var bmd:BitmapData = new renderer_up();
+			var bm:Bitmap = new Bitmap(bmd);
+			bm.width = this.myWidth - 55;
+			bm.visible = false;
+			scrollTarget.addChild(bm);
+
+			var text:MyTextField;
+			myScrollBar = new MyScrollBar();
+			bgSpr.addChild(myScrollBar);
+			myScrollBar.InIt(12, this.myHeight-70);
+			myScrollBar.x = this.myWidth - 45;
+			myScrollBar.y = 5;
+
+			myScrollBar.scrollTarget = scrollTarget;
+			rendererSpr = new MySprite();
 		}
 		private function iconFunction (obj:Object):Bitmap
 		{

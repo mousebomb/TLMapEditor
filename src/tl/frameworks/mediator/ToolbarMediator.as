@@ -9,6 +9,7 @@ package tl.frameworks.mediator
 	import flash.filesystem.File;
 	import flash.geom.Vector3D;
 	import flash.net.FileFilter;
+	import flash.text.TextField;
 	import flash.ui.Keyboard;
 
 	import org.mousebomb.framework.GlobalFacade;
@@ -67,6 +68,7 @@ package tl.frameworks.mediator
 		}
 		private function onKeyUp(event:KeyboardEvent):void
 		{
+			if(StageFrame.stage.focus is TextField) 	return;
 			switch (event.keyCode)
 			{
 				case Keyboard.O:

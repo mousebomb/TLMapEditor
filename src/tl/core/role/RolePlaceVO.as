@@ -24,7 +24,7 @@ package tl.core.role
 		public function toString():String
 		{
 			if(wizard)
-				return wizard.vo.name +"  x: "+x.toFixed()+", z: "+z.toFixed() +", y: "+y.toFixed();
+				return wizard.vo.csvVO.Name +"  x: "+x.toFixed()+", z: "+z.toFixed() +", y: "+y.toFixed();
 			return "[RolePlaceVO ID"+wizardId+"@x"+x+",z"+z +",y"+y+"]";
 		}
 

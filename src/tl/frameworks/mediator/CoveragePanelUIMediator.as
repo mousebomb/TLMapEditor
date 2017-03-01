@@ -3,29 +3,15 @@
  */
 package tl.frameworks.mediator
 {
-	import fl.data.DataProvider;
-
-	import flash.events.Event;
-	import flash.events.KeyboardEvent;
-
 	import flash.events.MouseEvent;
-	import flash.geom.Rectangle;
-	import flash.utils.Dictionary;
-
-	import org.mousebomb.framework.Notify;
 
 	import org.robotlegs.mvcs.Mediator;
 
-	import tl.core.mapnode.NodeTypeConst;
-
-	import tl.core.old.WizardObject;
 	import tl.core.role.RolePlaceVO;
-
 	import tl.frameworks.NotifyConst;
 	import tl.frameworks.TLEvent;
-	import tl.frameworks.model.CSV.SGCsvManager;
 	import tl.frameworks.model.TLEditorMapModel;
-
+	import tl.mapeditor.ui.common.MyScrollBarRenderer;
 	import tl.mapeditor.ui.window.CoveragePanelUI;
 
 	import tool.StageFrame;
@@ -39,6 +25,8 @@ package tl.frameworks.mediator
 		public var mapModel:TLEditorMapModel;
 		private var _vector:Vector.<String>;
 		private var _selectType:String;
+		private var _selectedRenderer:MyScrollBarRenderer;
+		private var _rendererVector:Vector.<MyScrollBarRenderer>
 		public function CoveragePanelUIMediator()
 		{
 			super();
@@ -48,14 +36,13 @@ package tl.frameworks.mediator
 			super.onRegister();
 
 			_vector = WizardBarMediator.menuVec;
-			view.init("图层面板", 460, 470);
+			view.init("图层面板", 320, 470);
 			view.x = StageFrame.stage.stageWidth - view.myWidth;
 			view.y = 32;
-			eventMap.mapListener(view.typeList, Event.CHANGE, onTypeChange);
-			eventMap.mapListener(view.wizardList, Event.CHANGE, onWizardObjectChanged);
 			onMapInit(null);
 			addContextListener(NotifyConst.MAP_VO_INITED , onMapInit);
-			addContextListener(NotifyConst.GROUP_WIZARD_LIST_CHANGED, onMapInit);
+			addContextListener(NotifyConst.GROUP_ADDED,onMapInit);
+			addContextListener(NotifyConst.GROUP_WIZARD_LIST_CHANGED, onWizardObjcetUpdate);
 			addContextListener(NotifyConst.GROUP_WIZARD_LI_CHANGED, onWizardObjcetUpdate);
 			addContextListener(NotifyConst.CLOSE_ALL_UI, onClose);
 			addContextListener(NotifyConst.CLOSE_ALL_UI, onClose);
@@ -70,54 +57,143 @@ package tl.frameworks.mediator
 		{
 			//默认选第一个
 			if(!mapModel.mapVO) return;
-			var data:DataProvider = new DataProvider();
 			var leng:int = mapModel.mapVO.entityGroupNames.length;
 			if(leng == 0) return;
+			var arr:Array = [];
+			var obj:*;
+			while(view.scrollTarget.numChildren>1)
+			{
+				obj = view.scrollTarget.removeChildAt(1);
+				if(obj is MyScrollBarRenderer)
+					arr.push(obj);
+			}
+			var renderer:MyScrollBarRenderer;
+			_rendererVector = new <MyScrollBarRenderer>[];
 			for (var i:int=0; i<leng; i++)
 			{
-				data.addItem({type:mapModel.mapVO.entityGroupNames[i]})
+				if(arr.length > 0)
+					renderer = arr.pop();
+				else
+					renderer = new MyScrollBarRenderer();
+				view.scrollTarget.addChild(renderer);
+				renderer.init(view.myWidth-65, 30);
+				renderer.name = i + '';
+				renderer.updateRenderer({label:mapModel.mapVO.entityGroupNames[i], type:1, index:i}, true);
+				renderer.y = i * 32;
+				renderer.x = 0;
+				renderer.addEventListener(MouseEvent.CLICK, onClickBtn, false, 0, true);
+				_rendererVector.push(renderer);
 			}
-			view.typeList.dataProvider = data;
-			//默认选第一项
-			view.typeList.selectedIndex = 0;
-			_selectType = mapModel.mapVO.entityGroupNames[0];
+			if(arr.length > 0)
+				renderer = arr.shift();
+			else
+				renderer = new MyScrollBarRenderer();
+			view.scrollTarget.addChild(renderer);
+			renderer.init(view.myWidth-105, 30);
+			renderer.updateRenderer({label:'添加图层', type:0, index:-1}, false);
+			renderer.y = i * 32;
+			renderer.x = 20;
+			renderer.addEventListener(MouseEvent.CLICK, onClickBtn, false, 0, true);
+			_rendererVector.push(renderer);
+			view.myScrollBar.scrollTarget = view.scrollTarget;
+
+			if(_selectedRenderer)
+			{
+				var index:int = _rendererVector.indexOf(_selectedRenderer);
+				_selectType = mapModel.mapVO.entityGroupNames[index];
+			}	else {
+				_selectType = mapModel.mapVO.entityGroupNames[0];
+				_selectedRenderer = _rendererVector[0];
+			}
+			_selectedRenderer.isSelected = true;
 			showWizardType();
 			view.stage.focus=null;
 		}
 
-		/** 选择类型后 **/
-		private function onTypeChange(event:Event):void
+		private function onClickBtn(event:MouseEvent):void
 		{
-			var index:int   = view.typeList.selectedIndex;
-			_selectType = mapModel.mapVO.entityGroupNames[index];
-			showWizardType();
+			var target:MyScrollBarRenderer = event.currentTarget as MyScrollBarRenderer;
+			if(target.rendererData.type == 0)
+			{
+				//创建图层
+				dispatchWith(NotifyConst.NEW_CREATE_COVERAGE_UI,false);
+			}	else if(target.rendererData.type == 1) {
+				//选中图层
+				if(_selectedRenderer == target)
+				{
+					_selectedRenderer.isSelected = !_selectedRenderer.isSelected;
+				}	else {
+					_selectedRenderer.isSelected = false;
+					_selectedRenderer = target;
+					var index:int = _rendererVector.indexOf(_selectedRenderer);
+					_selectType = mapModel.mapVO.entityGroupNames[index];
+					_selectedRenderer.isSelected = true;
+				}
+				showWizardType();
+			}	else if(target.rendererData.type == 2) {
+				//选中精灵
+				var vo :RolePlaceVO = target.rendererData.rolePlaceVO;
+				if(!vo ) return;
+				dispatchWith(NotifyConst.UI_SELECT_WIZARD, false, vo);
+			}
 			view.stage.focus=null;
 		}
+		/**显示选中图层的精灵数据*/
 		private function showWizardType():void
 		{
-			// 显示实体列表
 			var vo:RolePlaceVO;
-			var data2:DataProvider =new DataProvider();
-			var leng:int = mapModel.mapVO.entityGroups[_selectType].length
-			if(leng == 0) return;
+			var leng:int = mapModel.mapVO.entityGroups[_selectType].length;
+
+			mapModel.selectedGroupName = _selectedRenderer.rendererData.label;
+			var arr:Array = [];
+			while(view.rendererSpr.numChildren)
+			{
+				arr.push(view.rendererSpr.removeChildAt(0));
+			}
+			var renderer:MyScrollBarRenderer;
 			for (var i:int = 0; i < leng; i++)
 			{
 				vo = mapModel.mapVO.entityGroups[_selectType][i];
-				data2.addItem(vo);
+				if(arr.length > 0)
+					renderer = arr.pop();
+				else
+					renderer = new MyScrollBarRenderer();
+				view.rendererSpr.addChild(renderer);
+				renderer.init(view.myWidth-85, 30);
+				renderer.updateRenderer({label:vo.toString(), rolePlaceVO:vo, type:2}, false);
+				renderer.y = i * 32;
+				renderer.x = 10;
+				renderer.addEventListener(MouseEvent.CLICK, onClickBtn, false, 0, true);
 			}
-			view.wizardList.dataProvider = data2;
+			view.rendererSpr.myHeight = 32 * leng;
+			if(_selectedRenderer.isSelected)
+				view.scrollTarget.addChild(view.rendererSpr);
+			else if(view.rendererSpr.parent)
+				view.rendererSpr.parent.removeChild(view.rendererSpr);
+			var vy:int;
+			leng = _rendererVector.length;
+			for(i=0; i<leng; i++)
+			{
+				_rendererVector[i].y = vy;
+				vy += _rendererVector[i].myHeight + 2;
+				if(_selectedRenderer.isSelected && i == _selectedRenderer.rendererData.index)
+				{
+					view.rendererSpr.y = vy;
+					vy += view.rendererSpr.myHeight;
+				}
+			}
+			view.myScrollBar.scrollTarget = view.scrollTarget;
 		}
-		private function onWizardObjectChanged(event:Event):void
-		{
-			var vo :RolePlaceVO = view.wizardList.selectedItem as RolePlaceVO;
-			if(!vo ) return;
-			dispatchWith(NotifyConst.UI_SELECT_WIZARD, false, vo);
-			view.stage.focus=null;
-		}
-
+		/**刷新当前图层数据*/
 		private function onWizardObjcetUpdate(event:*):void
 		{
 			showWizardType();
+		}
+
+		override public function onRemove():void
+		{
+			super.onRemove();
+			_selectedRenderer = null;
 		}
 	}
 }

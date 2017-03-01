@@ -9,6 +9,7 @@ package tl.frameworks.command
 
 	import tl.frameworks.NotifyConst;
 	import tl.frameworks.model.CSV.SGCsvManager;
+	import tl.frameworks.model.CsvDataModel;
 
 	import tool.StageFrame;
 
@@ -19,7 +20,7 @@ package tl.frameworks.command
 		}
 
 		[Inject]
-		public var csvModel:SGCsvManager;
+		public var csvModel:CsvDataModel;
 		override public function execute():void
 		{
 			/** 加载csv **/
@@ -27,7 +28,7 @@ package tl.frameworks.command
 			dispatchWith(NotifyConst.STATUS, false, "开始加载csv文件");
 
 
-			csvModel.InIt();
+			csvModel.init();
 		}
 
 		private function onSGCsvManagerError(event:Event):void

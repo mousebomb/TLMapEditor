@@ -83,7 +83,7 @@ package tl.frameworks
 		/** 让模型旋转 @data : int  +-1  */
 		public static const WIZARD_PREVIEW_ROTATE :String = "WIZARD_PREVIEW_ROTATE";
 
-		/** 开始按下拖拽，准备在场景内放置精灵 @data=WizardObject */
+		/** 开始按下拖拽，准备在场景内放置精灵 @data=CsvRoleVO */
 		public static const UI_START_ADD_WIZARD:String = "UI_START_ADD_WIZARD";
 		/** UI点选已放置的模型精灵 @data=RolePlaceVO */
 		public static const UI_SELECT_WIZARD :String = "UI_SELECT_WIZARD";
@@ -143,7 +143,8 @@ package tl.frameworks
 		public static const CLOSE_UI:String = 'CLOSE_UI';
 		/**关闭所有ui界面*/
 		public static const CLOSE_ALL_UI:String = 'CLOSE_ALL_UI';
-
+		/**打开新建图层界面*/
+		public static const NEW_CREATE_COVERAGE_UI:String = 'NEW_CREATE_COVERAGE_UI'
 		public function NotifyConst()
 		{
 		}

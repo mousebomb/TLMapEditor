@@ -41,16 +41,16 @@ package tl.core.role
 			track("Role/Role 创建角色", statsNumInstance);
 		}
 
-		// TODO 换成RoleVO
-		protected var _vo:WizardObject;
+		//  换成RoleVO
+		protected var _vo:RoleVO;
 
-		public function get vo():WizardObject
+		public function get vo():RoleVO
 		{
 			return _vo;
 		}
 
 		/** 从数据初始化 */
-		public function actor3DInIt(vo:WizardObject):void
+		public function actor3DInIt(vo:RoleVO):void
 		{
 			if (_vo)
 			{
@@ -62,7 +62,7 @@ package tl.core.role
 			// 初始化body ，加入信息，开始加载，但并不一定显示
 			_bodyUnit = new RoleMesh();
 			addChild(_bodyUnit);
-			_bodyUnit.init(vo.resId);
+			_bodyUnit.init(vo.csvVO.ResId);
 		}
 
 		/** 释放资源 清空所有状态以便回收 */

@@ -12,8 +12,8 @@ package tl.frameworks.mediator
 
 	import org.robotlegs.mvcs.Mediator;
 
-	import tl.core.old.WizardObject;
 	import tl.core.role.Role;
+	import tl.core.role.model.RoleVO;
 	import tl.frameworks.NotifyConst;
 	import tl.frameworks.TLEvent;
 	import tl.frameworks.model.TLEditorMapModel;
@@ -70,7 +70,7 @@ package tl.frameworks.mediator
 		private function onMouseDown(event:*):void
 		{
 			track("PreviewScene3DMediator/onMouseDown");
-			dispatchWith(NotifyConst.UI_START_ADD_WIZARD,false, wizard.vo);
+			dispatchWith(NotifyConst.UI_START_ADD_WIZARD,false, wizard.vo.csvVO);
 
 		}
 
@@ -101,7 +101,8 @@ package tl.frameworks.mediator
 		{
 			clearTexture();
 			clearWizard();
-			var wo :WizardObject = n.data ;
+			var wo :RoleVO=new RoleVO();
+			wo.csvVO = n.data ;
 			wizard ||= new Role();
 			wizard.actor3DInIt(wo);
 			view.addChild(wizard);
