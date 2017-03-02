@@ -48,7 +48,7 @@ package tl.mapeditor.scenes
 			addChild(LightProvider.getInstance().sunLight);
 			_camera           = camera_;
 			_camera.lens      = new PerspectiveLens();
-			_camera.lens.far  = 5000;
+			_camera.lens.far  = 10240;
 			_camera.rotationX = 75;
 			_camera.position  = _lookTarget;
 			_camera.moveBackward(800);

@@ -35,7 +35,7 @@
       <file leaf-file-name="Role.as" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/tl/core/role/Role.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="630">
+            <state relative-caret-position="0">
               <caret line="51" column="21" selection-start-line="0" selection-start-column="0" selection-end-line="167" selection-end-column="0" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
@@ -47,7 +47,7 @@
       <file leaf-file-name="RoleVO.as" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/tl/core/role/model/RoleVO.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
+            <state relative-caret-position="135">
               <caret line="11" column="32" selection-start-line="11" selection-start-column="32" selection-end-line="11" selection-end-column="32" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
@@ -78,18 +78,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EditorScene3DMediator.as" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/tl/frameworks/mediator/EditorScene3DMediator.as">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4800">
-              <caret line="322" column="41" selection-start-line="322" selection-start-column="41" selection-end-line="322" selection-end-column="41" />
-              <folding>
-                <element signature="e#77#120#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="CoveragePanelUIMediator.as" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/tl/frameworks/mediator/CoveragePanelUIMediator.as">
           <provider selected="true" editor-type-id="text-editor">
@@ -100,14 +88,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CsvDataModel.as" pinned="false" current-in-tab="false">
+      <file leaf-file-name="CsvDataModel.as" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/tl/frameworks/model/CsvDataModel.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2970">
-              <caret line="216" column="17" selection-start-line="216" selection-start-column="17" selection-end-line="216" selection-end-column="17" />
+            <state relative-caret-position="392">
+              <caret line="179" column="45" selection-start-line="179" selection-start-column="45" selection-end-line="179" selection-end-column="45" />
               <folding>
                 <element signature="e#73#107#0" expanded="true" />
-                <element signature="e#8510#8540#0" expanded="true" />
+                <element signature="e#8507#8537#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -135,11 +123,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RolePlaceVO.as" pinned="false" current-in-tab="true">
+      <file leaf-file-name="RolePlaceVO.as" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/tl/core/role/RolePlaceVO.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="10" column="5" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="5" />
+            <state relative-caret-position="510">
+              <caret line="36" column="29" selection-start-line="36" selection-start-column="29" selection-end-line="36" selection-end-column="29" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EditorScene3D.as" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/tl/mapeditor/scenes/EditorScene3D.as">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="285">
+              <caret line="52" column="44" selection-start-line="52" selection-start-column="44" selection-end-line="52" selection-end-column="44" />
               <folding />
             </state>
           </provider>
@@ -182,7 +180,6 @@
         <option value="$PROJECT_DIR$/src/tl/frameworks/command/SaveMapCmd.as" />
         <option value="$PROJECT_DIR$/src/tl/frameworks/service/TLATFConverter.as" />
         <option value="$PROJECT_DIR$/src/tl/mapeditor/ui3d/MapZoneView.as" />
-        <option value="$PROJECT_DIR$/src/tl/mapeditor/scenes/EditorScene3D.as" />
         <option value="$PROJECT_DIR$/src/tl/frameworks/mediator/ToolbarMediator.as" />
         <option value="$PROJECT_DIR$/src/tl/core/Embeds.as" />
         <option value="$PROJECT_DIR$/src/tl/frameworks/service/bombloader/JYLoad3DUnit.as" />
@@ -214,9 +211,10 @@
         <option value="$PROJECT_DIR$/src/tl/core/role/model/CsvRoleVO.as" />
         <option value="$PROJECT_DIR$/src/tl/frameworks/model/TLEditorMapModel.as" />
         <option value="$PROJECT_DIR$/src/tl/frameworks/mediator/CoveragePanelUIMediator.as" />
-        <option value="$PROJECT_DIR$/src/tl/frameworks/model/CsvDataModel.as" />
         <option value="$PROJECT_DIR$/src/tl/frameworks/mediator/EditorScene3DMediator.as" />
         <option value="$PROJECT_DIR$/src/tl/frameworks/mediator/WizardBarMediator.as" />
+        <option value="$PROJECT_DIR$/src/tl/frameworks/model/CsvDataModel.as" />
+        <option value="$PROJECT_DIR$/src/tl/mapeditor/scenes/EditorScene3D.as" />
       </list>
     </option>
   </component>
@@ -295,7 +293,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -474,8 +474,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -817,7 +815,8 @@
       <workItem from="1488341701961" duration="263000" />
       <workItem from="1488342548075" duration="8621000" />
       <workItem from="1488361835585" duration="1296000" />
-      <workItem from="1488369815339" duration="15000" />
+      <workItem from="1488369815339" duration="1847000" />
+      <workItem from="1488425308574" duration="357000" />
     </task>
     <task id="LOCAL-00001" summary="坐标系转换">
       <created>1481705149647</created>
@@ -1117,7 +1116,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="696611000" />
+    <option name="totallyTimeSpent" value="698800000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1400,17 +1399,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/tl/mapeditor/scenes/EditorScene3D.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="23" column="17" selection-start-line="23" selection-start-column="17" selection-end-line="23" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/tl/core/DataSources/Buff.as">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="201">
           <caret line="39" column="27" selection-start-line="39" selection-start-column="27" selection-end-line="39" selection-end-column="27" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1418,6 +1411,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="201">
           <caret line="288" column="17" selection-start-line="288" selection-start-column="17" selection-end-line="288" selection-end-column="17" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1425,6 +1419,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="201">
           <caret line="83" column="29" selection-start-line="83" selection-start-column="29" selection-end-line="83" selection-end-column="29" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1432,6 +1427,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="201">
           <caret line="97" column="17" selection-start-line="97" selection-start-column="17" selection-end-line="97" selection-end-column="17" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1504,6 +1500,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="21" column="29" selection-start-line="21" selection-start-column="17" selection-end-line="21" selection-end-column="29" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1572,30 +1569,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/tl/frameworks/mediator/EditorScene3DMediator.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4800">
-          <caret line="322" column="41" selection-start-line="322" selection-start-column="41" selection-end-line="322" selection-end-column="41" />
-          <folding>
-            <element signature="e#77#120#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/tl/frameworks/model/CsvDataModel.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2970">
-          <caret line="216" column="17" selection-start-line="216" selection-start-column="17" selection-end-line="216" selection-end-column="17" />
-          <folding>
-            <element signature="e#73#107#0" expanded="true" />
-            <element signature="e#8510#8540#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/tl/core/role/Role.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
+        <state relative-caret-position="0">
           <caret line="51" column="21" selection-start-line="0" selection-start-column="0" selection-end-line="167" selection-end-column="0" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
@@ -1605,7 +1581,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/tl/core/role/model/RoleVO.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
+        <state relative-caret-position="135">
           <caret line="11" column="32" selection-start-line="11" selection-start-column="32" selection-end-line="11" selection-end-column="32" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
@@ -1615,9 +1591,38 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/tl/core/role/RolePlaceVO.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="10" column="5" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="5" />
+        <state relative-caret-position="510">
+          <caret line="36" column="29" selection-start-line="36" selection-start-column="29" selection-end-line="36" selection-end-column="29" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tl/frameworks/mediator/EditorScene3DMediator.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="54" column="32" selection-start-line="54" selection-start-column="32" selection-end-line="54" selection-end-column="32" />
+          <folding>
+            <element signature="e#77#120#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tl/mapeditor/scenes/EditorScene3D.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="52" column="44" selection-start-line="52" selection-start-column="44" selection-end-line="52" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tl/frameworks/model/CsvDataModel.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="392">
+          <caret line="179" column="45" selection-start-line="179" selection-start-column="45" selection-end-line="179" selection-end-column="45" />
+          <folding>
+            <element signature="e#73#107#0" expanded="true" />
+            <element signature="e#8507#8537#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

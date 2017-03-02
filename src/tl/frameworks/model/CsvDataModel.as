@@ -180,7 +180,7 @@ package tl.frameworks.model
 											{
 												case "key":
 												case "index":
-													voId = voForRow[colField] = int(colVal);
+													voId = voForRow[colField] = (colVal);
 													break;
 												case "int":
 													voForRow[colField] = int(colVal);
