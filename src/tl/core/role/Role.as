@@ -62,7 +62,7 @@ package tl.core.role
 			// 初始化body ，加入信息，开始加载，但并不一定显示
 			_bodyUnit = new RoleMesh();
 			addChild(_bodyUnit);
-			_bodyUnit.init(vo.csvVO.ResId);
+			_bodyUnit.init(vo.csvVO.ResName);
 		}
 
 		/** 释放资源 清空所有状态以便回收 */

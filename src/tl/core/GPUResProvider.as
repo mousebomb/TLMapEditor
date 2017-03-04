@@ -131,7 +131,7 @@ package tl.core
 		* 所有的3D模型 用awd格式，带骨骼动作 放在awd文件夹里，以数字.awd命名 数字对应表里配的resId
 		* */
 		/** 加载3D模型 */
-		public function getAWD(resId : int , cb:Function ):void
+		public function getAWD(resId : String , cb:Function ):void
 		{
 			var url :String = Config.MOXING_AWD_URL +resId +".awd";
 			JYLoader.getInstance().reqResource( url ,JYLoader.RES_AWD,0,JYLoader.GROUP_CHARA,onAWDLoaded,null,[cb,resId]);

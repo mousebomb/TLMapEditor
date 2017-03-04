@@ -18,6 +18,7 @@ package tl.frameworks.model
 	import tl.core.terrain.*;
 	import tl.core.terrain.TLMapVO;
 	import tl.frameworks.NotifyConst;
+	import tl.frameworks.defines.WizardLayer;
 	import tl.frameworks.defines.WizardType;
 
 	import tool.StageFrame;
@@ -49,7 +50,7 @@ package tl.frameworks.model
 			if(selectedGroupName)
 				return addWizardToGroup(role ,selectedGroupName);
 			else
-				return addWizardToGroup(role ,WizardType.LABEL[role.vo.csvVO.Type]);
+				return addWizardToGroup(role ,WizardLayer.LABEL[role.vo.csvVO.Layer]);
 		}
 
 		private function addWizardToGroup(role:Role, wizardType:String):RolePlaceVO

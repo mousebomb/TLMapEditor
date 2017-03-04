@@ -11,6 +11,8 @@ package
 	import flash.geom.Rectangle;
 	import flash.text.TextField;
 
+	import tool.StageFrame;
+
 	public class TestMain extends Sprite
 	{
 		private var g:Shape;

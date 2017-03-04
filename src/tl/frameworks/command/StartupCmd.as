@@ -40,6 +40,7 @@ package tl.frameworks.command
 	import tl.frameworks.model.SkyBoxTextureListModel;
 	import tl.frameworks.model.TLEditorMapModel;
 	import tl.frameworks.model.TerrainTextureListModel;
+	import tl.frameworks.model.WizardResTypeModel;
 	import tl.frameworks.model.WizardSettingModel;
 	import tl.frameworks.service.TLEditorMapService;
 	import tl.mapeditor.scenes.EditorScene3D;
@@ -79,6 +80,7 @@ package tl.frameworks.command
 			injector.mapSingleton(TerrainTextureListModel);
 			injector.mapSingleton(SkyBoxTextureListModel);
 			injector.mapSingleton(LogModel);
+			injector.mapSingleton(WizardResTypeModel);
 			injector.mapSingleton(WizardSettingModel);
 			injector.mapSingleton(CsvDataModel);
 			injector.mapValue(GPUResProvider,GPUResProvider.getInstance());

@@ -11,6 +11,7 @@ package tl.frameworks.mediator
 	import tl.frameworks.NotifyConst;
 	import tl.frameworks.TLEvent;
 	import tl.frameworks.model.TLEditorMapModel;
+	import tl.frameworks.model.WizardResTypeModel;
 	import tl.mapeditor.ui.common.MyScrollBarRenderer;
 	import tl.mapeditor.ui.window.CoveragePanelUI;
 
@@ -23,7 +24,8 @@ package tl.frameworks.mediator
 		public var view:CoveragePanelUI;
 		[Inject]
 		public var mapModel:TLEditorMapModel;
-		private var _vector:Vector.<String>;
+		[Inject]
+		public var resTypeModel:WizardResTypeModel;
 		private var _selectType:String;
 		private var _selectedRenderer:MyScrollBarRenderer;
 		private var _rendererVector:Vector.<MyScrollBarRenderer>
@@ -38,7 +40,6 @@ package tl.frameworks.mediator
 		{
 			super.onRegister();
 
-			_vector = WizardBarMediator.menuVec;
 			view.init("图层面板", 320, 470);
 			view.x = StageFrame.stage.stageWidth - view.myWidth;
 			view.y = 32;

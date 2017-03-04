@@ -43,10 +43,10 @@ package tl.core.role
 			track("RoleMesh/RoleMesh 当前实例数：", statsNumInstance);
 		}
 
-		private var _resId:int;
+		private var _resId:String;
 
 		/** 初始化入口 */
-		public function init(resId:int):void
+		public function init(resId:String):void
 		{
 			_resId = resId;
 			GPUResProvider.getInstance().getAWD(_resId, onAWDLoadedCb);
@@ -56,14 +56,14 @@ package tl.core.role
 		/** 释放资源和状态 以便回收 */
 		public function clear():void
 		{
-			_resId  = -1;
+			_resId  = null;
 			_curAct = "";
 			bindIndexByUnit = new Dictionary();
 			StageFrame.removeActorFun(validatePoses);
 		}
 
 
-		private function onAWDLoadedCb(resId:int, assets:Vector.<IAsset>):void
+		private function onAWDLoadedCb(resId:String, assets:Vector.<IAsset>):void
 		{
 			// 防止请求多次回调(回收再用等），只关心当前我的resId
 			if (resId == _resId)

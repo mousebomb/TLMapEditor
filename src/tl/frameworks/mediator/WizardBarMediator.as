@@ -13,10 +13,13 @@ package tl.frameworks.mediator
 	import org.mousebomb.framework.Notify;
 	import org.robotlegs.mvcs.Mediator;
 
+	import tl.core.role.model.CsvResTypeVO;
+
 	import tl.core.role.model.CsvRoleVO;
 	import tl.frameworks.NotifyConst;
 	import tl.frameworks.TLEvent;
 	import tl.frameworks.model.CsvDataModel;
+	import tl.frameworks.model.WizardResTypeModel;
 	import tl.mapeditor.ToolBoxType;
 	import tl.mapeditor.ui.common.MyButton;
 	import tl.mapeditor.ui.common.MyPageButton;
@@ -38,9 +41,9 @@ package tl.frameworks.mediator
 		public var view: WizardBarUI;
 		[Inject]
 		public var csvModel:CsvDataModel;
+		[Inject]
+		public var resTypeModel:WizardResTypeModel;
 
-		/** 模型 分分类的列表*/
-		private var _modelDataVec:Vector.<Array>;
 		private var _isControl:Boolean;
 
 		override public function onRegister():void
@@ -140,8 +143,8 @@ package tl.frameworks.mediator
 		private function onSelectType(event:TLEvent):void
 		{
 			var name:String = event.data as String;
-			var index:int = menuVec.indexOf(name);
-			onMenuSelectCallBack(index);
+			var resType:int = resTypeModel.resTypeByName[name];
+			onMenuSelectCallBack(resType);
 		}
 		private function onViewMove():void
 		{
@@ -152,14 +155,14 @@ package tl.frameworks.mediator
 		private function onClickSelect(event:MouseEvent):void
 		{
 			ToolBoxType.popmenuX = view.x + view.myWidth;
-			var mh:int = 18.5*menuVec.length;
+			var mh:int = 18.5*resTypeModel.resTypeCount;
 			var vh:int = StageFrame.stage.stageHeight - mh;
 			var vy:int = view.y + view.selectBtn.y ;
 			if(vy + mh*.5 < StageFrame.stage.stageHeight)
 				ToolBoxType.popmenuY = vy - mh * .5;
 			else
 				ToolBoxType.popmenuY = vh;
-			dispatchWith(NotifyConst.NEW_POPMENUBAR_UI, false, menuVec);
+			dispatchWith(NotifyConst.NEW_POPMENUBAR_UI, false, resTypeModel.resTypeAsArray);
 		}
 
 		override public function onRemove():void
@@ -180,53 +183,30 @@ package tl.frameworks.mediator
 			onViewMove();
 		}
 
-		//菜单内容
-		public static const menuVec:Vector.<String> = Vector.<String>(
-				[
-					"英雄", "Npc", "场景特效", "搜捡怪物", "怪物", "Boss怪物", "受击破碎特效", "受击溅血特效", "翅膀", "坐骑"
-					, "武器", "搜检部件（点击打开）", "场景小精灵", "镖车", "地表模型", "建筑模型", "野外BOSS", "阻挡特效", "功能性特效", "界面展示模型",
-					"怪物（有尸体）", "特效模型（同场景特效）", "特效怪物（只显示血条）", "固定不动怪", "友方Boss怪物", "竞技场用怪", "特效怪（没有鼠标事件）",
-					"宠物", "搜捡部件（需要攻击）", "采集类型", "篝火专用", "可以被占领的生物", "要塞支持类建筑", "要塞防御类建筑", "要塞陷阱", "掉落物品"
-				]);
 		private var wizardVector:Array;
 
 		private function onCsvLoaded(n:Notify):void
 		{
 			dispatchWith(NotifyConst.STATUS, false, "加载完毕");
 
-			//默认选第一个
-			if (!_modelDataVec)
-			{
-				_modelDataVec      = new Vector.<Array>(menuVec.length, true);
-				var i:int          ;
-				var wizardObject:CsvRoleVO;
-				var keys:Array = csvModel.table_wizard.keys;
-				for (var j:int = 0; j < keys.length; j++)
-				{
-					var key : * = keys[j];
-					wizardObject = csvModel.table_wizard.get( key );
-					i = int(wizardObject.Type);
-					if (i >= menuVec.length) i = menuVec.length - 1;
+			// 整理分类方式 采用栋哥配置表里的
+			resTypeModel.parseResTypes( csvModel );
 
-					_modelDataVec[i] ||= [];
-					_modelDataVec[i].push(wizardObject);
-				}
-			}
 			//默认选第一项
-			onMenuSelectCallBack(0);
+			onMenuSelectCallBack(resTypeModel.resTypeByName[resTypeModel.resTypeAsArray[0]]);
 		}
 
 		/** 选择类型后 **/
-		private function onMenuSelectCallBack(index:int):void
+		private function onMenuSelectCallBack(resType:int):void
 		{
-			if(!_modelDataVec[index])
+			if(!resTypeModel.modelByResType[resType])
 			{
 				return;
 			}
 			//设置数据
-			wizardVector = _modelDataVec[index];
+			wizardVector = resTypeModel.modelByResType[resType];
 			//设置类型文本显示
-			view.modelTypeText.text = menuVec[index];
+			view.modelTypeText.text = (csvModel.table_restype.get(resType) as CsvResTypeVO).Name;
 			var len:int = wizardVector.length;
 			view.modelPageBtn.maxPage = int(len/_showNum) + 1;
 			view.modelPageBtn.nowPage = 1;

@@ -12,6 +12,8 @@ package tl.frameworks.model
 
 	import org.robotlegs.mvcs.Actor;
 
+	import tl.core.role.model.CsvResTypeVO;
+
 	import tl.core.role.model.CsvRoleVO;
 	import tl.frameworks.NotifyConst;
 	import tl.frameworks.service.bombloader.JYLoader;
@@ -42,6 +44,7 @@ package tl.frameworks.model
 			// 配置
 			_csvConfigList               = new Dictionary();
 			_csvConfigList["wizard.csv"] = new CsvNameConfig(CsvRoleVO, table_wizard);
+			_csvConfigList["restype.csv"] = new CsvNameConfig(CsvResTypeVO, table_restype);
 			//加载
 			JYLoader.getInstance().reqResource(Config.PROJECT_URL + "csv.jpg" + "?v=" + Config.VERSION_NUN, JYLoader.RES_BYTEARRAY, 0, JYLoader.GROUP_LOGIN, onComplete, onPROGRESS);
 		}
@@ -51,6 +54,7 @@ package tl.frameworks.model
 
 		public var table_action:HashMap       = new HashMap();			//精灵动作表
 		public var table_wizard:HashMap       = new HashMap();			//精灵表
+		public var table_restype:HashMap       = new HashMap();			//精灵类型表
 		public var table_map:HashMap          = new HashMap();			//地图表
 		public var table_barrier:HashMap      = new HashMap();		//
 		public var table_coef:HashMap         = new HashMap();			//
@@ -92,24 +96,6 @@ package tl.frameworks.model
 
 		/**配置csv[表名] 的信息 {} */
 		private var _csvConfigList:Dictionary;
-
-//		private var _csvVec:Vector.<HCSV> = Vector.<HCSV>([
-//			table_action, table_wizard, table_map, table_barrier, table_coef, table_skill, table_skillup,
-//			table_buff, table_effect, table_quest, table_item, table_keyword, table_tipsitem, table_player,
-//			table_shop, table_bless, table_title, table_function, table_freshen, table_camp, table_vip, table_vipWelfare,
-//			table_nameslib, table_activity, table_activitykey, table_escort, table_info, table_config, table_promotions,
-//			table_spoken, table_ai, table_activityIcon, table_equipSet, table_indAthletics, table_worldMap, table_achieve,
-//			table_material
-//		]);
-//
-//		private var _csvNameVec:Vector.<String> = Vector.<String>([
-//			"action", "wizard", "map", "barrier", "coef", "skill", "skillup",
-//			"buff", "effect", "quest", "item", "keyword", "tipsitem", "player",
-//			"shop", "bless", "title", "function", "freshen", "camp", "vip", "vipwelfare",
-//			"nameslib", "activity", "activitykey", "escort", "info", "config", "promotions",
-//			"spoken", "ai", "activityIcon", "equipset", "indAthletics", "worldMap", "achieve",
-//			"material"
-//		]);
 
 
 		private function onComplete(url:String, data:ByteArray, mark:*):void

@@ -11,9 +11,13 @@ package tl.core.role.model
 		/*生物名称*/
 		public var Name:String;
 		/*资源ID*/
-		public var ResId:int;
+		public var ResName:String;
 		/*等级*/
 		public var Level:int;
+		/** 默认图层（编辑器用） */
+		public var Layer:int;
+		/**资源分类*/
+		public var ResType:int;
 		/*生物类型*/
 		public var Type:int;
 		/*生物AI*/
