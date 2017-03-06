@@ -16,10 +16,9 @@ package tl.frameworks.model
 	import tl.core.role.Role;
 	import tl.core.role.RolePlaceVO;
 	import tl.core.terrain.*;
-	import tl.core.terrain.TLMapVO;
 	import tl.frameworks.NotifyConst;
+	import tl.frameworks.defines.FunctionPointType;
 	import tl.frameworks.defines.WizardLayer;
-	import tl.frameworks.defines.WizardType;
 
 	import tool.StageFrame;
 
@@ -496,6 +495,66 @@ package tl.frameworks.model
 			// 压缩
 			end.compress();
 			return end;
+		}
+
+		public function saveMapXMLData():ByteArray
+		{
+			/*<?xml version='1.0' encoding='UTF-8' ?>
+			 <setting>
+			 <width>6656</width>
+			 <height>7168</height>
+			 <startpoint>5447,5203</startpoint>
+			 <point></point>
+			 <wizard></wizard>
+			 </setting>*/
+			var xmlStr:String     = "<?xml version='1.0' encoding='UTF-8' ?>\n<setting>";
+			xmlStr += "\n			 <width>" + _curMapVO.terrainVerticlesX * TLMapVO.TERRAIN_SCALE + "</width>";
+			xmlStr += "\n			 <height>" + _curMapVO.terrainVerticlesY * TLMapVO.TERRAIN_SCALE + "</height>";
+			//功能点
+			var startpoint:String = "";
+			for (var i:int = 0; i < _curMapVO.funcPoints.length; i++)
+			{
+				var vo:FuncPointVO = _curMapVO.funcPoints[i];
+				if (vo.type == FunctionPointType.START)
+				{
+					startpoint = (vo.tileX+.5) * TLMapVO.TERRAIN_SCALE + "," + (vo.tileY+.5) * TLMapVO.TERRAIN_SCALE;
+				}
+			}
+			xmlStr += "\n			 <startpoint>"+startpoint+"</startpoint>";
+			// 区域
+			xmlStr += "\n			 <point>";
+			var nodes :Vector.<int> = new <int>[];
+			for (var y:int = 0; y < _curMapVO.terrainVerticlesY; y++)
+			{
+				for (var x:int = 0; x < _curMapVO.terrainVerticlesX; x++)
+				{
+					nodes .push( _curMapVO.getNodeVal(x,y) );
+				}
+			}
+			xmlStr+= nodes.join(",");
+			xmlStr += "\n			 </point>";
+
+			xmlStr += "\n			 <wizard>";
+			var entities :Vector.<String> = new Vector.<String>();
+			for each (var groupName:String in _curMapVO.entityGroupNames)
+			{
+				var group:Vector.<RolePlaceVO> = _curMapVO.entityGroups[groupName];
+				for (var i:int = 0; i < group.length; i++)
+				{
+					entities.push(
+							group[i].wizardId+","+group[i].x+","+(0-group[i].z)+"," +group[i].y+"," +group[i].rotationY
+					);
+				}
+			}
+			xmlStr+= entities.join(",");
+			xmlStr += "\n			 </wizard>";
+
+			xmlStr += "\n</setting>";
+
+			var end:ByteArray = new ByteArray();
+			end.writeUTFBytes(xmlStr);
+			return end;
+
 		}
 
 	}
