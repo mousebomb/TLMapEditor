@@ -326,6 +326,7 @@ package tl.frameworks.mediator
 			newRole.x = placeVO.x;
 			newRole.z = placeVO.z;
 			newRole.y = placeVO.y;
+			newRole.rotationY = placeVO.rotationY;
 			placeVO.wizard = newRole;
 			view.addChild(newRole);
 			rolesInScene.push(newRole);

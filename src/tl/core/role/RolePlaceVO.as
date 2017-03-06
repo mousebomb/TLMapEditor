@@ -18,6 +18,9 @@ package tl.core.role
 		public var y:Number;
 		public var z:Number;
 
+		/** 旋转角度 */
+		public var rotationY:Number;
+
 		/**[编辑器使用] 模型 */
 		public var wizard:Role;
 
@@ -32,17 +35,21 @@ package tl.core.role
 		public function exportToByteArray( ba :ByteArray):void
 		{
 			ba.writeUTF(wizardId);
-			ba.writeFloat(x);
-			ba.writeFloat(y);
-			ba.writeFloat(z);
+			ba.writeInt(x);
+			ba.writeInt(y);
+			ba.writeInt(z);
+			ba.writeShort(rotationY);
+
 		}
 
 		public function readFromByteArray(ba:ByteArray):void
 		{
 			wizardId = ba.readUTF();
-			x = ba.readFloat();
-			y = ba.readFloat();
-			z = ba.readFloat();
+			x = ba.readInt();
+			y = ba.readInt();
+			z = ba.readInt();
+			rotationY = ba.readShort();
+
 		}
 
 	}

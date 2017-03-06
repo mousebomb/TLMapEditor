@@ -67,6 +67,7 @@ package tl.frameworks.model
 			placeData.x = role.x;
 			placeData.y =role.y;
 			placeData.z = role.z;
+			placeData.rotationY = role.rotationY;
 			group.push(placeData);
 			placeData.wizard = role;
 			dispatchWith(NotifyConst.GROUP_WIZARD_LIST_CHANGED,false,wizardType);
@@ -80,6 +81,7 @@ package tl.frameworks.model
 				placeData.x = role.x;
 				placeData.y = role.y;
 				placeData.z = role.z;
+				placeData.rotationY = role.rotationY;
 				dispatchWith(NotifyConst.GROUP_WIZARD_LI_CHANGED,false,placeData);
 			}else{
 				GlobalFacade.sendNotify(NotifyConst.STATUS,this,"精灵放置数据不存在");
@@ -427,7 +429,7 @@ package tl.frameworks.model
 		{
 			var end :ByteArray = new ByteArray();
 			// 版本号
-			end.writeUnsignedInt(2);
+			end.writeUnsignedInt(4);
 			// 写入地图名
 			end.writeUTF(_curMapVO.name);
 			//写入高度图
