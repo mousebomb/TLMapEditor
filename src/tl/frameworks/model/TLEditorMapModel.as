@@ -428,7 +428,7 @@ package tl.frameworks.model
 		{
 			var end :ByteArray = new ByteArray();
 			// 版本号
-			end.writeUnsignedInt(4);
+			end.writeUnsignedInt(5);
 			// 写入地图名
 			end.writeUTF(_curMapVO.name);
 			//写入高度图

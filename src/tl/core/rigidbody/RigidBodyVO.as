@@ -61,7 +61,9 @@ package tl.core.rigidbody
 			ba.writeShort(rotationY);
 		}
 
-		public function readFromByteArray(ba:ByteArray):void
+		/** 从bin文件读取
+		 * @param version 存档文件的版本 */
+		public function readFromByteArray(ba:ByteArray,version:uint):void
 		{
 			y = ba.readFloat();
 			rect .x = ba.readShort();

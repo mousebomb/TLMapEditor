@@ -6,15 +6,13 @@ package tl.core.terrain
 	import flash.geom.Point;
 	import flash.geom.Vector3D;
 	import flash.utils.ByteArray;
-	import flash.utils.ByteArray;
-	import flash.utils.ByteArray;
 
 	import org.robotlegs.mvcs.Actor;
 
 	import tl.core.funcpoint.FuncPointVO;
-
 	import tl.core.rigidbody.RigidBodyVO;
 	import tl.frameworks.NotifyConst;
+	import tl.utils.HPointUtil;
 
 	import tool.StageFrame;
 
@@ -30,10 +28,55 @@ package tl.core.terrain
 			return _curMapVO;
 		}
 
+		private const VERTEX_P_TL:Point = new Point(0,0);
+		private const VERTEX_P_TR:Point = new Point(TLMapVO.TERRAIN_SCALE,0);
+		private const VERTEX_P_BL:Point = new Point(0,TLMapVO.TERRAIN_SCALE);
+		private const VERTEX_P_BR:Point = new Point(TLMapVO.TERRAIN_SCALE,TLMapVO.TERRAIN_SCALE);
+		private const VERTEX_DJX_DISTANCE:Number = TLMapVO.TERRAIN_SCALE ;
 		/** 以Flash显示坐标来获得高度 */
-		public function getHeight(x:Number, z:Number):Number
+		public function getHeight(x:Number, z:Number , lerp :Boolean = false):Number
 		{
-			return _curMapVO.getHeight(Math.round(x / TLMapVO.TERRAIN_SCALE), Math.round(-z / TLMapVO.TERRAIN_SCALE));
+			if(lerp)
+			{
+				// 4点插值计算
+				var vertexX:int =Math.floor(x / TLMapVO.TERRAIN_SCALE);
+				var vertexY:int =Math.floor(-z / TLMapVO.TERRAIN_SCALE);
+				var p1:Number  = _curMapVO.getHeight(vertexX,vertexY);
+				var p2:Number  = _curMapVO.getHeight(vertexX+1,vertexY);
+				var p3:Number  = _curMapVO.getHeight(vertexX,vertexY+1);
+				var p4:Number  = _curMapVO.getHeight(vertexX+1,vertexY+1);
+				if(p1==p2 && p2==p3 && p3==p4)
+						return p1;
+				// 计算平均值，作为中心点高度
+				var avg:Number = (p1+p2+p3+p4)/4;
+				// 求出目标点离中心点的距离 以计算4个点的差的权重
+				var offsetX:Number = (x % TLMapVO.TERRAIN_SCALE);
+				var offsetY:Number = (-z % TLMapVO.TERRAIN_SCALE);
+				var offsetP :Point = new Point(offsetX,offsetY);
+				var distance1 :Number = HPointUtil.getTowPointDisTance(VERTEX_P_TL,offsetP);
+				var distance2 :Number = HPointUtil.getTowPointDisTance(VERTEX_P_TR,offsetP);
+				var distance3 :Number = HPointUtil.getTowPointDisTance(VERTEX_P_BL,offsetP);
+				var distance4 :Number = HPointUtil.getTowPointDisTance(VERTEX_P_BR,offsetP);
+				var pow1 :Number = (1-distance1/VERTEX_DJX_DISTANCE);
+				var pow2 :Number = (1-distance2/VERTEX_DJX_DISTANCE);
+				var pow3 :Number = (1-distance3/VERTEX_DJX_DISTANCE);
+				var pow4 :Number = (1-distance4/VERTEX_DJX_DISTANCE);
+				if(pow1<0) pow1=0;
+				if(pow2<0) pow2=0;
+				if(pow3<0) pow3=0;
+				if(pow4<0) pow4=0;
+				// 4个点的权重影响
+				var delta1 :Number = p1-avg;
+				var delta2 :Number = p2-avg;
+				var delta3 :Number = p3-avg;
+				var delta4 :Number = p4-avg;
+				var deltaAvg :Number = (delta1 * pow1 + delta2 * pow2 + delta3*pow3 + delta4*pow4) ;
+//				trace(StageFrame.renderIdx,"[TLMapModel]/getHeight 坐标" ,x,(-z),"vertex坐标", vertexX,vertexY ,"偏移",offsetX,offsetY , "四角", p1,p2,p3,p4, "中心",avg,"=",avg+deltaAvg);
+				return avg+deltaAvg;
+			}else
+			{
+				return _curMapVO.getHeight(Math.round(x / TLMapVO.TERRAIN_SCALE), Math.round(-z / TLMapVO.TERRAIN_SCALE));
+			}
 		}
 
 		/** 转换 - 从flash显示坐标转到地形网格坐标 */
@@ -50,7 +93,7 @@ package tl.core.terrain
 		/** 以Flash显示坐标来获得高度; 考虑刚体在内 */
 		public function getHeightWithRigidBody(x:Number, z:Number):Number
 		{
-			var end:Number = getHeight(x, z);
+			var end:Number = getHeight(x, z , true);
 
 			for (var i:int = 0; i < _curMapVO.rigidBodies.length; i++)
 			{
@@ -76,7 +119,7 @@ package tl.core.terrain
 			newMapVO();
 			by.uncompress();
 			// 版本号
-			var version :uint = by.readUnsignedInt();
+			_curMapVO.version = by.readUnsignedInt();
 			// 地图名
 			_curMapVO.name = by.readUTF();
 			// tiles heightMap
@@ -123,6 +166,13 @@ package tl.core.terrain
 			// 天空盒
 			_curMapVO.skyboxTextureName = by.readUTF();
 			//
+			this.onMapVOInited();
+		}
+
+		/** 地图读取完毕 */
+		protected function onMapVOInited():void
+		{
+
 			dispatchWith(NotifyConst.MAP_VO_INITED);
 		}
 

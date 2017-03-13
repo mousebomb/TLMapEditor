@@ -25,6 +25,10 @@ package tl.core.terrain
 		{
 		}
 
+		/** 当前保存时的地图版本号 */
+		public static const SAVE_VERSION :uint = 5;
+		/** 当前读取的地图版本(仅读取时用） */
+		public var version:uint;
 		/** 地图名字 */
 		public var name :String = 'null';
 
@@ -314,7 +318,7 @@ package tl.core.terrain
 			for (var i:int = 0; i < num; i++)
 			{
 				var rb:RigidBodyVO = new RigidBodyVO();
-				rb.readFromByteArray(rawData);
+				rb.readFromByteArray(rawData,version);
 				rigidBodies.push(rb);
 			}
 		}
@@ -341,7 +345,7 @@ package tl.core.terrain
 				for (var j:int = 0; j < groupLen; j++)
 				{
 					var vo :RolePlaceVO = new RolePlaceVO();
-					vo.readFromByteArray(rawBytes);
+					vo.readFromByteArray(rawBytes,version);
 					group.push(vo);
 				}
 			}

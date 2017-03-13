@@ -5,7 +5,6 @@ package tl.core.role
 {
 	import flash.utils.ByteArray;
 
-
 	/** 地图中 预先摆放好的模型数据 */
 	public class RolePlaceVO
 	{
@@ -20,6 +19,8 @@ package tl.core.role
 
 		/** 旋转角度 */
 		public var rotationY:Number;
+		/** 缩放 */
+		public var scale:Number;
 
 		/**[编辑器使用] 模型 */
 		public var wizard:Role;
@@ -39,16 +40,22 @@ package tl.core.role
 			ba.writeInt(y);
 			ba.writeInt(z);
 			ba.writeShort(rotationY);
-
+			ba.writeFloat(scale);
 		}
 
-		public function readFromByteArray(ba:ByteArray):void
+		/** 从bin文件读取
+		 * @param version 存档文件的版本 */
+		public function readFromByteArray(ba:ByteArray, version:uint):void
 		{
 			wizardId = ba.readUTF();
 			x = ba.readInt();
 			y = ba.readInt();
 			z = ba.readInt();
 			rotationY = ba.readShort();
+			if (version >= 5)
+				scale = ba.readFloat();
+			else
+				scale = 1.0;
 
 		}
 
