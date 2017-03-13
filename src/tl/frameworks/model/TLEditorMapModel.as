@@ -81,6 +81,8 @@ package tl.frameworks.model
 				placeData.y = role.y;
 				placeData.z = role.z;
 				placeData.rotationY = role.rotationY;
+				placeData.scale = role.scaleX;
+				trace(StageFrame.renderIdx,"[TLEditorMapModel]/commitWizard placeData.scale" ,placeData.scale);
 				dispatchWith(NotifyConst.GROUP_WIZARD_LI_CHANGED,false,placeData);
 			}else{
 				GlobalFacade.sendNotify(NotifyConst.STATUS,this,"精灵放置数据不存在");

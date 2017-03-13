@@ -36,8 +36,6 @@ package tl.frameworks.command
 				if(ui.parent)
 				{
 					ui.parent.removeChild(ui)
-				}	else {
-					contextView.addChild(ui);
 				}
 			}	else {
 				model.showObj = event.data ;

@@ -5,6 +5,7 @@ package tl.frameworks.mediator
 {
 	import away3d.containers.ObjectContainer3D;
 	import away3d.core.base.Object3D;
+	import away3d.core.pick.PickingColliderType;
 	import away3d.events.MouseEvent3D;
 
 	import flash.events.KeyboardEvent;
@@ -33,6 +34,7 @@ package tl.frameworks.mediator
 	import tl.frameworks.model.TLEditorMapModel;
 	import tl.mapeditor.scenes.EditorScene3D;
 	import tl.mapeditor.ui.controls.Gizmo3DBase;
+	import tl.mapeditor.ui.controls.ScaleGizmo3D;
 	import tl.mapeditor.ui.events.Gizmo3DEvent;
 	import tl.mapeditor.ui3d.BrushView;
 	import tl.mapeditor.ui3d.FuncPointView;
@@ -240,6 +242,9 @@ package tl.frameworks.mediator
 			}
 			// 天空盒
 			view.skyBoxView.setSkyBoxTextureName(mapModel.mapVO.skyboxTextureName);
+			// 选择器
+			view.mousePointTrack.updateAABB(null);
+			clearGizmo3D();
 		}
 
 		private function onSPLAT_TEXTURE_CHANGED(n:TLEvent):void
@@ -318,9 +323,11 @@ package tl.frameworks.mediator
 			newRole.z = placeVO.z;
 			newRole.y = placeVO.y;
 			newRole.rotationY = placeVO.rotationY;
+			newRole.scale(placeVO.scale);
 			placeVO.wizard = newRole;
 			view.addChild(newRole);
 			rolesInScene.push(newRole);
+			newRole.bodyUnit.pickType = PickingColliderType.AUTO_BEST_HIT;
 			// 提交后监听鼠标点击可选中
 			newRole.addEventListener(MouseEvent3D.MOUSE_DOWN, onRoleMouseDown);
 			//
@@ -392,6 +399,7 @@ package tl.frameworks.mediator
 				// 提交后监听鼠标点击可选中
 				setTargetsMouseInteractive(true);
 				draggingNewRole.addEventListener(MouseEvent3D.MOUSE_DOWN, onRoleMouseDown);
+				draggingNewRole.bodyUnit.pickType = PickingColliderType.AUTO_BEST_HIT;
 			}
 			draggingNewRole = null;
 		}
@@ -408,6 +416,7 @@ package tl.frameworks.mediator
 				// 停止移动
 				setTargetsMouseInteractive(true);
 				isSelectedDragging            = false;
+				gizmoSetTarget(_selectedRole);
 			}
 			onStageMouseUp4RigidBody(e);
 			onStageMouseUp4FuncPoint(e);

@@ -8,6 +8,7 @@ package tl.core.role
 	import away3d.animators.transitions.CrossfadeTransition;
 	import away3d.containers.ObjectContainer3D;
 	import away3d.core.base.Object3D;
+	import away3d.core.pick.IPickingCollider;
 	import away3d.core.pick.PickingColliderType;
 	import away3d.entities.Entity;
 	import away3d.entities.Mesh;
@@ -88,6 +89,7 @@ package tl.core.role
 				//
 				mouseEnabled = _mouseEnabled;
 				showBounds = _showBounds;
+				pickType = _pickType;
 			}
 		}
 
@@ -187,5 +189,24 @@ package tl.core.role
 					mesh.mouseEnabled = value;
 			}
 		}
+
+
+		// #pragma mark --  光纤探测方式		  ------------------------------------------------------------
+		private var _pickType:IPickingCollider = PickingColliderType.BOUNDS_ONLY;
+
+		public function set pickType(pickType:IPickingCollider):void
+		{
+			_pickType = pickType;
+			for (var i:int = 0; i < numChildren; i++)
+			{
+				(getChildAt(i) as Entity).pickingCollider = _pickType;
+			}
+		}
+
+		public function get pickType():IPickingCollider
+		{
+			return _pickType;
+		}
+
 	}
 }

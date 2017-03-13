@@ -92,7 +92,7 @@ package tl.core.terrain
 
 		/** 以Flash显示坐标来获得高度; 考虑刚体在内 */
 		public function getHeightWithRigidBody(x:Number, z:Number):Number
-		{
+		{//Todo 四叉树
 			var end:Number = getHeight(x, z , true);
 
 			for (var i:int = 0; i < _curMapVO.rigidBodies.length; i++)

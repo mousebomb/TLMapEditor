@@ -12,6 +12,9 @@ package tl.mapeditor.ui.controls
 	import flash.events.MouseEvent;
 	import flash.geom.Vector3D;
 
+	import tl.core.rigidbody.RigidBodyView;
+	import tl.core.role.Role;
+	import tl.core.role.RoleMesh;
 	import tl.mapeditor.defines.GizmoMode;
 	import tl.mapeditor.ui.events.Gizmo3DEvent;
 
@@ -121,15 +124,40 @@ package tl.mapeditor.ui.controls
 			zCube.addEventListener(MouseEvent3D.MOUSE_UP, handleMouseUp);			
 			zCube.rotationX = 180;
 			zCube.z = 100 + (cubeGeom.depth/2);
-			content.addChild(zCube);						
+			content.addChild(zCube);
+
+
 		}
 
+		/** 设置缩放模式
+		 * 1: xyz一起
+		 * 2: 刚体只允许x或z缩放 */
+		public function setScaleMode(mode:int):void
+		{
+			if (_scaleMode == mode) return;
+			_scaleMode        = mode;
+			mCube.visible     = (_scaleMode == SCALEMODE_ASONE);
+			xCylinder.visible = zCylinder.visible = (_scaleMode == SCALEMODE_SEPRATE);
+		}
+
+		private var _scaleMode:int                = 0;
+		public static const SCALEMODE_ASONE:int   = 1;
+		public static const SCALEMODE_SEPRATE:int = 2;
 
 		override public function show(sceneObject:ObjectContainer3D):void
 		{
 			super.show(sceneObject);
-			this.scaleX = currentMesh.scaleX/100;
-			this.scaleZ = currentMesh.scaleZ/100;
+			if (sceneObject is RigidBodyView)
+			{
+				this.scaleX = currentMesh.scaleX / 100;
+				this.scaleZ = currentMesh.scaleZ / 100;
+				setScaleMode(SCALEMODE_SEPRATE);
+			} else if (sceneObject is Role)
+			{
+				this.scaleX = currentMesh.scaleX;
+				this.scaleZ = currentMesh.scaleZ;
+				setScaleMode(SCALEMODE_ASONE);
+			}
 		}
 
 		protected function handleMouseOut(event:MouseEvent3D):void
@@ -277,58 +305,67 @@ package tl.mapeditor.ui.controls
 			mScale.x = actualMesh.scaleX;
 			mScale.y = actualMesh.scaleY;
 			mScale.z = actualMesh.scaleZ;
-			
-			switch(currentAxis)
+
+			if (_scaleMode == SCALEMODE_ASONE)
 			{
-				case "xAxis":
-					
-					var xv1:Vector3D = TLMapEditor.view3D.camera.rightVector;
-					var xv2:Vector3D = content.rightVector; 
-					xv1.normalize();
-					xv2.normalize();
-					var ax:Number = xv1.dotProduct(xv2);
-					if (ax < 0) trans = -trans;					
-					
-					mScale.x += trans;
-					
-					break;
-				
-				case "yAxis":
-					
-					var yv1:Vector3D = TLMapEditor.view3D.camera.upVector;
-					var yv2:Vector3D = content.upVector; 			
-					yv1.normalize();
-					yv2.normalize();
-					var ay:Number = yv1.dotProduct(yv2);
-					if (ay < 0) trans = -trans;					
-					
-					mScale.y += trans;
-					
-					break;
-				
-				case "zAxis":
-					
-					var zv1:Vector3D = TLMapEditor.view3D.camera.rightVector;
-					var zv2:Vector3D = content.forwardVector; 			
-					zv1.normalize();
-					zv2.normalize();
-					var az:Number = zv1.dotProduct(zv2);
-					if (az < 0) trans = -trans;					
-					
-					mScale.z += trans;
-					
-					break;				
-				
-				case "allAxis":
-					
-					mScale.x += trans * scaleRatio.x;
-					mScale.y += trans * scaleRatio.y;
-					mScale.z += trans * scaleRatio.z;
-					
-					break;				
-				
-				
-			}							
+				mScale.x += trans * scaleRatio.x;
+				mScale.y += trans * scaleRatio.y;
+				mScale.z += trans * scaleRatio.z;
+			}
+			else
+			{
+				switch (currentAxis)
+				{
+					case "xAxis":
+
+						var xv1:Vector3D = TLMapEditor.view3D.camera.rightVector;
+						var xv2:Vector3D = content.rightVector;
+						xv1.normalize();
+						xv2.normalize();
+						var ax:Number = xv1.dotProduct(xv2);
+						if (ax < 0) trans = -trans;
+
+						mScale.x += trans;
+
+						break;
+
+					case "yAxis":
+
+						var yv1:Vector3D = TLMapEditor.view3D.camera.upVector;
+						var yv2:Vector3D = content.upVector;
+						yv1.normalize();
+						yv2.normalize();
+						var ay:Number = yv1.dotProduct(yv2);
+						if (ay < 0) trans = -trans;
+
+						mScale.y += trans;
+
+						break;
+
+					case "zAxis":
+
+						var zv1:Vector3D = TLMapEditor.view3D.camera.rightVector;
+						var zv2:Vector3D = content.forwardVector;
+						zv1.normalize();
+						zv2.normalize();
+						var az:Number = zv1.dotProduct(zv2);
+						if (az < 0) trans = -trans;
+
+						mScale.z += trans;
+
+						break;
+
+					case "allAxis":
+
+						mScale.x += trans * scaleRatio.x;
+						mScale.y += trans * scaleRatio.y;
+						mScale.z += trans * scaleRatio.z;
+
+						break;
+
+
+				}
+			}
 			
 			actualMesh.scaleX = mScale.x;					
 			actualMesh.scaleY = mScale.y;
