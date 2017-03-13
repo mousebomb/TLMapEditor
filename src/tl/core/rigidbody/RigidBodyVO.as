@@ -13,7 +13,7 @@ package tl.core.rigidbody
 		/** 坐标 采用flash显示坐标单位 */
 		public var y:Number = 0.0;
 		public var rect:Rectangle = new Rectangle(0,0,100,100);
-		public var rotationY:Number;
+		public var rotationY:Number = 0.0;
 
 		public function setXZ(x:Number, z:Number):void
 		{
@@ -48,6 +48,18 @@ package tl.core.rigidbody
 			p2.y = o.y + Math.sin(radRot) * op;
 			p2.x = o.x + Math.cos(radRot)*op;
 			return rect.containsPoint(p2);
+		}
+
+		public function clone():RigidBodyVO
+		{
+			var end:RigidBodyVO = new RigidBodyVO();
+			end.y           = y;
+			end.rect.x      = rect.x;
+			end.rect.y      = rect.y;
+			end.rect.width  = rect.width;
+			end.rect.height = rect.height;
+			end.rotationY   = rotationY;
+			return end;
 		}
 
 		/** 导出保存用的数据 */

@@ -13,9 +13,8 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TLMapEditor.iws" afterPath="$PROJECT_DIR$/TLMapEditor.iws" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/TLMapEditor/TLMapEditor-app.xml" afterPath="$PROJECT_DIR$/out/production/TLMapEditor/TLMapEditor-app.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tl/core/rigidbody/RigidBodyVO.as" afterPath="$PROJECT_DIR$/src/tl/core/rigidbody/RigidBodyVO.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tl/core/role/RolePlaceVO.as" afterPath="$PROJECT_DIR$/src/tl/core/role/RolePlaceVO.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tl/core/terrain/TLMapModel.as" afterPath="$PROJECT_DIR$/src/tl/core/terrain/TLMapModel.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tl/core/terrain/TLMapVO.as" afterPath="$PROJECT_DIR$/src/tl/core/terrain/TLMapVO.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tl/core/rigidbody/RigidBodyView.as" afterPath="$PROJECT_DIR$/src/tl/core/rigidbody/RigidBodyView.as" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tl/frameworks/mediator/EditorScene3DMediator.as" afterPath="$PROJECT_DIR$/src/tl/frameworks/mediator/EditorScene3DMediator.as" />
     </list>
     <list id="7b406d0d-f7ef-4b91-8753-c734f3cbebbc" name="Revert: 区域重写，换实体显示" comment="" />
     <ignored path="TLMapEditor.iws" />
@@ -38,11 +37,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="RolePlaceVO.as" pinned="false" current-in-tab="true">
+      <file leaf-file-name="RolePlaceVO.as" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/tl/core/role/RolePlaceVO.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="444">
-              <caret line="39" column="27" selection-start-line="39" selection-start-column="27" selection-end-line="39" selection-end-column="27" />
+            <state relative-caret-position="270">
+              <caret line="20" column="36" selection-start-line="20" selection-start-column="36" selection-end-line="20" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -75,9 +74,57 @@
       <file leaf-file-name="RigidBodyVO.as" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/tl/core/rigidbody/RigidBodyVO.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="609">
-              <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="64" selection-end-column="36" />
+            <state relative-caret-position="165">
+              <caret line="15" column="41" selection-start-line="15" selection-start-column="41" selection-end-line="15" selection-end-column="41" />
+              <folding>
+                <element signature="e#70#94#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EditorScene3DMediator.as" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/tl/frameworks/mediator/EditorScene3DMediator.as">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="195">
+              <caret line="852" column="83" selection-start-line="852" selection-start-column="14" selection-end-line="852" selection-end-column="83" />
+              <folding>
+                <element signature="e#77#120#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ScaleGizmo3D.as" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/tl/mapeditor/ui/controls/ScaleGizmo3D.as">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="744">
+              <caret line="370" column="63" selection-start-line="370" selection-start-column="56" selection-end-line="370" selection-end-column="63" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TLEditorMapModel.as" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/tl/frameworks/model/TLEditorMapModel.as">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="408" column="0" selection-start-line="408" selection-start-column="0" selection-end-line="408" selection-end-column="0" />
+              <folding>
+                <element signature="e#74#106#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RigidBodyView.as" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/tl/core/rigidbody/RigidBodyView.as">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="375">
+              <caret line="27" column="35" selection-start-line="27" selection-start-column="35" selection-end-line="27" selection-end-column="35" />
+              <folding>
+                <element signature="e#70#98#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -103,7 +150,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/tl/frameworks/service/CookieManage.as" />
         <option value="$PROJECT_DIR$/src/tl/mapeditor/Config.as" />
         <option value="$PROJECT_DIR$/src/tl/config.inf" />
         <option value="$PROJECT_DIR$/src/tl/frameworks/command/InitConfigCmd.as" />
@@ -144,16 +190,17 @@
         <option value="$PROJECT_DIR$/src/tl/frameworks/model/WizardResTypeModel.as" />
         <option value="$PROJECT_DIR$/src/tl/frameworks/defines/WizardLayer.as" />
         <option value="$PROJECT_DIR$/src/tl/frameworks/mediator/WizardBarMediator.as" />
-        <option value="$PROJECT_DIR$/src/tl/frameworks/mediator/EditorScene3DMediator.as" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/TLMAP_SPECIFICATION.txt" />
         <option value="$PROJECT_DIR$/src/tl/frameworks/command/SaveMapCmd.as" />
         <option value="$PROJECT_DIR$/src/tl/core/role/RoleMesh.as" />
-        <option value="$PROJECT_DIR$/src/tl/frameworks/model/TLEditorMapModel.as" />
         <option value="$PROJECT_DIR$/src/tl/core/terrain/TLMapModel.as" />
-        <option value="$PROJECT_DIR$/src/tl/core/rigidbody/RigidBodyVO.as" />
         <option value="$PROJECT_DIR$/src/tl/core/terrain/TLMapVO.as" />
         <option value="$PROJECT_DIR$/src/tl/core/role/RolePlaceVO.as" />
+        <option value="$PROJECT_DIR$/src/tl/frameworks/model/TLEditorMapModel.as" />
+        <option value="$PROJECT_DIR$/src/tl/core/rigidbody/RigidBodyView.as" />
+        <option value="$PROJECT_DIR$/src/tl/core/rigidbody/RigidBodyVO.as" />
+        <option value="$PROJECT_DIR$/src/tl/frameworks/mediator/EditorScene3DMediator.as" />
       </list>
     </option>
   </component>
@@ -683,7 +730,7 @@
       <workItem from="1488774423626" duration="7865000" />
       <workItem from="1488796348120" duration="3236000" />
       <workItem from="1489043978326" duration="817000" />
-      <workItem from="1489373782060" duration="2386000" />
+      <workItem from="1489373782060" duration="4728000" />
     </task>
     <task id="LOCAL-00001" summary="坐标系转换">
       <created>1481705149647</created>
@@ -983,7 +1030,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="725324000" />
+    <option name="totallyTimeSpent" value="727666000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1098,7 +1145,7 @@
           <option name="timeStamp" value="126" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="296" />
+      <option name="time" value="301" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1107,20 +1154,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/tl/frameworks/model/WizardSettingModel.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="17" column="28" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/tl/frameworks/mediator/WizardSettingUIMediator.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="557">
-          <caret line="140" column="77" selection-start-line="140" selection-start-column="77" selection-end-line="140" selection-end-column="77" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/tl/frameworks/NotifyConst.as">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
@@ -1372,14 +1405,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/tl/frameworks/mediator/EditorScene3DMediator.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="10035">
-          <caret line="714" column="13" selection-start-line="714" selection-start-column="13" selection-end-line="714" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://D:/SDK/FLEX/4.6.0_AIR24/frameworks/libs/air/airglobal.swc!/library.swf">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="212">
@@ -1425,7 +1450,7 @@
         <state relative-caret-position="735">
           <caret line="51" column="86" selection-start-line="51" selection-start-column="86" selection-end-line="51" selection-end-column="86" />
           <folding>
-            <element signature="e#74#100#0" expanded="true" />
+            <element signature="e#74#100#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1443,16 +1468,6 @@
         <state relative-caret-position="639">
           <caret line="133" column="33" selection-start-line="133" selection-start-column="33" selection-end-line="133" selection-end-column="33" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/tl/frameworks/model/TLEditorMapModel.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="624">
-          <caret line="430" column="34" selection-start-line="430" selection-start-column="34" selection-end-line="430" selection-end-column="34" />
-          <folding>
-            <element signature="e#74#106#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1476,19 +1491,59 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/tl/core/rigidbody/RigidBodyVO.as">
+    <entry file="file://$PROJECT_DIR$/src/tl/core/role/RolePlaceVO.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="609">
-          <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="64" selection-end-column="36" />
+        <state relative-caret-position="270">
+          <caret line="20" column="36" selection-start-line="20" selection-start-column="36" selection-end-line="20" selection-end-column="36" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/tl/core/role/RolePlaceVO.as">
+    <entry file="file://$PROJECT_DIR$/src/tl/mapeditor/ui/controls/ScaleGizmo3D.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="444">
-          <caret line="39" column="27" selection-start-line="39" selection-start-column="27" selection-end-line="39" selection-end-column="27" />
+        <state relative-caret-position="744">
+          <caret line="370" column="63" selection-start-line="370" selection-start-column="56" selection-end-line="370" selection-end-column="63" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tl/frameworks/model/TLEditorMapModel.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="408" column="0" selection-start-line="408" selection-start-column="0" selection-end-line="408" selection-end-column="0" />
+          <folding>
+            <element signature="e#74#106#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tl/core/rigidbody/RigidBodyVO.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="15" column="41" selection-start-line="15" selection-start-column="41" selection-end-line="15" selection-end-column="41" />
+          <folding>
+            <element signature="e#70#94#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tl/frameworks/mediator/EditorScene3DMediator.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="852" column="83" selection-start-line="852" selection-start-column="14" selection-end-line="852" selection-end-column="83" />
+          <folding>
+            <element signature="e#77#120#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tl/core/rigidbody/RigidBodyView.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="27" column="35" selection-start-line="27" selection-start-column="35" selection-end-line="27" selection-end-column="35" />
+          <folding>
+            <element signature="e#70#98#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

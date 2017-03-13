@@ -5,8 +5,6 @@ package tl.frameworks.mediator
 {
 	import away3d.containers.ObjectContainer3D;
 	import away3d.core.base.Object3D;
-	import away3d.core.base.Object3D;
-	import away3d.entities.Entity;
 	import away3d.events.MouseEvent3D;
 
 	import flash.events.KeyboardEvent;
@@ -27,21 +25,14 @@ package tl.frameworks.mediator
 	import tl.core.rigidbody.RigidBodyView;
 	import tl.core.role.Role;
 	import tl.core.role.RolePlaceVO;
-	import tl.core.role.RolePlaceVO;
 	import tl.core.role.model.RoleVO;
-	import tl.core.terrain.TLMapVO;
 	import tl.frameworks.NotifyConst;
 	import tl.frameworks.TLEvent;
 	import tl.frameworks.defines.ToolBrushType;
-	import tl.frameworks.defines.ZoneType;
-	import tl.frameworks.model.CSV.SGCsvManager;
 	import tl.frameworks.model.CsvDataModel;
 	import tl.frameworks.model.TLEditorMapModel;
 	import tl.mapeditor.scenes.EditorScene3D;
 	import tl.mapeditor.ui.controls.Gizmo3DBase;
-	import tl.mapeditor.ui.controls.RotateGizmo3D;
-	import tl.mapeditor.ui.controls.ScaleGizmo3D;
-	import tl.mapeditor.ui.controls.TranslateGizmo3D;
 	import tl.mapeditor.ui.events.Gizmo3DEvent;
 	import tl.mapeditor.ui3d.BrushView;
 	import tl.mapeditor.ui3d.FuncPointView;
@@ -859,9 +850,19 @@ package tl.frameworks.mediator
 		/** 请求添加刚体， 让用户鼠标放置 */
 		private function onNewRigidBody(n:TLEvent):void
 		{
+			//选中哪个刚体时 点击现在工具栏的“添加刚体” 按钮 ，就会创建一个和选中项一样的刚体出来，而你空选状态，点击“添加刚体”就是默认那个正方体
+			var previewselySelectedRigidBodyVO:RigidBodyVO ;
+			if(_selectedRigidBody)
+			{
+				previewselySelectedRigidBodyVO = _selectedRigidBody.vo;
+			}
 			// 不是实际放置，而是先比划一下 ，实际放置的时候找model
 			clearSelection();
-			var vo:RigidBodyVO = new RigidBodyVO();
+			var vo:RigidBodyVO;
+			if (previewselySelectedRigidBodyVO)
+				vo = previewselySelectedRigidBodyVO.clone();
+			else
+				vo = new RigidBodyVO();
 			_selectedRigidBody = new RigidBodyView(vo);
 			view.addChild(_selectedRigidBody);
 			rigidBodiesInScene.push(_selectedRigidBody);
