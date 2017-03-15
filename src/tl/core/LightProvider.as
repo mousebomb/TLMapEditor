@@ -63,8 +63,8 @@ package tl.core
 //			softShadowMapMethod.alpha = 0.1;
 			//动态阴影
 			_lightPicker = new StaticLightPicker([ _sunLight]);
-			_shadowMapMethod = new FilteredShadowMapMethod( _sunLight );
-			_shadowMapMethod.alpha = 0.5;
+//			_shadowMapMethod = new FilteredShadowMapMethod( _sunLight );
+//			_shadowMapMethod.alpha = 0.5;
 			//
 		}
 

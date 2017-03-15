@@ -171,7 +171,7 @@ package tl.core.terrain
 					var tileVO:TLTileVO   = mapVO.tiles[i];
 					var tileView:TileGridView = new TileGridView(tileViewDic[tileVO]);
 					tileGridViewDic[tileVO]   = tileView;
-					tileView.y =1.0;
+					tileView.y =_zoneY + 1.0;
 					addChild(tileView);
 				}
 			}else{
@@ -205,10 +205,10 @@ package tl.core.terrain
 			{
 				for (var i:int = 0; i < mapVO.tiles.length; i++)
 				{
-					var tileVO:TLTileVO   = mapVO.tiles[i];
+					var tileVO:TLTileVO       = mapVO.tiles[i];
 					var tileView:TileNodeView = new TileNodeView(tileViewDic[tileVO],tileVO.parentTerrain.debugNodeMap);
 					tileZoneViewDic[tileVO]   = tileView;
-					tileView.y = 1.5;
+					tileView.y                = _zoneY + 1.5;
 					addChild(tileView);
 				}
 			}else{
@@ -223,5 +223,32 @@ package tl.core.terrain
 		/** 地形区域显示格 */
 		private var tileZoneViewDic:Dictionary = new Dictionary();
 
+		/** 显示区域的y位置（为了编辑方便） */
+		private var _zoneY:Number = 0;
+
+		public function get zoneY():Number
+		{
+			return _zoneY;
+		}
+
+		public function set zoneY(value:Number):void
+		{
+			_zoneY = value;
+			if (_zoneY < 0) _zoneY = 0;
+			if (_isShowZone)
+			{
+				for each (var nodeView:TileNodeView in tileZoneViewDic)
+				{
+					nodeView.y = _zoneY + 1.5;
+				}
+			}
+			if (_isShowGrid)
+			{
+				for each (var gridView:TileGridView in tileGridViewDic)
+				{
+					gridView.y = _zoneY + 1.0;
+				}
+			}
+		}
 	}
 }

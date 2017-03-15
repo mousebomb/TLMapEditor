@@ -24,6 +24,7 @@ package tl.core.terrain
 			super(tile.geometry, sharedTerrainMaterial);
 			this.x = tile.x;
 			this.z = tile.z;
+			mouseEnabled=true;
 		}
 
 

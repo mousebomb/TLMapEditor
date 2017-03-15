@@ -1421,8 +1421,17 @@ package away3d.loaders.parsers
 				data_len = _newBlockBytes.readUnsignedInt();
 				var url:String;
 				url = _newBlockBytes.readUTFBytes(data_len);
+                // 加载外部贴图
+				if(url.substr(-8,8) == ".png.jpg")
+				{
+					url = url.substr(0,url.length-8) + ".atf";
+				}else if(url.substr(-4,4)==".png")
+				{
+					url = url.substr(0,url.length-4) + ".atf";
+				}
 				addDependency(_cur_block_id.toString(), new URLRequest(url), false, null, true);
 			} else {
+                // 内嵌贴图的
 				data_len = _newBlockBytes.readUnsignedInt();
 				var data:ByteArray;
 				data = new ByteArray();
@@ -2276,10 +2285,17 @@ package away3d.loaders.parsers
 									}
 								}
 								if ((assetTypesToGet[typeCnt] == AssetType.TEXTURE) && (extraTypeInfo == "SingleTexture")) {
-									if (_blocks[assetID].data is BitmapTexture) {
+									//使awd格式支持atf
+									if( _blocks[assetID].data is ATFTexture ) {
 										returnArray.push(true);
 										returnArray.push(_blocks[assetID].data);
 										return returnArray;
+									}else if (_blocks[assetID].data is BitmapTexture ){
+                                        // 是谁在哎用bmp
+//                                        trace(StageFrame.renderIdx,"[AWD2Parser]/getAssetByID 有人在用 Bitmap",this._blocks[assetID].name);
+//                                        returnArray.push(true);
+//                                        returnArray.push(_blocks[assetID].data);
+//                                        return returnArray;
 									}
 								} else {
 									returnArray.push(true);

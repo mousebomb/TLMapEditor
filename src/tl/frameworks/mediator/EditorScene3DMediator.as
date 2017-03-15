@@ -598,6 +598,19 @@ package tl.frameworks.mediator
 					case Keyboard.D:
 						view.camXSpeed = 1;
 						break;
+					case Keyboard.PAGE_UP:
+					case Keyboard.SPACE:
+						view.lookAtY += 32;
+						view.terrainView.zoneY +=32;
+						break;
+					case Keyboard.PAGE_DOWN:
+						view.lookAtY -= 32;
+						view.terrainView.zoneY -=32;
+						break;
+					case Keyboard.ENTER:
+						view.lookAtY = 0;
+						view.terrainView.zoneY =0;
+						break;
 				}
 			}
 		}
@@ -694,7 +707,7 @@ package tl.frameworks.mediator
 				var downPos:Vector3D = event.scenePosition;
 				brushView.x          = downPos.x;
 				brushView.z          = downPos.z;
-				brushView.y =  mapModel.getHeight(downPos.x, downPos.z);
+				brushView.y =  mapModel.getHeight(downPos.x, downPos.z) + view.terrainView.zoneY;
 				// 除了地形高度刷100ms一次，区域刷子移动也执行 并且其它刷子y要设置
 				if(_isBrushPressed &&
 						(curBrushType == curBrushType== ToolBrushType.BRUSH_TYPE_ZONE))

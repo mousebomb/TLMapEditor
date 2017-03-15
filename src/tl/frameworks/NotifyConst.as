@@ -115,6 +115,9 @@ package tl.frameworks
 		/** 加载已存在的地图文件 @data :File */
 		public static const LOAD_MAP :String = "LOAD_MAP";
 
+		/** 撤销一步 */
+		public static const UNDO :String = "";
+
 		/** 开关网格 @data 不需要  */
 		public static const TOGGLE_GRID :String = "TOGGLE_GRID";
 		/**开关区域显示 @data 不需要 */

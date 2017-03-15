@@ -179,7 +179,8 @@ package tl.mapeditor.scenes
 
 		public function camForward(delta:int):void
 		{
-			_camHC.distance -= delta*5;
+			_camHC.distance -= delta*10;
+			if(_camHC.distance<100) _camHC.distance=100;
 		}
 
 		/** 进入俯视模式 */
@@ -188,6 +189,18 @@ package tl.mapeditor.scenes
 			_camHC.panAngle = 180;
 			_camHC.tiltAngle=  89;
 			_camHC.lookAtPosition = _lookTarget;
+		}
+
+		/** 设置摄像机聚焦点的高度 */
+		public function set lookAtY(v:Number):void
+		{
+			_lookTarget.y         = v;
+			_camHC.lookAtPosition = _lookTarget;
+		}
+
+		public function get lookAtY():Number
+		{
+			return _lookTarget.y;
 		}
 
 

@@ -142,8 +142,13 @@ package tl.frameworks.mediator
 					break;
 				case Keyboard.Z:
 					if(!_isControl)
-						break;
-					dispatchWith(NotifyConst.CLOSE_ALL_UI);
+					{
+						//z隐藏ui
+						dispatchWith(NotifyConst.CLOSE_ALL_UI);
+					}else{
+						//ctrl+Z撤销
+						dispatchWith(NotifyConst.UNDO);
+					}
 					break;
 				case Keyboard.NUMPAD_ADD:
 					dispatchWith(NotifyConst.TOOL_BRUSH_SIZE_ADD, false, 1);

@@ -6,7 +6,6 @@ package tl.frameworks.mediator
 	import org.robotlegs.mvcs.Mediator;
 
 	import tl.frameworks.NotifyConst;
-
 	import tl.mapeditor.ui.window.HelpUI;
 
 	import tool.StageFrame;
@@ -28,7 +27,7 @@ package tl.frameworks.mediator
 			super.onRegister();
 
 			 var spacing:String = '        '
-			view.init("快捷键显示", 420, 240);
+			view.init("快捷键显示", 420, 340);
 			view.x = StageFrame.stage.stageWidth - view.myWidth >> 1 ;
 			view.y = 32;
 			_value ='Ctrl + N' + spacing + '新建文件' + '\n' +
@@ -36,7 +35,8 @@ package tl.frameworks.mediator
 					'Ctrl + S' + spacing + '保存文件' + '\n' +
 					'Ctrl + G' + spacing + '新建刚体' + '\n' +
 					'Ctrl + Q' + spacing + '显示网格' + '\n' +
-					'Ctrl + Z' + spacing + '关闭所有UI界面' + '\n';
+					'   Z    ' + spacing + '关闭所有UI界面' + '\n' +
+					'Ctrl + Z' + spacing + '单步撤销(尚未支持)' + '\n';
 
 			_label ='       B' + spacing + '地形设置' + '\n' +
 					'       T' + spacing + '贴图设置' + '\n' +
@@ -47,7 +47,11 @@ package tl.frameworks.mediator
 					'       M' + spacing + '模型列表' + '\n' +
 					'       F' + spacing + '属性界面' + '\n' +
 					'       H' + spacing + '缩略地图' + '\n' +
-					'       V' + spacing + '取消刷子' + '\n';
+					'       V' + spacing + '取消刷子' + '\n'+
+					'  PageUp' + spacing + '抬高镜头' + '\n'+
+					'PageDown' + spacing + '降低镜头' + '\n'+
+					'   Enter' + spacing + '重置镜头高度' + '\n'+
+							"";
 			undeteText();
 			addContextListener(NotifyConst.CLOSE_ALL_UI, onClose);
 		}

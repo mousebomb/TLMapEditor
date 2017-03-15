@@ -103,7 +103,7 @@ package
 			_Stage3DProxy.antiAlias = 0;           					//全局抗锯齿参数
 			_Stage3DProxy.color     = 0xFF000000;  							//背景颜色
 			_Stage3DProxy.addEventListener(Stage3DEvent.CONTEXT3D_CREATED, onProxyCreated);
-			_Stage3DProxy.configureBackBuffer(myWidth, myHeight, 4);
+			_Stage3DProxy.configureBackBuffer(myWidth, myHeight, 0);
 
 //			Away3DConfig.myStage = stage;			//设置Away3D类库所用的stage
 			//			Parsers.enableAllBundled();
@@ -119,7 +119,7 @@ package
 			{
 				myWidth  = stage.stageWidth;
 				myHeight = stage.stageHeight;
-				_Stage3DProxy.configureBackBuffer(myWidth, myHeight, 4);
+				_Stage3DProxy.configureBackBuffer(myWidth, myHeight, 0);
 				_View3D.width  = myWidth - PADDING_LEFT;
 				_View3D.height = myHeight;
 				_View3D.x = PADDING_LEFT;
