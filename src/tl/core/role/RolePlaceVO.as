@@ -56,7 +56,8 @@ package tl.core.role
 				scale = ba.readFloat();
 			else
 				scale = 1.0;
-
+			if(isNaN(scale))
+				scale = 1.0;
 		}
 
 	}
