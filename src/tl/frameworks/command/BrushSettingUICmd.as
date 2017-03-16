@@ -5,6 +5,8 @@ package tl.frameworks.command
 {
 	import org.robotlegs.mvcs.Command;
 
+	import tl.frameworks.TLEvent;
+
 	import tl.mapeditor.ui.window.BrushSettingUI;
 
 	/**地形笔刷设置*/
@@ -16,16 +18,19 @@ package tl.frameworks.command
 			super();
 		}
 
+		[Inject]
+		public var e:TLEvent;
 		override public function execute():void
 		{
 			if(!ui)
 			{
 				ui = new BrushSettingUI();
 			}
-			if(ui.parent)
+			if(ui.parent && ui.brushType==e.data)
 			{
 				ui.parent.removeChild(ui);
 			}	else {
+				ui.brushType = e.data;
 				contextView.addChild(ui);
 			}
 		}

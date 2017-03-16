@@ -13,5 +13,8 @@ package tl.frameworks.defines
 		public static const BRUSH_TYPE_TERRAINTEXTURE:int = 2;
 		/** 地图区域刷 */
 		public static const BRUSH_TYPE_ZONE:int           = 3;
+
+		/**地形抹匀刷*/
+		public static const BRUSH_TYPE_HEIGHT_AVG :int = 5;
 	}
 }

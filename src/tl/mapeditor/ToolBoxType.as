@@ -51,6 +51,7 @@ package tl.mapeditor
 		public static const BAR_NAME_23:String	= '贴图转换';
 		public static const BAR_NAME_24:String	= '性能测试';
 		public static const BAR_NAME_25:String	= '地形设置';
+		public static const BAR_NAME_35:String	= '地形抹匀';
 		public static const BAR_NAME_26:String	= '图层面板';
 		public static const BAR_NAME_27:String	= '模型列表';
 		public static const BAR_NAME_29:String	= '性能控制';

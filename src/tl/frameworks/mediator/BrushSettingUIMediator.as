@@ -35,7 +35,15 @@ package tl.frameworks.mediator
 		{
 			super.onRegister();
 
-			view.init("地形笔刷设置", 425, 280);
+			if(view.brushType== ToolBrushType.BRUSH_TYPE_HEIGHT)
+			{
+				view.init("地形笔刷设置", 425, 280);
+			}
+			else
+			{
+				view.init("地形抹匀笔刷设置", 425, 280);
+			}
+
 			view.x = 350;
 			view.y = 32;
 
@@ -61,6 +69,21 @@ package tl.frameworks.mediator
 			eventMap.mapListener(view.hideBtn, MouseEvent.CLICK, onClickHide);
 			eventMap.mapListener(view.showBtn, MouseEvent.CLICK, onClickShow);
 			addContextListener(NotifyConst.CLOSE_UI, onClose);
+			addContextListener(NotifyConst.NEW_BRUSHSETTING_UI,onRecall);
+		}
+		private function onRecall( n: * ):void
+		{
+			if(view.brushType== ToolBrushType.BRUSH_TYPE_HEIGHT)
+			{
+				view.title = "地形笔刷设置";
+			}
+			else
+			{
+				view.title = "地形抹匀笔刷设置";
+			}
+			if(mapModel.mapVO)
+				onClickShow(null);
+
 		}
 
 		private function onClose(event:*):void
@@ -79,7 +102,7 @@ package tl.frameworks.mediator
 		private function onClickShow(event:MouseEvent):void
 		{
 			if(mapModel.mapVO)
-				dispatchWith(NotifyConst.TOOL_BRUSH, false,ToolBrushType.BRUSH_TYPE_HEIGHT);
+				dispatchWith(NotifyConst.TOOL_BRUSH, false,view.brushType);
 		}
 		/**隐藏笔刷*/
 		private function onClickHide(event:MouseEvent):void

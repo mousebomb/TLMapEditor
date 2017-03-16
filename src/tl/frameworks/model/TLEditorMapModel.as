@@ -217,6 +217,76 @@ package tl.frameworks.model
 			dispatchWith(NotifyConst.MAP_VO_INITED);
 		}
 
+		/**高度刷抹匀
+		 * 几个参数全是显示单位
+		 * @param pxX 像素单位坐标
+		 * @param pxZ 像素单位坐标
+		 * @param pxRadius 半径
+		 * */
+		public function useHeightAvgBrush(pxX:Number, pxZ:Number, pxRadius:Number):void
+		{
+			// 像素坐标换算成顶点坐标
+			var centerX:int = pxX / TLMapVO.TERRAIN_SCALE;
+			var centerY:int = -pxZ / TLMapVO.TERRAIN_SCALE;
+			var size:int    = pxRadius / TLMapVO.TERRAIN_SCALE;
+			if (size < 1)size = 1;
+			var curHeightAdd:Number;
+			var curX:int;
+			var curY:int;
+			var curRadius:Number;
+			var centerP:Point    = new Point(centerX, centerY);
+			var tmpP:Point       = new Point();
+			// 圆形区域内 向周围辐射均匀
+			var cornerExpand:int = size - 1;
+			// 先求出圆形区域
+			// 求出平均值
+			var avgHeight: Number = 0.0;
+			var numHeight :uint = 0;
+			for (curX = centerX - cornerExpand; curX <= centerX + cornerExpand; curX++)
+			{
+				for (curY = centerY - cornerExpand; curY <= centerY + cornerExpand; curY++)
+				{
+					tmpP.x    = curX;
+					tmpP.y    = curY;
+					curRadius = MousebombMath.distanceOf2Point(centerP, tmpP);
+					if (curRadius >= size) continue;
+					if (curX < 0) continue;
+					if (curY < 0) continue;
+					if (curX > _curMapVO.terrainVerticlesX) continue;
+					if (curY > _curMapVO.terrainVerticlesY) continue;
+					numHeight++;
+					avgHeight+=_curMapVO.getHeight(curX, curY);
+				}
+			}
+			if(numHeight==0) return;
+			avgHeight = avgHeight / numHeight;
+			// 采用平均值 对圆形区域遍历再次处理
+			for (curX = centerX - cornerExpand; curX <= centerX + cornerExpand; curX++)
+			{
+				for (curY = centerY - cornerExpand; curY <= centerY + cornerExpand; curY++)
+				{
+					tmpP.x    = curX;
+					tmpP.y    = curY;
+					curRadius = MousebombMath.distanceOf2Point(centerP, tmpP);
+					if (curRadius >= size) continue;
+					if (curX < 0) continue;
+					if (curY < 0) continue;
+					if (curX > _curMapVO.terrainVerticlesX) continue;
+					if (curY > _curMapVO.terrainVerticlesY) continue;
+					var oldHeight : Number = _curMapVO.getHeight(curX, curY);
+					var heightAdd :Number = avgHeight - oldHeight;
+					curHeightAdd        = heightAdd * calcPower(curRadius, size);
+					var toHeight:Number = oldHeight + curHeightAdd;
+					if (toHeight > brushHeightMax)toHeight = brushHeightMax;
+					if (toHeight < brushHeightMin)toHeight = brushHeightMin;
+					_curMapVO.setHeight(curX, curY, toHeight);
+				}
+			}
+
+			// 让对应tile处理变化
+			_curMapVO.validateTileHeight();
+		}
+
 		/**
 		 * 高度刷子刷一下
 		 * 几个参数全是显示单位

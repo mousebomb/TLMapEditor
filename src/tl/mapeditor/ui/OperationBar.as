@@ -17,7 +17,7 @@ package tl.mapeditor.ui
 			ToolBoxType.BAR_NAME_6, ToolBoxType.BAR_NAME_7, ToolBoxType.BAR_NAME_8,
 			ToolBoxType.BAR_NAME_11, ToolBoxType.BAR_NAME_12, ToolBoxType.BAR_NAME_13,
 			ToolBoxType.BAR_NAME_14, ToolBoxType.BAR_NAME_15, ToolBoxType.BAR_NAME_16,
-			ToolBoxType.BAR_NAME_25, ToolBoxType.BAR_NAME_9, ToolBoxType.BAR_NAME_10,
+			ToolBoxType.BAR_NAME_25, ToolBoxType.BAR_NAME_35,ToolBoxType.BAR_NAME_9, ToolBoxType.BAR_NAME_10,
 			ToolBoxType.BAR_NAME_30, ToolBoxType.BAR_NAME_28, ToolBoxType.BAR_NAME_27
 		]);
 		public function OperationBar()

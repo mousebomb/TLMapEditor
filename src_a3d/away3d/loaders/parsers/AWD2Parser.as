@@ -1422,10 +1422,10 @@ package away3d.loaders.parsers
 				var url:String;
 				url = _newBlockBytes.readUTFBytes(data_len);
                 // 加载外部贴图
-				if(url.substr(-8,8) == ".png.jpg")
+				if(url.substr(-8,8).toLowerCase() == ".png.jpg")
 				{
 					url = url.substr(0,url.length-8) + ".atf";
-				}else if(url.substr(-4,4)==".png")
+				}else if(url.substr(-4,4).toLowerCase()==".png")
 				{
 					url = url.substr(0,url.length-4) + ".atf";
 				}

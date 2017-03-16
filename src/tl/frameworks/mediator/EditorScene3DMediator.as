@@ -730,7 +730,10 @@ package tl.frameworks.mediator
 			}
 			clearSelection();
 			var downPos:Vector3D = event.scenePosition;
-			if (curBrushType == ToolBrushType.BRUSH_TYPE_HEIGHT || curBrushType == ToolBrushType.BRUSH_TYPE_TERRAINTEXTURE || curBrushType== ToolBrushType.BRUSH_TYPE_ZONE)
+			if (curBrushType == ToolBrushType.BRUSH_TYPE_HEIGHT
+					|| curBrushType == ToolBrushType.BRUSH_TYPE_HEIGHT_AVG
+					|| curBrushType == ToolBrushType.BRUSH_TYPE_TERRAINTEXTURE
+					|| curBrushType== ToolBrushType.BRUSH_TYPE_ZONE)
 			{
 				doBrush();
 				isBrushPressed = true;
@@ -835,7 +838,13 @@ package tl.frameworks.mediator
 			} else if(curBrushType == ToolBrushType.BRUSH_TYPE_ZONE)
 			{
 				// 画区域(阻挡等)
-				mapModel.setZoneType(brushView.x ,brushView.z , mapModel.curZoneType,mapModel.brushSize);
+				mapModel.setZoneType(brushView.x, brushView.z, mapModel.curZoneType, mapModel.brushSize);
+			}else if( curBrushType == ToolBrushType.BRUSH_TYPE_HEIGHT_AVG)
+			{
+			//TODO 抹匀高度
+				mapModel.useHeightAvgBrush(brushView.x, brushView.z,   mapModel.brushSize);
+				// 显示 地形
+				view.terrainView.isHeightDirty = true;
 			} else
 			{
 				// ...

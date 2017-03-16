@@ -10,6 +10,7 @@ package tl.frameworks.mediator
 
 	import tl.frameworks.NotifyConst;
 	import tl.frameworks.TLEvent;
+	import tl.frameworks.defines.ToolBrushType;
 	import tl.frameworks.model.TLEditorMapModel;
 	import tl.mapeditor.ToolBoxType;
 	import tl.mapeditor.ui.*;
@@ -81,7 +82,11 @@ package tl.frameworks.mediator
 					break;
 				case ToolBoxType.BAR_NAME_25 :
 					dispatchWith(NotifyConst.CLOSE_UI);
-					dispatchWith(NotifyConst.NEW_BRUSHSETTING_UI);
+					dispatchWith(NotifyConst.NEW_BRUSHSETTING_UI,false,ToolBrushType.BRUSH_TYPE_HEIGHT);
+					break;
+				case ToolBoxType.BAR_NAME_35:
+					dispatchWith(NotifyConst.CLOSE_UI);
+					dispatchWith(NotifyConst.NEW_BRUSHSETTING_UI,false,ToolBrushType.BRUSH_TYPE_HEIGHT_AVG);
 					break;
 				default :
 					view.switchToolBox(e.data);

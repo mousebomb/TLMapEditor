@@ -22,6 +22,9 @@ package tl.mapeditor.ui.window
 		public var vectorDragBar:Vector.<MyDragBar> ;
 		public var showBtn:MyButton;
 		public var hideBtn:MyButton;
+
+		/** 呼出ui使用的笔刷类型 */
+		public var brushType:int;
 		public function BrushSettingUI()
 		{
 			super();

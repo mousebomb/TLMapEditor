@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<project name="屠龙地图编辑器">
+    <property file="ant.properties" basedir="."/>
+
+    <target name="拷贝发布到design">
+        <copy todir="${mapEditor.exec}">
+            <fileset dir="${mapEditor.out}" >
+                <exclude name="config.inf"/>
+            </fileset>
+        </copy>
+
+        <exec executable="explorer"   >
+            <arg path="${mapEditor.exec}"/>
+        </exec>
+    </target>
+
+</project>
