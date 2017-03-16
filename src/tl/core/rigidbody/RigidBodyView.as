@@ -26,12 +26,15 @@ package tl.core.rigidbody
 			z           = vo.rect.y + vo.rect.height/2;
 			y           = vo.y - 10;
 			rotationY   = vo.rotationY;
+			rotationX   = vo.rotationX;
 		}
 
 		public function commit():void
 		{
 			vo.setXZWD(x, z, y, scaleX, scaleZ,20);
 			vo.setRotation(rotationY);
+			vo.setRotationX(rotationX);
+			vo.validate();
 		}
 
 	}

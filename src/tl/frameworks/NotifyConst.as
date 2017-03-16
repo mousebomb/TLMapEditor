@@ -44,8 +44,8 @@ package tl.frameworks
 		public static const TOOL_NEW_RIGIDBODY:String  = "TOOL_NEW_RIGIDBODY";
 		/** 选中刚体的尺寸 @data:Number */
 		public static const TOOL_RIGIDBODY_SIZE_ADD:String  = "TOOL_RIGIDBODY_SIZE_ADD";
-		/** 选中刚体的旋转 @data:Number */
-		public static const TOOL_RIGIDBODY_ROTATION_ADD:String  = "TOOL_RIGIDBODY_ROTATION_ADD";
+		/** 选择刚体对象后旋转（x倾斜） @data = 旋转角度 (+-1~360) */
+		public static const TOOL_RIGIDBODY_ROTATEX :String = "TOOL_RIGIDBODY_ROTATEX";
 
 		/**设置天空盒 @data:String 天空和Cube纹理 */
 		public static const TOOL_SKYBOX_SET :String = "TOOL_SKYBOX_SET";

@@ -26,7 +26,7 @@ package tl.core.terrain
 		}
 
 		/** 当前保存时的地图版本号 */
-		public static const SAVE_VERSION :uint = 5;
+		public static const SAVE_VERSION :uint = 6;
 		/** 当前读取的地图版本(仅读取时用） */
 		public var version:uint;
 		/** 地图名字 */

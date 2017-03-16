@@ -8,6 +8,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="fd9ac68a-8274-4592-9363-1ebd5a9fe3d0" name="Default" comment="修正报错">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/TLMapEditor/TLMapEditor.swf" afterPath="$PROJECT_DIR$/out/production/TLMapEditor/TLMapEditor.swf" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/TLMapEditor/TestMain.swf" afterPath="$PROJECT_DIR$/out/production/TLMapEditor/TestMain.swf" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TLMapEditor.iml" afterPath="$PROJECT_DIR$/TLMapEditor.iml" />
@@ -15,16 +16,6 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TLMapEditor.iws" afterPath="$PROJECT_DIR$/TLMapEditor.iws" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/TLMapEditor/TLMapEditor-app.xml" afterPath="$PROJECT_DIR$/out/production/TLMapEditor/TLMapEditor-app.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/TLMapEditor/config.inf" afterPath="$PROJECT_DIR$/out/production/TLMapEditor/config.inf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tl/frameworks/command/BrushSettingUICmd.as" afterPath="$PROJECT_DIR$/src/tl/frameworks/command/BrushSettingUICmd.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tl/frameworks/defines/ToolBrushType.as" afterPath="$PROJECT_DIR$/src/tl/frameworks/defines/ToolBrushType.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tl/frameworks/mediator/BrushSettingUIMediator.as" afterPath="$PROJECT_DIR$/src/tl/frameworks/mediator/BrushSettingUIMediator.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tl/frameworks/mediator/EditorScene3DMediator.as" afterPath="$PROJECT_DIR$/src/tl/frameworks/mediator/EditorScene3DMediator.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tl/frameworks/mediator/EditorUIMediator.as" afterPath="$PROJECT_DIR$/src/tl/frameworks/mediator/EditorUIMediator.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tl/frameworks/model/TLEditorMapModel.as" afterPath="$PROJECT_DIR$/src/tl/frameworks/model/TLEditorMapModel.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tl/mapeditor/ToolBoxType.as" afterPath="$PROJECT_DIR$/src/tl/mapeditor/ToolBoxType.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tl/mapeditor/ui/OperationBar.as" afterPath="$PROJECT_DIR$/src/tl/mapeditor/ui/OperationBar.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tl/mapeditor/ui/window/BrushSettingUI.as" afterPath="$PROJECT_DIR$/src/tl/mapeditor/ui/window/BrushSettingUI.as" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src_a3d/away3d/loaders/parsers/AWD2Parser.as" afterPath="$PROJECT_DIR$/src_a3d/away3d/loaders/parsers/AWD2Parser.as" />
     </list>
     <list id="7b406d0d-f7ef-4b91-8753-c734f3cbebbc" name="Revert: 区域重写，换实体显示" comment="" />
     <ignored path="TLMapEditor.iws" />
@@ -47,31 +38,55 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="BrushSettingUIMediator.as" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/tl/frameworks/mediator/BrushSettingUIMediator.as">
+      <file leaf-file-name="RigidBodyVO.as" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/tl/core/rigidbody/RigidBodyVO.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="82" column="13" selection-start-line="82" selection-start-column="13" selection-end-line="82" selection-end-column="13" />
+            <state relative-caret-position="148">
+              <caret line="88" column="13" selection-start-line="0" selection-start-column="0" selection-end-line="137" selection-end-column="0" />
+              <folding>
+                <element signature="e#70#97#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RigidBodyView.as" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/tl/core/rigidbody/RigidBodyView.as">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="465">
+              <caret line="33" column="51" selection-start-line="33" selection-start-column="51" selection-end-line="33" selection-end-column="51" />
+              <folding>
+                <element signature="e#70#98#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TLMapModel.as" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/tl/core/terrain/TLMapModel.as">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="228">
+              <caret line="87" column="50" selection-start-line="87" selection-start-column="50" selection-end-line="87" selection-end-column="50" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ToolBrushType.as" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/tl/frameworks/defines/ToolBrushType.as">
+      <file leaf-file-name="EditorScene3D.as" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/tl/mapeditor/scenes/EditorScene3D.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="17" column="49" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="49" />
+            <state relative-caret-position="495">
+              <caret line="90" column="94" selection-start-line="90" selection-start-column="94" selection-end-line="90" selection-end-column="94" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EditorScene3DMediator.as" pinned="false" current-in-tab="true">
+      <file leaf-file-name="EditorScene3DMediator.as" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/tl/frameworks/mediator/EditorScene3DMediator.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="226">
-              <caret line="750" column="0" selection-start-line="750" selection-start-column="0" selection-end-line="750" selection-end-column="0" />
+            <state relative-caret-position="118">
+              <caret line="540" column="63" selection-start-line="540" selection-start-column="63" selection-end-line="540" selection-end-column="63" />
               <folding>
                 <element signature="e#77#120#0" expanded="true" />
               </folding>
@@ -79,61 +94,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BrushSettingUICmd.as" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/tl/frameworks/command/BrushSettingUICmd.as">
+      <file leaf-file-name="ToolbarMediator.as" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/tl/frameworks/mediator/ToolbarMediator.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+            <state relative-caret-position="568">
+              <caret line="154" column="45" selection-start-line="154" selection-start-column="45" selection-end-line="154" selection-end-column="45" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BrushSettingUI.as" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/tl/mapeditor/ui/window/BrushSettingUI.as">
+      <file leaf-file-name="NotifyConst.as" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/tl/frameworks/NotifyConst.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="32" column="33" selection-start-line="32" selection-start-column="33" selection-end-line="32" selection-end-column="33" />
+            <state relative-caret-position="523">
+              <caret line="47" column="50" selection-start-line="47" selection-start-column="28" selection-end-line="47" selection-end-column="50" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TLEditorMapModel.as" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/tl/frameworks/model/TLEditorMapModel.as">
+      <file leaf-file-name="FogMethod.as" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src_a3d/away3d/materials/methods/FogMethod.as">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="718">
-              <caret line="265" column="76" selection-start-line="265" selection-start-column="76" selection-end-line="265" selection-end-column="76" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TLMapVO.as" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/tl/core/terrain/TLMapVO.as">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="298">
-              <caret line="122" column="24" selection-start-line="122" selection-start-column="24" selection-end-line="122" selection-end-column="24" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EditorUIMediator.as" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/tl/frameworks/mediator/EditorUIMediator.as">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="84" column="85" selection-start-line="84" selection-start-column="85" selection-end-line="84" selection-end-column="85" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Mediator.as" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src_rl/org/robotlegs/mvcs/Mediator.as">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="95" column="0" selection-start-line="95" selection-start-column="0" selection-end-line="95" selection-end-column="0" />
+            <state relative-caret-position="-45">
+              <caret line="12" column="26" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -181,21 +166,15 @@
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/TLMAP_SPECIFICATION.txt" />
         <option value="$PROJECT_DIR$/src/tl/frameworks/command/SaveMapCmd.as" />
-        <option value="$PROJECT_DIR$/src/tl/core/terrain/TLMapVO.as" />
-        <option value="$PROJECT_DIR$/src/tl/core/rigidbody/RigidBodyView.as" />
-        <option value="$PROJECT_DIR$/src/tl/core/rigidbody/RigidBodyVO.as" />
-        <option value="$PROJECT_DIR$/src/tl/core/terrain/TLMapModel.as" />
         <option value="$PROJECT_DIR$/src/tl/mapeditor/ui/controls/ScaleGizmo3D.as" />
         <option value="$PROJECT_DIR$/src/tl/frameworks/command/WizardSettingCmd.as" />
         <option value="$PROJECT_DIR$/src/tl/core/role/RoleMesh.as" />
-        <option value="$PROJECT_DIR$/src/tl/frameworks/NotifyConst.as" />
         <option value="$PROJECT_DIR$/src/tl/frameworks/mediator/ToolbarMediator.as" />
         <option value="$PROJECT_DIR$/src/config.inf" />
         <option value="$PROJECT_DIR$/src/tl/core/LightProvider.as" />
         <option value="$PROJECT_DIR$/src/TLMapEditor.as" />
         <option value="$PROJECT_DIR$/ant/ant.properties" />
         <option value="$PROJECT_DIR$/ant/build.xml" />
-        <option value="$PROJECT_DIR$/src/tl/mapeditor/scenes/EditorScene3D.as" />
         <option value="$PROJECT_DIR$/src/tl/core/terrain/TileNodeView.as" />
         <option value="$PROJECT_DIR$/src/tl/frameworks/mediator/HelpUIMediator.as" />
         <option value="$PROJECT_DIR$/src/tl/mapeditor/ui3d/MousePointTrack.as" />
@@ -208,9 +187,15 @@
         <option value="$PROJECT_DIR$/src/tl/mapeditor/ui/window/BrushSettingUI.as" />
         <option value="$PROJECT_DIR$/src_a3d/away3d/loaders/parsers/AWD2Parser.as" />
         <option value="$PROJECT_DIR$/src/tl/frameworks/command/BrushSettingUICmd.as" />
-        <option value="$PROJECT_DIR$/src/tl/frameworks/mediator/EditorScene3DMediator.as" />
-        <option value="$PROJECT_DIR$/src/tl/frameworks/model/TLEditorMapModel.as" />
         <option value="$PROJECT_DIR$/src/tl/frameworks/mediator/BrushSettingUIMediator.as" />
+        <option value="$PROJECT_DIR$/src/tl/frameworks/model/TLEditorMapModel.as" />
+        <option value="$PROJECT_DIR$/src/tl/core/terrain/TLMapVO.as" />
+        <option value="$PROJECT_DIR$/src/tl/core/rigidbody/RigidBodyView.as" />
+        <option value="$PROJECT_DIR$/src/tl/mapeditor/scenes/EditorScene3D.as" />
+        <option value="$PROJECT_DIR$/src/tl/frameworks/NotifyConst.as" />
+        <option value="$PROJECT_DIR$/src/tl/frameworks/mediator/EditorScene3DMediator.as" />
+        <option value="$PROJECT_DIR$/src/tl/core/rigidbody/RigidBodyVO.as" />
+        <option value="$PROJECT_DIR$/src/tl/core/terrain/TLMapModel.as" />
       </list>
     </option>
   </component>
@@ -290,7 +275,7 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -391,7 +376,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -747,7 +732,8 @@
       <workItem from="1489541203374" duration="10183000" />
       <workItem from="1489565047902" duration="5076000" />
       <workItem from="1489582030306" duration="23000" />
-      <workItem from="1489644845193" duration="4589000" />
+      <workItem from="1489644845193" duration="4893000" />
+      <workItem from="1489652113269" duration="14729000" />
     </task>
     <task id="LOCAL-00001" summary="坐标系转换">
       <created>1481705149647</created>
@@ -1047,7 +1033,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="770795000" />
+    <option name="totallyTimeSpent" value="785828000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1068,17 +1054,17 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32910052" sideWeight="0.50208336" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32769555" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32910052" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32827735" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35095137" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18443497" sideWeight="0.77290076" order="4" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18443497" sideWeight="0.76717556" order="4" side_tool="false" content_ui="combo" />
       <window_info id="LuaJ" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16875" sideWeight="0.5055118" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18443497" sideWeight="0.22709924" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18443497" sideWeight="0.23282443" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.43228602" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -1162,7 +1148,7 @@
           <option name="timeStamp" value="126" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="327" />
+      <option name="time" value="335" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1177,62 +1163,6 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/tl/core/role/RoleMesh.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1011">
-          <caret line="91" column="37" selection-start-line="91" selection-start-column="37" selection-end-line="91" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/tl/mapeditor/ui/controls/ScaleGizmo3D.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="885">
-          <caret line="59" column="25" selection-start-line="59" selection-start-column="25" selection-end-line="59" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/tl/core/role/Role.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2235">
-          <caret line="151" column="9" selection-start-line="151" selection-start-column="9" selection-end-line="151" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/tl/frameworks/mediator/WizardSettingUIMediator.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1770">
-          <caret line="138" column="26" selection-start-line="138" selection-start-column="26" selection-end-line="138" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/tl/core/rigidbody/RigidBodyVO.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1200">
-          <caret line="84" column="39" selection-start-line="84" selection-start-column="39" selection-end-line="84" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/tl/core/rigidbody/RigidBodyView.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="13" column="37" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src_a3d/away3d/stereo/StereoCamera3D.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9">
-          <caret line="59" column="47" selection-start-line="59" selection-start-column="36" selection-end-line="59" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src_a3d/away3d/controllers/FollowController.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="11" column="33" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src_a3d/away3d/controllers/HoverController.as">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -1244,13 +1174,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="525">
           <caret line="51" column="50" selection-start-line="51" selection-start-column="50" selection-end-line="51" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/tl/frameworks/NotifyConst.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="864">
-          <caret line="147" column="65" selection-start-line="147" selection-start-column="65" selection-end-line="147" selection-end-column="65" />
         </state>
       </provider>
     </entry>
@@ -1311,24 +1234,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/TLMapEditor.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="810">
-          <caret line="80" column="0" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/tl/core/terrain/NodeMapTexture.as">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="34" column="66" selection-start-line="34" selection-start-column="66" selection-end-line="34" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/tl/mapeditor/scenes/EditorScene3D.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="825">
-          <caret line="57" column="36" selection-start-line="57" selection-start-column="36" selection-end-line="57" selection-end-column="36" />
         </state>
       </provider>
     </entry>
@@ -1346,7 +1255,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="18" column="72" selection-start-line="18" selection-start-column="72" selection-end-line="18" selection-end-column="72" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1354,7 +1262,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
           <caret line="31" column="39" selection-start-line="0" selection-start-column="0" selection-end-line="116" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1362,7 +1269,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
           <caret line="31" column="88" selection-start-line="31" selection-start-column="88" selection-end-line="31" selection-end-column="88" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1377,23 +1283,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="32" column="20" selection-start-line="32" selection-start-column="20" selection-end-line="32" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/tl/core/role/RolePlaceVO.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/tl/frameworks/mediator/ToolbarMediator.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="33" column="28" selection-start-line="33" selection-start-column="28" selection-end-line="33" selection-end-column="28" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1401,7 +1290,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="14" column="89" selection-start-line="14" selection-start-column="89" selection-end-line="14" selection-end-column="89" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1409,7 +1297,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="298">
           <caret line="54" column="33" selection-start-line="54" selection-start-column="33" selection-end-line="54" selection-end-column="33" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1417,7 +1304,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="354">
           <caret line="52" column="28" selection-start-line="52" selection-start-column="28" selection-end-line="52" selection-end-column="28" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1455,22 +1341,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src_a3d/away3d/loaders/parsers/AWD2Parser.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="800">
-          <caret line="1432" column="20" selection-start-line="1432" selection-start-column="20" selection-end-line="1432" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://D:/SDK/FLEX/4.6.0_AIR24/frameworks/libs/air/airglobal.swc!/library.swf">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="13020" column="29" selection-start-line="13020" selection-start-column="29" selection-end-line="13020" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/tl/mapeditor/ui/common/UIBase.as">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="538">
@@ -1495,25 +1365,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/tl/core/terrain/TLMapVO.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="122" column="24" selection-start-line="122" selection-start-column="24" selection-end-line="122" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/tl/frameworks/model/TLEditorMapModel.as">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="718">
-          <caret line="265" column="76" selection-start-line="265" selection-start-column="76" selection-end-line="265" selection-end-column="76" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/tl/frameworks/mediator/EditorUIMediator.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
+        <state relative-caret-position="1080">
           <caret line="84" column="85" selection-start-line="84" selection-start-column="85" selection-end-line="84" selection-end-column="85" />
           <folding />
         </state>
@@ -1545,7 +1399,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src_rl/org/robotlegs/mvcs/Mediator.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
+        <state relative-caret-position="1215">
           <caret line="95" column="0" selection-start-line="95" selection-start-column="0" selection-end-line="95" selection-end-column="0" />
           <folding />
         </state>
@@ -1553,19 +1407,159 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/tl/frameworks/mediator/BrushSettingUIMediator.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
+        <state relative-caret-position="1020">
           <caret line="82" column="13" selection-start-line="82" selection-start-column="13" selection-end-line="82" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tl/frameworks/command/SaveMapCmd.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="585">
+          <caret line="50" column="85" selection-start-line="50" selection-start-column="85" selection-end-line="50" selection-end-column="85" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tl/frameworks/model/TLEditorMapModel.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="268">
+          <caret line="502" column="48" selection-start-line="502" selection-start-column="48" selection-end-line="502" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tl/core/terrain/TLMapVO.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="320" column="26" selection-start-line="320" selection-start-column="26" selection-end-line="320" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tl/core/role/RolePlaceVO.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/TLMapEditor.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="138" column="53" selection-start-line="138" selection-start-column="53" selection-end-line="138" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src_a3d/away3d/cameras/lenses/OrthographicLens.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="19" column="24" selection-start-line="19" selection-start-column="24" selection-end-line="19" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src_a3d/away3d/cameras/lenses/FreeMatrixLens.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="60" selection-start-line="21" selection-start-column="60" selection-end-line="21" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src_a3d/away3d/cameras/lenses/LensBase.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="96" column="28" selection-start-line="96" selection-start-column="28" selection-end-line="96" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tl/frameworks/mediator/ToolbarMediator.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="568">
+          <caret line="154" column="45" selection-start-line="154" selection-start-column="45" selection-end-line="154" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tl/frameworks/NotifyConst.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="523">
+          <caret line="47" column="50" selection-start-line="47" selection-start-column="28" selection-end-line="47" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/SDK/FLEX/4.6.0_AIR24/frameworks/libs/air/airglobal.swc!/library.swf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="3513" column="29" selection-start-line="3513" selection-start-column="29" selection-end-line="3513" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src_a3d/away3d/loaders/parsers/AWD2Parser.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="388">
+          <caret line="1588" column="38" selection-start-line="1588" selection-start-column="38" selection-end-line="1588" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src_a3d/away3d/materials/methods/FogMethod.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-45">
+          <caret line="12" column="26" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tl/mapeditor/scenes/EditorScene3D.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="90" column="94" selection-start-line="90" selection-start-column="94" selection-end-line="90" selection-end-column="94" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/tl/frameworks/mediator/EditorScene3DMediator.as">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="750" column="0" selection-start-line="750" selection-start-column="0" selection-end-line="750" selection-end-column="0" />
+        <state relative-caret-position="118">
+          <caret line="540" column="63" selection-start-line="540" selection-start-column="63" selection-end-line="540" selection-end-column="63" />
           <folding>
             <element signature="e#77#120#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tl/core/rigidbody/RigidBodyVO.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="148">
+          <caret line="88" column="13" selection-start-line="0" selection-start-column="0" selection-end-line="137" selection-end-column="0" />
+          <folding>
+            <element signature="e#70#97#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tl/core/rigidbody/RigidBodyView.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="33" column="51" selection-start-line="33" selection-start-column="51" selection-end-line="33" selection-end-column="51" />
+          <folding>
+            <element signature="e#70#98#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tl/core/terrain/TLMapModel.as">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="87" column="50" selection-start-line="87" selection-start-column="50" selection-end-line="87" selection-end-column="50" />
+          <folding />
         </state>
       </provider>
     </entry>

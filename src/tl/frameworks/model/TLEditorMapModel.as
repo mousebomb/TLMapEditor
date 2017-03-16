@@ -500,7 +500,7 @@ package tl.frameworks.model
 		{
 			var end :ByteArray = new ByteArray();
 			// 版本号
-			end.writeUnsignedInt(5);
+			end.writeUnsignedInt( TLMapVO.SAVE_VERSION );
 			// 写入地图名
 			end.writeUTF(_curMapVO.name);
 			//写入高度图

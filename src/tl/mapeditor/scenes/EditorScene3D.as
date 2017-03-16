@@ -4,6 +4,7 @@
 package tl.mapeditor.scenes
 {
 	import away3d.cameras.Camera3D;
+	import away3d.cameras.lenses.OrthographicLens;
 	import away3d.cameras.lenses.PerspectiveLens;
 	import away3d.containers.ObjectContainer3D;
 	import away3d.containers.Scene3D;
@@ -69,6 +70,18 @@ package tl.mapeditor.scenes
 			addChild(mousePointTrack);
 
 			initGizmo3D();
+		}
+
+		public function switchCam():void
+		{
+			_camera.lens = new OrthographicLens(2050);
+			_camera.rotationX = 90;
+			_camHC.distance = 2050;
+			_camera.lens.far = 10240;
+			_camHC.tiltAngle=90;
+			_camHC.minTiltAngle=_camHC.maxTiltAngle = 90;
+			_camHC.panAngle = -180;
+			_camHC.minPanAngle = _camHC.maxPanAngle = -180;
 		}
 
 		/** 为当前摄像机朝向 计算一个二维化后的法线矢量方向 */

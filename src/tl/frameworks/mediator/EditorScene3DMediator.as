@@ -24,6 +24,7 @@ package tl.frameworks.mediator
 	import tl.core.funcpoint.FuncPointVO;
 	import tl.core.rigidbody.RigidBodyVO;
 	import tl.core.rigidbody.RigidBodyView;
+	import tl.core.rigidbody.RigidBodyView;
 	import tl.core.role.Role;
 	import tl.core.role.RolePlaceVO;
 	import tl.core.role.model.RoleVO;
@@ -90,7 +91,7 @@ package tl.frameworks.mediator
 			addContextListener(NotifyConst.TOOL_BRUSH_H_MIN,onTOOL_BRUSH_H_MIN);
 			addContextListener(NotifyConst.TOOL_NEW_RIGIDBODY, onNewRigidBody);
 			addContextListener(NotifyConst.TOOL_RIGIDBODY_SIZE_ADD, onToolRigidBodySizeAdd);
-			addContextListener(NotifyConst.TOOL_RIGIDBODY_ROTATION_ADD, onToolRigidBodyRotated);
+			addContextListener(NotifyConst.TOOL_RIGIDBODY_ROTATEX,onToolRigidBodyXRotated);
 
 			addContextListener(NotifyConst.UI_START_ADD_WIZARD, onAddWizard);
 			addContextListener(NotifyConst.UI_SELECT_WIZARD, onUISelectWizard);
@@ -575,6 +576,12 @@ package tl.frameworks.mediator
 					case Keyboard.END:
 						target.rotationY-= moveStep;
 						break;
+					case Keyboard.EQUAL:
+						if(target is RigidBodyView) target.rotationX+=moveStep;
+						break;
+					case Keyboard.MINUS:
+						if(target is RigidBodyView) target.rotationX-=moveStep;
+						break;
 				}
 				// 保存移动数据
 				selectedTargetTransformCommit();
@@ -768,6 +775,7 @@ package tl.frameworks.mediator
 			{
 				view.terrainView.isShowZone=true;
 				view.lookDown();
+//				view.switchCam();
 			}
 			// 刷子阶段 不监听其它鼠标单击
 			setTargetsMouseInteractive( false );
@@ -915,12 +923,12 @@ package tl.frameworks.mediator
 			}
 		}
 
-		private function onToolRigidBodyRotated(n:TLEvent):void
+		private function onToolRigidBodyXRotated(n:TLEvent):void
 		{
 			if (_selectedRigidBody)
 			{
 				var deltaRot:Number = n.data;
-				_selectedRigidBody.rotationY += deltaRot;
+				_selectedRigidBody.rotationX += deltaRot;
 				_selectedRigidBody.commit();
 			}
 		}

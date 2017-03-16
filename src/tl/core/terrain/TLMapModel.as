@@ -98,9 +98,10 @@ package tl.core.terrain
 			for (var i:int = 0; i < _curMapVO.rigidBodies.length; i++)
 			{
 				var vo:RigidBodyVO = _curMapVO.rigidBodies[i];
-				if (vo.contains(x, z) && vo.y>end)
+				var rigidProvidedY:Number = vo.provideY4XZ(x,z);
+				if (rigidProvidedY>end)
 				{
-					end = vo.y;
+					end = rigidProvidedY;
 				}
 			}
 			return end;
