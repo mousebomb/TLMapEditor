@@ -12,7 +12,7 @@ package tl.mapeditor
 
 		public static const VERSION_NUN:String = "0.010";	//版本号
 
-		public static var PROJECT_URL:String = "";
+		public static var PROJECT_URL:String = "/Users/rhett/MyWork/2016_Q1/TLMapEditor/assets/";
 
 
 
